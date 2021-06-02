@@ -1,0 +1,44 @@
+{{ define "login_form" }}
+<!DOCTYPE html>
+<html lang="es">
+
+{{template "form_html_head" .}}
+<body>
+<div class="main-title-frame">
+    <div class="main-title">{{.Ft.Ct.Title}}</div>
+    <div class="park-name">{{.Ft.Ct.ParkName}}</div>
+</div>
+
+<div class="container">
+    {{ if (ne .ErrorMessage "") }}
+    <div class="error-message">{{.ErrorMessage}}</div>
+    {{ end }}
+    <div class="card text-dark border-dark bg-light mb-3 school-card" style="margin-top: 1em;">
+        <div class="card-header">
+            <b>{{.Ft.Ct.PageTitle}}</b>
+        </div>
+        <div class="card-body">
+            <form action="{{.Ft.URL}}" method="post">
+                <div class="row mb-3">
+                    {{ .AuthenticationRequest.EmailLabel }}
+                    <div class="col-sm-10">
+                        {{ .AuthenticationRequest.EmailInput (index .Ft.FormErrorMessages "Email") (index .Ft.FormValues "Email") }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    {{ .AuthenticationRequest.PasswordLabel }}
+                    <div class="col-sm-10">
+                        {{ .AuthenticationRequest.PasswordInput (index .Ft.FormErrorMessages "Password") (index .Ft.FormValues "Password") }}
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button type="submit" class="btn btn-success">{{ .Ft.SubmitLabel }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+{{ end }}

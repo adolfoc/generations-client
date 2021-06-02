@@ -1,0 +1,39 @@
+{{ define "schemas" }}
+{{template "top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header">
+    <b>{{.Ct.PageTitle}}, Fichas seleccionadas: {{ .GenerationSchemas.RecordCount }}</b>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Rango</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{range .GenerationSchemas.GenerationSchemas}}
+      <tr>
+        <td><a href="/schemas/{{.ID}}">{{ .Name }}</a></td>
+        <td>{{ .Description }}</td>
+        <td>{{ .Span }}</td>
+      </tr>
+      {{end}}
+      </tbody>
+    </table>
+    {{ .Pagination.HTML .Pagination.CurrentPage }}
+    {{ if or (eq .Ct.UserRole "admin") (eq .Ct.UserRole "editor") }}
+    <div class="card-footer bg-transparent border-success">
+      <a class="btn btn-primary" href="/schemas/new" role="button">Nueva Tarjeta</a>
+    </div>
+    {{ end }}
+  </div>
+</div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

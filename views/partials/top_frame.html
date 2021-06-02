@@ -1,0 +1,15 @@
+{{ define "top_frame" }}
+{{template "html_head" .}}
+<body>
+<div class="main-title-frame">
+  <div class="main-title">{{.Ct.Title}}</div>
+</div>
+{{template "nav_bar" .}}
+<div class="container">
+  {{ if (ne .Ct.ErrorMessage "") }}
+  <div class="error-message">{{.Ct.ErrorMessage}}</div>
+  {{ end }}
+  {{ if (ne .Ct.InfoMessage "") }}
+  <div class="info-message">{{.Ct.InfoMessage}}</div>
+  {{ end }}
+{{ end }}

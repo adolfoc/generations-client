@@ -1,0 +1,30 @@
+{{ define "generation" }}
+{{ template "top_frame" . }}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header">
+    <b>{{.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <b>Nombre</b>: {{ .Generation.Name }}
+    </p>
+    <p class="card-text">
+      <b>Tipo</b>: {{ .Generation.Type.Archetype }}
+    </p>
+    <p class="card-text">
+      <b>País</b>: {{ .Generation.Place.Name }}
+    </p>
+    <p class="card-text">
+      <b>Descripción</b>: {{ .Generation.Description }}
+    </p>
+  </div>
+  <div class="card-footer bg-transparent border-success">
+    <a class="btn btn-danger" href="/schemas/edit/{{ .SchemaID }}" role="button">Editar Generación</a>
+    <a class="btn btn-success" href="/schemas/{{ .SchemaID }}/generations" role="button">Generaciones</a>
+  </div>
+</div>
+</div>
+{{ template "bottom_frame" . }}
+
+{{ end }}

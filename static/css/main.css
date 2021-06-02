@@ -1,0 +1,28 @@
+.main-title-frame {
+    color: blue;
+    text-align: center;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background-color: lightgrey;
+    border-bottom: 2px solid black;
+}
+
+.main-title {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.school-card {
+    margin-top: 1em;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 2em;
+}
+
+.middle-card-button-row {
+    margin-bottom: 1em;
+}
