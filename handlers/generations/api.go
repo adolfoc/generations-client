@@ -11,6 +11,7 @@ import (
 const (
 	ResourceGenerationSchema = "generation-schemas"
 	ResourceGenerations = "generations"
+	ResourceMoments = "historical-moments"
 )
 
 func getSchemaGenerationsURL(generationSchemaID int) string {
@@ -27,6 +28,22 @@ func getGenerationsURL() string {
 
 func getGenerationURL(generationID int) string {
 	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceGenerations, generationID)
+}
+
+func getCalculatedMomentURL(generationSchemaID, generationID int) string {
+	return fmt.Sprintf("%s%s/%d/formation-landscape", handlers.GetAPIHostURL(), ResourceGenerations, generationID)
+}
+
+func getGenerationalLandscapeURL(generationSchemaID, generationID int) string {
+	return fmt.Sprintf("%s%s/%d/generational-landscape", handlers.GetAPIHostURL(), ResourceGenerations, generationID)
+}
+
+func getMomentURL(momentID int) string {
+	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceMoments, momentID)
+}
+
+func getGenerationPositionsURL(generationID int) string {
+	return fmt.Sprintf("%s%s/%d/full-positions", handlers.GetAPIHostURL(), ResourceGenerations, generationID)
 }
 
 func getSchemaGenerations(w http.ResponseWriter, r *http.Request, generationSchemaID int) (*model.Generations, error) {
@@ -69,6 +86,90 @@ func getSchemaGeneration(w http.ResponseWriter, r *http.Request, generationSchem
 	}
 
 	return generation, nil
+}
+
+func getCalculatedLandscape(w http.ResponseWriter, r *http.Request, generationSchemaID, generationID int) (*model.HistoricalMoment, error) {
+	url := getCalculatedMomentURL(generationSchemaID, generationID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var calculatedMoment *model.HistoricalMoment
+	err = json.Unmarshal(body, &calculatedMoment)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return calculatedMoment, nil
+}
+
+func getHistoricalMoment(w http.ResponseWriter, r *http.Request, momentID int) (*model.HistoricalMoment, error) {
+	url := getMomentURL(momentID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var moment *model.HistoricalMoment
+	err = json.Unmarshal(body, &moment)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return moment, nil
+}
+
+func getGenerationalLandscape(w http.ResponseWriter, r *http.Request, generationSchemaID, generationID int) (*model.GenerationalLandscape, error) {
+	url := getGenerationalLandscapeURL(generationSchemaID, generationID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var generationalLandscape *model.GenerationalLandscape
+	err = json.Unmarshal(body, &generationalLandscape)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return generationalLandscape, nil
+}
+
+func getPositions(w http.ResponseWriter, r *http.Request, generationID int) ([]*model.GenerationFullPosition, error) {
+	url := getGenerationPositionsURL(generationID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var positions []*model.GenerationFullPosition
+	err = json.Unmarshal(body, &positions)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return positions, nil
 }
 
 func getUrlGenerationSchemaID(w http.ResponseWriter, r *http.Request) (int, error) {

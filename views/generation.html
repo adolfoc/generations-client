@@ -1,86 +1,188 @@
 {{ define "generation" }}
 {{ template "top_frame" . }}
 
-<div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        Descripción
-      </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <div id="main-page" class="card text-dark border-dark bg-light mb-3 school-card">
-          <div class="card-header">
-            <b>{{.Ct.PageTitle}}</b>
-          </div>
-          <div class="card-body">
-            <p class="card-text">
-              <b>Nombre</b>: {{ .Generation.Name }}
-            </p>
-            <p class="card-text">
-              <b>Tipo</b>: {{ .Generation.Type.Archetype }}
-            </p>
-            <p class="card-text">
-              <b>País</b>: {{ .Generation.Place.Name }}
-            </p>
-            <p class="card-text">
-              <b>Descripción</b>: {{ .Generation.Description }}
-            </p>
-          </div>
-          <div class="card-footer bg-transparent border-success">
-            <a class="btn btn-danger" href="/schemas/{{ .SchemaID }}/generations/{{ .Generation.ID }}/edit" role="button">Editar Generación</a>
-            <a class="btn btn-success" href="/schemas/{{ .SchemaID }}/generations" role="button">Generaciones</a>
-          </div>
-        </div>
+<div style="margin-top: 1em;">
+  <a class="btn btn-primary" data-bs-toggle="collapse" href="#description" role="button" aria-expanded="true" aria-controls="description">
+    Descripción
+  </a>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#landscape" aria-expanded="false" aria-controls="landscape">
+    Paisaje
+  </button>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#positions" aria-expanded="false" aria-controls="positions">
+    Posiciones
+  </button>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#cohorts" aria-expanded="false" aria-controls="cohorts">
+    Coetáneos
+  </button>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multimedia" aria-expanded="false" aria-controls="multimedia">
+    Multimedia
+  </button>
+</div>
+
+<div class="collapse" id="description">
+  <div class="card text-dark border-dark bg-light mb-3 school-card">
+    <div class="card-header">
+      <b>{{.Ct.PageTitle}}</b>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        <b>Nombre</b>: {{ .Generation.Name }}
+      </p>
+      <p class="card-text">
+        <b>Tipo</b>: {{ .Generation.Type.Archetype }}
+      </p>
+      <p class="card-text">
+        <b>País</b>: {{ .Generation.Place.Name }}
+      </p>
+      <p class="card-text">
+        <b>Descripción</b>: {{ .Generation.Description }}
+      </p>
+    </div>
+    <div class="card-footer bg-transparent border-success">
+      <a class="btn btn-danger" href="/schemas/{{ .SchemaID }}/generations/{{ .Generation.ID }}/edit" role="button">Editar Generación</a>
+      <a class="btn btn-success" href="/schemas/{{ .SchemaID }}/generations" role="button">Generaciones</a>
+    </div>
+  </div>
+</div>
+
+<div class="collapse" id="landscape">
+  <div class="card text-dark border-dark bg-light mb-3 school-card">
+    <div class="card-header">
+      <b>Paisaje de formación generacional</b>
+    </div>
+    <div class="card-body">
+      {{ if (eq .HaveMoment true) }}
+      <p class="card-text">
+        <b>Momento de formación</b>: {{ .FormationMoment.Name }}
+      </p>
+      {{ end }}
+      {{ if (eq .HaveCalculatedMoment true) }}
+      <p class="card-text">
+        <b>Momento de formación calculado</b>: {{ .CalculatedFormationMoment.Name }}
+      </p>
+      {{ end }}
+      {{ if (eq .HaveLandscape true) }}
+      <p class="card-text">
+        <b>Descripción</b>: {{ .GenerationalLandscape.Description }}
+      </p>
+      {{ end }}
+      {{ if (eq .HaveLandscape true) }}
+      <h5>Tangibles</h5>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ range .GenerationalLandscape.Tangibles }}
+        <tr>
+          <td>{{ .Name }}</td>
+          <td>{{ .Description }}</td>
+        </tr>
+        {{ end }}
+        </tbody>
+      </table>
+      <h5>Intangibles</h5>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ range .GenerationalLandscape.Intangibles }}
+        <tr>
+          <td>{{ .Name }}</td>
+          <td>{{ .Description }}</td>
+        </tr>
+        {{ end }}
+        </tbody>
+      </table>
+      {{ end }}
+      <div class="card-footer bg-transparent border-success">
       </div>
     </div>
   </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingTwo">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        Paisaje
-      </button>
-    </h2>
-    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+</div>
+
+<div class="collapse" id="positions">
+  <div class="card text-dark border-dark bg-light mb-3 school-card">
+    <div class="card-header">
+      <b>Posiciones generacionales</b>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Etapa de vida</th>
+          <th>Nombre</th>
+          <th>Momento histórico</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ if (eq .HavePositions true) }}
+        {{ range .Positions }}
+        <tr>
+          <td>{{ .Position.LifePhase.Name }}</td>
+          <td>{{ .Position.Name }}</td>
+          <td>{{ .HistoricalMoment.Name }}</td>
+        </tr>
+        {{ end }}
+        {{ end }}
+        </tbody>
+      </table>
+      <div class="card-footer bg-transparent border-success">
       </div>
     </div>
   </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-        Posiciones
-      </button>
-    </h2>
-    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+</div>
+
+<div class="collapse" id="cohorts">
+  <div class="card text-dark border-dark bg-light mb-3 school-card">
+    <div class="card-header">
+      <b>Personas de la generación</b>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nombres</th>
+          <th>Alias</th>
+          <th>Conocido como</th>
+          <th>Años de vida</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      <div class="card-footer bg-transparent border-success">
       </div>
     </div>
   </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingCohorts">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCohorts" aria-expanded="false" aria-controls="collapseThree">
-        Coetáneos
-      </button>
-    </h2>
-    <div id="collapseCohorts" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
+</div>
+
+<div class="collapse" id="multimedia">
+  <div class="card text-dark border-dark bg-light mb-3 school-card">
+    <div class="card-header">
+      <b>Documentos multimedia</b>
     </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingMultimedia">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMultimedia" aria-expanded="false" aria-controls="collapseThree">
-        Multimedia
-      </button>
-    </h2>
-    <div id="collapseMultimedia" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      <div class="card-footer bg-transparent border-success">
       </div>
     </div>
   </div>

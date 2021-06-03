@@ -11,6 +11,7 @@ import (
 const (
 	ResourceGenerationSchema = "generation-schemas"
 	ResourceMoments = "historical-moments"
+	ResourcePositions = "generation-positions"
 )
 
 func getSchemaMomentsURL(generationSchemaID int) string {
@@ -27,6 +28,10 @@ func getMomentsURL() string {
 
 func getGenerationURL(momentID int) string {
 	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceMoments, momentID)
+}
+
+func getGenerationPositionsURL(generationSchemaID, momentID int) string {
+	return fmt.Sprintf("%s%s/by-moment/%d", handlers.GetAPIHostURL(), ResourcePositions, momentID)
 }
 
 func getSchemaMoments(w http.ResponseWriter, r *http.Request, generationSchemaID int) (*model.HistoricalMoments, error) {
@@ -69,6 +74,27 @@ func getSchemaMoment(w http.ResponseWriter, r *http.Request, schemaID, momentID 
 	}
 
 	return moment, nil
+}
+
+func getGenerationPositions(w http.ResponseWriter, r *http.Request, schemaID, momentID int) ([]*model.GenerationPosition, error){
+	url := getGenerationPositionsURL(schemaID, momentID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var positions []*model.GenerationPosition
+	err = json.Unmarshal(body, &positions)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return positions, nil
 }
 
 func getUrlGenerationSchemaID(w http.ResponseWriter, r *http.Request) (int, error) {

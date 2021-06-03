@@ -9,3 +9,8 @@ type GenerationPosition struct {
 	Generation *Generation `json:"generation"`
 }
 
+type GenerationFullPosition struct {
+	GenerationID     int                 `json:"generation_id"`
+	Position         *GenerationPosition `json:"position"`
+	HistoricalMoment *HistoricalMoment   `json:"historical_moment"`
+}

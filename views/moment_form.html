@@ -40,6 +40,13 @@
       </div>
 
       <div class="row mb-3">
+        {{ .Moment.SummaryLabel }}
+        <div class="col-sm-10">
+          {{ .Moment.SummaryInput (index .Ft.FormErrorMessages "Summary") (index .Ft.FormValues "Summary") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
         {{ .Moment.DescriptionLabel }}
         <div class="col-sm-10">
           {{ .Moment.DescriptionInput (index .Ft.FormErrorMessages "Description") (index .Ft.FormValues "Description") }}

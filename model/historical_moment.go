@@ -88,6 +88,13 @@ func (hm *HistoricalMoment) DescriptionInput(message, value string) template.HTM
 	return BuildTextAreaInput("inputDescription", value, message)
 }
 
+func (hm *HistoricalMoment) SummaryLabel() template.HTML {
+	return BuildLabel("inputSummary", "Resumen")
+}
+
+func (hm *HistoricalMoment) SummaryInput(message, value string) template.HTML {
+	return BuildTextAreaInput("inputSummary", value, message)
+}
 
 
 

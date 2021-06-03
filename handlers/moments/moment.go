@@ -8,21 +8,23 @@ import (
 )
 
 type MomentTemplate struct {
-	Ct         handlers.CommonTemplate
-	SchemaID   int
-	Moment     *model.HistoricalMoment
+	Ct            handlers.CommonTemplate
+	SchemaID      int
+	Moment        *model.HistoricalMoment
+	Constellation []*model.GenerationPosition
 }
 
-func MakeMomentTemplate(r *http.Request, pageTitle string, moment *model.HistoricalMoment) (*MomentTemplate, error) {
+func MakeMomentTemplate(r *http.Request, pageTitle string, moment *model.HistoricalMoment, positions []*model.GenerationPosition) (*MomentTemplate, error) {
 	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
 	if err != nil {
 		return nil, err
 	}
 
 	momentTemplate := &MomentTemplate{
-		Ct:         *ct,
-		SchemaID:   moment.SchemaID,
-		Moment:     moment,
+		Ct:            *ct,
+		SchemaID:      moment.SchemaID,
+		Moment:        moment,
+		Constellation: positions,
 	}
 
 	return momentTemplate, nil
@@ -49,13 +51,19 @@ func GetMoment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	generation, err := getSchemaMoment(w, r, schemaID, momentID)
+	moment, err := getSchemaMoment(w, r, schemaID, momentID)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
 		return
 	}
 
-	ct, err := MakeMomentTemplate(r, GetLabel(MomentPageTitleIndex), generation)
+	positions, err := getGenerationPositions(w, r, schemaID, momentID)
+	if handlers.HandleError(w, r, err) {
+		log.FailedReturn()
+		return
+	}
+
+	ct, err := MakeMomentTemplate(r, GetLabel(MomentPageTitleIndex), moment, positions)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
