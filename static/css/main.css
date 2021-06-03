@@ -26,3 +26,63 @@
 .middle-card-button-row {
     margin-bottom: 1em;
 }
+
+.library-control {
+    height: 34px;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    border-top: none;
+    border-bottom: 1px solid #DDD;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
+    background-color: cornflowerblue;
+}
+
+.error-message {
+    border: 1px solid black;
+    background-color: red;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+
+.info-message {
+    border: 1px solid black;
+    background-color: blue;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+
+.session-expired {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    padding: 1em;
+    margin: 1em;
+    border: 2px solid black;
+    background-color: red;
+    color: white;
+}
+
+.general-error {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    padding: 1em;
+    margin: 1em;
+    border: 2px solid black;
+    background-color: red;
+    color: white;
+}
+
+textarea {
+    width: 300px;
+    height: 150px;
+}

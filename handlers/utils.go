@@ -128,6 +128,17 @@ func shouldHandleError(code int) bool {
 	return true
 }
 
+func GetIntFormValue(r *http.Request, id string) int {
+	stringValue := r.FormValue(id)
+	intValue, _ := strconv.Atoi(stringValue)
+	return intValue
+}
+
+func GetStringFormValue(r *http.Request, id string) string {
+	stringValue := r.FormValue(id)
+	return stringValue
+}
+
 func prepareStandardHeader(request *http.Request, clientRequest *http.Request) error {
 	session, err := GetCurrentSessionFromRequest(clientRequest)
 	if err != nil || session == nil {

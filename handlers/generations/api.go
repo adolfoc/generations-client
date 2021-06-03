@@ -21,6 +21,14 @@ func getSchemaGenerationURL(generationSchemaID, generationID int) string {
 	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceGenerations, generationID)
 }
 
+func getGenerationsURL() string {
+	return fmt.Sprintf("%s%s", handlers.GetAPIHostURL(), ResourceGenerations)
+}
+
+func getGenerationURL(generationID int) string {
+	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceGenerations, generationID)
+}
+
 func getSchemaGenerations(w http.ResponseWriter, r *http.Request, generationSchemaID int) (*model.Generations, error) {
 	url := getSchemaGenerationsURL(generationSchemaID)
 	code, body, err := handlers.GetResource(w, r, url)
@@ -71,3 +79,86 @@ func getUrlGenerationID(w http.ResponseWriter, r *http.Request) (int, error) {
 	return handlers.GetUrlIntParam("generation_id", w, r)
 }
 
+func buildGenerationRequest(generation *model.Generation) *model.GenerationRequest {
+	gr := &model.GenerationRequest{
+		ID:                   generation.ID,
+		Name:                 generation.Name,
+		SchemaID:             generation.SchemaID,
+		TypeID:               generation.Type.ID,
+		StartYear:            generation.StartYear,
+		EndYear:              generation.EndYear,
+		PlaceID:              generation.Place.ID,
+		FormationLandscapeID: generation.FormationLandscapeID,
+		Description:          generation.Description,
+	}
+
+	return gr
+}
+
+func newGenerationRequest(schemaID int) *model.GenerationRequest {
+	gr := &model.GenerationRequest{
+		SchemaID:             schemaID,
+	}
+
+	return gr
+}
+
+func makeGenerationRequest(r *http.Request) (*model.GenerationRequest, error) {
+	normalizedID := handlers.GetIntFormValue(r, "inputID")
+	normalizedSchemaID := handlers.GetIntFormValue(r, "inputSchemaID")
+	name := handlers.GetStringFormValue(r, "inputName")
+	normalizedTypeID := handlers.GetIntFormValue(r, "inputTypeID")
+	normalizedStartYear := handlers.GetIntFormValue(r, "inputStartYear")
+	normalizedEndYear := handlers.GetIntFormValue(r, "inputEndYear")
+	normalizedPlaceID := handlers.GetIntFormValue(r, "inputPlaceID")
+	normalizedFormationLandscapeID := handlers.GetIntFormValue(r, "inputLandscapeID")
+	description := handlers.GetStringFormValue(r, "inputDescription")
+
+	gr := &model.GenerationRequest{
+		ID:                   normalizedID,
+		Name:                 name,
+		SchemaID:             normalizedSchemaID,
+		TypeID:               normalizedTypeID,
+		StartYear:            normalizedStartYear,
+		EndYear:              normalizedEndYear,
+		PlaceID:              normalizedPlaceID,
+		FormationLandscapeID: normalizedFormationLandscapeID,
+		Description:          description,
+	}
+
+	return gr, nil
+}
+
+func postGeneration(w http.ResponseWriter, r *http.Request, generationRequest *model.GenerationRequest) (int, []byte, error) {
+	url := getGenerationsURL()
+
+	payload, err := json.Marshal(generationRequest)
+	if err != nil {
+		return 0, nil, err
+	}
+
+	if err != nil {
+		return 0, nil, err
+	}
+
+	code, body, err := handlers.PostResource(w, r, url, payload)
+
+	return code, body, nil
+}
+
+func patchGeneration(w http.ResponseWriter, r *http.Request, auRequest *model.GenerationRequest) (int, []byte, error) {
+	url := getGenerationURL(auRequest.ID)
+
+	payload, err := json.Marshal(auRequest)
+	if err != nil {
+		return 0, nil, err
+	}
+
+	code, body, err := handlers.PatchResource(w, r, url, payload)
+	if err != nil {
+		return 0, nil, err
+	}
+
+
+	return code, body, nil
+}

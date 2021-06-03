@@ -13,3 +13,8 @@ type Place struct {
 	PlaceName     string     `json:"place_name"`
 }
 
+type Places struct {
+	Places      []*Place `json:"places"`
+	RecordCount int      `json:"record_count"`
+}
+

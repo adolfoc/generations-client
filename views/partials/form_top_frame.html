@@ -1,0 +1,19 @@
+{{ define "form_top_frame" }}
+{{template "form_html_head" .}}
+<body>
+
+<div class="main-title-frame">
+  <div class="main-title">{{.Ft.Ct.Title}}</div>
+  <div class="park-name">{{.Ft.Ct.ParkName}}</div>
+</div>
+
+{{template "form_nav_bar" .}}
+
+<div class="container">
+  {{ if (ne .Ft.Ct.ErrorMessage "") }}
+  <div class="error-message">{{.Ft.Ct.ErrorMessage}}</div>
+  {{ end }}
+  {{ if (ne .Ft.Ct.InfoMessage "") }}
+  <div class="info-message">{{.Ft.Ct.InfoMessage}}</div>
+  {{ end }}
+{{ end }}

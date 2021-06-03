@@ -1,0 +1,73 @@
+{{ define "generation_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header border-success">
+    <b>{{.Ft.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <form action="{{.Ft.URL}}" method="post">
+      {{ .Generation.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+
+      <div class="row mb-3">
+        {{ .Generation.NameLabel }}
+        <div class="col-sm-10">
+          {{ .Generation.NameInput (index .Ft.FormErrorMessages "Name") (index .Ft.FormValues "Name") }}
+        </div>
+      </div>
+
+      {{ .Generation.SchemaIDInput (index .Ft.FormErrorMessages "SchemaID") (index .Ft.FormValues "SchemaID") }}
+
+      <div class="row mb-3">
+        {{ .Generation.TypeLabel }}
+        <div class="col-sm-10">
+          {{ .Generation.TypeSelectBox (.GenerationTypes) (index .Ft.FormValues "TypeID") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Generation.StartYearLabel }}
+        <div class="col-sm-10">
+          {{ .Generation.StartYearInput (index .Ft.FormErrorMessages "StartYear") (index .Ft.FormValues "StartYear") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Generation.EndYearLabel }}
+        <div class="col-sm-10">
+          {{ .Generation.EndYearInput (index .Ft.FormErrorMessages "EndYear") (index .Ft.FormValues "EndYear") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Generation.PlaceLabel }}
+        <div class="col-sm-10">
+          {{ .Generation.PlaceSelectBox (.Places) (index .Ft.FormValues "PlaceID") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Generation.DescriptionLabel }}
+        <div class="col-sm-10">
+          {{ .Generation.DescriptionInput (index .Ft.FormErrorMessages "Description") (index .Ft.FormValues "Description") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Generation.LandscapeLabel }}
+        <div class="col-sm-10">
+          {{ .Generation.LandscapeSelectBox (.FormationLandscapes) (index .Ft.FormValues "FormationLandscapeID") }}
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent border-success">
+        <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+        <a href="/schemas/{{ .Generation.SchemaID }}/generations/{{ .Generation.ID }}" class="btn btn-success" role="button ">Volver</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}
