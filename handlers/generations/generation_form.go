@@ -13,6 +13,7 @@ const (
 
 type GenerationForm struct {
 	Ft                  handlers.FormTemplate
+	SchemaID            int
 	Generation          *model.Generation
 	GenerationTypes     []*model.GenerationType
 	Places              []*model.Place
@@ -72,6 +73,7 @@ func MakeGenerationForm(w http.ResponseWriter, r *http.Request, url string, page
 
 	generationTemplate := &GenerationForm{
 		Ft:                  *ft,
+		SchemaID:            generationRequest.SchemaID,
 		Generation:          generation,
 		GenerationTypes:     generationTypes,
 		Places:              places,

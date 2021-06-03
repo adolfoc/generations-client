@@ -62,7 +62,11 @@
 
       <div class="card-footer bg-transparent border-success">
         <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
-        <a href="/schemas/{{ .Generation.SchemaID }}/generations/{{ .Generation.ID }}" class="btn btn-success" role="button ">Volver</a>
+        {{ if ( gt .Generation.ID 0 ) }}
+        <a href="/schemas/{{ .SchemaID }}/generations/{{ .Generation.ID }}" class="btn btn-success" role="button ">Volver</a>
+        {{ else }}
+        <a href="/schemas/{{ .SchemaID }}/generations" class="btn btn-success" role="button ">Volver</a>
+        {{ end }}
       </div>
     </form>
   </div>

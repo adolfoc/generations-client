@@ -1,4 +1,4 @@
-package generations
+package moments
 
 import (
 	"github.com/adolfoc/generations-client/common"
@@ -7,29 +7,29 @@ import (
 	"net/http"
 )
 
-type GenerationTemplate struct {
+type MomentTemplate struct {
 	Ct         handlers.CommonTemplate
 	SchemaID   int
-	Generation *model.Generation
+	Moment     *model.HistoricalMoment
 }
 
-func MakeGenerationTemplate(r *http.Request, pageTitle string, generation *model.Generation) (*GenerationTemplate, error) {
+func MakeMomentTemplate(r *http.Request, pageTitle string, moment *model.HistoricalMoment) (*MomentTemplate, error) {
 	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
 	if err != nil {
 		return nil, err
 	}
 
-	generationTemplate := &GenerationTemplate{
+	momentTemplate := &MomentTemplate{
 		Ct:         *ct,
-		SchemaID:   generation.SchemaID,
-		Generation: generation,
+		SchemaID:   moment.SchemaID,
+		Moment:     moment,
 	}
 
-	return generationTemplate, nil
+	return momentTemplate, nil
 }
 
-func GetGeneration(w http.ResponseWriter, r *http.Request) {
-	log := common.StartLog("handlers-schemas", "GetGeneration")
+func GetMoment(w http.ResponseWriter, r *http.Request) {
+	log := common.StartLog("handlers-moments", "GetMoment")
 
 	if handlers.UserAuthenticated(w, r) == false {
 		log.FailedReturn()
@@ -43,26 +43,26 @@ func GetGeneration(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	generationID, err := getUrlGenerationID(w, r)
+	momentID, err := getUrlMomentID(w, r)
 	if err != nil {
 		log.FailedReturn()
 		return
 	}
 
-	generation, err := getSchemaGeneration(w, r, schemaID, generationID)
+	generation, err := getSchemaMoment(w, r, schemaID, momentID)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
 		return
 	}
 
-	ct, err := MakeGenerationTemplate(r, GetLabel(GenerationPageTitleIndex), generation)
+	ct, err := MakeMomentTemplate(r, GetLabel(MomentPageTitleIndex), generation)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
 		return
 	}
 
-	err = handlers.ExecuteView("generation", ct, w)
+	err = handlers.ExecuteView("moment", ct, w)
 	if err != nil {
 		log.FailedReturn()
 		return
@@ -70,3 +70,4 @@ func GetGeneration(w http.ResponseWriter, r *http.Request) {
 
 	log.NormalReturn()
 }
+

@@ -1,0 +1,63 @@
+{{ define "moment_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header border-success">
+    <b>{{.Ft.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <form action="{{.Ft.URL}}" method="post">
+      {{ .Moment.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+
+      <div class="row mb-3">
+        {{ .Moment.NameLabel }}
+        <div class="col-sm-10">
+          {{ .Moment.NameInput (index .Ft.FormErrorMessages "Name") (index .Ft.FormValues "Name") }}
+        </div>
+      </div>
+
+      {{ .Moment.SchemaIDInput (index .Ft.FormErrorMessages "SchemaID") (index .Ft.FormValues "SchemaID") }}
+
+      <div class="row mb-3">
+        {{ .Moment.TypeLabel }}
+        <div class="col-sm-10">
+          {{ .Moment.TypeSelectBox (.MomentTypes) (index .Ft.FormValues "TypeID") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Moment.StartLabel }}
+        <div class="col-sm-10">
+          {{ .Moment.StartInput (index .Ft.FormErrorMessages "Start") (index .Ft.FormValues "Start") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Moment.EndLabel }}
+        <div class="col-sm-10">
+          {{ .Moment.EndInput (index .Ft.FormErrorMessages "End") (index .Ft.FormValues "End") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Moment.DescriptionLabel }}
+        <div class="col-sm-10">
+          {{ .Moment.DescriptionInput (index .Ft.FormErrorMessages "Description") (index .Ft.FormValues "Description") }}
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent border-success">
+        <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+        {{ if ( gt .Moment.ID 0 ) }}
+        <a href="/schemas/{{ .SchemaID }}/moments/{{ .Moment.ID }}" class="btn btn-success" role="button ">Volver</a>
+        {{ else }}
+        <a href="/schemas/{{ .SchemaID }}/moments" class="btn btn-success" role="button ">Volver</a>
+        {{ end }}
+      </div>
+    </form>
+  </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

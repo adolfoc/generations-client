@@ -147,6 +147,11 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/create", generations.CreateGeneration).Methods("POST")
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments", moments.GetSchemaMoments).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/{moment_id:[0-9]+}", moments.GetMoment).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/{moment_id:[0-9]+}/edit", moments.EditMoment).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/{moment_id:[0-9]+}/update", moments.UpdateMoment).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/new", moments.NewMoment).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/create", moments.CreateMoment).Methods("POST")
 
 	return r
 }

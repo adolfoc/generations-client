@@ -10,7 +10,7 @@ import (
 )
 
 func CreateGeneration(w http.ResponseWriter, r *http.Request) {
-	log := common.StartLog("handlers-authors", "CreateGeneration")
+	log := common.StartLog("handlers-generations", "CreateGeneration")
 
 	generationRequest, err := makeGenerationRequest(r)
 	if err != nil {

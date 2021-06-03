@@ -112,7 +112,7 @@ func EditGenerationRetry(w http.ResponseWriter, r *http.Request, generationReque
 
 	url := fmt.Sprintf("/schemas/%d/generations/%d/update", schemaID, generationRequest.ID)
 	generationForm, err := MakeGenerationForm(w, r, url, GetLabel(GenerationEditPageTitleIndex),
-		GetLabel(GenerationEditSubmitLabelIndex), generation, generationRequest, generationTypes, places, moments, handlers.ResponseErrors{})
+		GetLabel(GenerationEditSubmitLabelIndex), generation, generationRequest, generationTypes, places, moments, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
@@ -205,7 +205,6 @@ func matchGenerationType(typeID int, generationTypes []*model.GenerationType) *m
 
 	return nil
 }
-
 
 func matchPlace(placeID int, places []*model.Place) *model.Place {
 	for _, place := range places {
