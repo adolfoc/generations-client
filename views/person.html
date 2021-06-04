@@ -52,7 +52,7 @@
   <div class="card-footer bg-transparent border-success">
     <a class="btn btn-danger" href="/persons/{{ .Person.ID }}/edit" role="button">Editar Persona</a>
     {{ if (eq .HaveLifeSegments false) }}
-    <a class="btn btn-danger" href="/persons/{{ .Person.ID }}/generate-life-segments" role="button">Generar segmentos de vida</a>
+    <a class="btn btn-danger" href="/persons/{{ .Person.ID }}/add-life-segments" role="button">Generar segmentos de vida</a>
     {{ end }}
     <a class="btn btn-success" href="/persons/index" role="button">Personas</a>
   </div>

@@ -158,6 +158,34 @@ func (p *Person) SummaryInput(message, value string) template.HTML {
 	return BuildTextAreaInput("inputSummary", value, message)
 }
 
+func (p *Person) SchemaIDLabel() template.HTML {
+	return BuildLabel("inputSchemaID", "Esquema generacional")
+}
+
+func (p *Person) SchemaIDSelectBox(schemas []*GenerationSchema, selectedID int) template.HTML {
+	var selectBox []string
+	startSelect := fmt.Sprintf("<select class='form-select library-control' id='inputSchemaID' name='inputSchemaID'>")
+	selectBox = append(selectBox, startSelect)
+
+	blankOption := "<option value='' selected disabled hidden>Elija un esquema generacional...</option>"
+	selectBox = append(selectBox, blankOption)
+
+	for _, schema := range schemas {
+		var option string
+		if schema.ID == selectedID {
+			option = fmt.Sprintf("<option value='%d' selected>%s</option>", schema.ID, schema.Name)
+		} else {
+			option = fmt.Sprintf("<option value='%d'>%s</option>", schema.ID, schema.Name)
+		}
+		selectBox = append(selectBox, option)
+	}
+
+	endSelect := fmt.Sprintf("</select>")
+	selectBox = append(selectBox, endSelect)
+
+	return template.HTML(strings.Join(selectBox, "\n"))
+}
+
 
 
 type Persons struct {

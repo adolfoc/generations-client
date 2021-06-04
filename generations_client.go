@@ -160,9 +160,11 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/persons/index", persons.GetPersons).Methods("GET")
 	r.HandleFunc("/persons/{person_id:[0-9]+}", persons.GetPerson).Methods("GET")
 	r.HandleFunc("/persons/new-person", persons.NewPerson).Methods("GET")
-	//r.HandleFunc("/persons/{person_id:[0-9]+}/create", persons.CreatePerson).Methods("POST")
+	r.HandleFunc("/persons/{person_id:[0-9]+}/create", persons.CreatePerson).Methods("POST")
 	r.HandleFunc("/persons/{person_id:[0-9]+}/edit", persons.EditPerson).Methods("GET")
-	//r.HandleFunc("/persons/{person_id:[0-9]+}/update", persons.UpdatePerson).Methods("POST")
+	r.HandleFunc("/persons/{person_id:[0-9]+}/update", persons.UpdatePerson).Methods("POST")
+	r.HandleFunc("/persons/{person_id:[0-9]+}/add-life-segments", persons.AddSegments).Methods("GET")
+	r.HandleFunc("/persons/{person_id:[0-9]+}/generate-life-segments", persons.GenerateLifeSegments).Methods("POST")
 
 	r.HandleFunc("/persons/{person_id:[0-9]+}/life-segments/{life_segment_id:[0-9]+}/edit", life_segments.EditLifeSegment).Methods("GET")
 	r.HandleFunc("/persons/{person_id:[0-9]+}/life-segments/{life_segment_id:[0-9]+}/update", life_segments.UpdateLifeSegment).Methods("POST")

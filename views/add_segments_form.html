@@ -1,0 +1,28 @@
+{{ define "add_segments_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+    <div class="card-header border-success">
+        <b>{{.Ft.Ct.PageTitle}}</b>
+    </div>
+    <div class="card-body">
+        <form action="{{.Ft.URL}}" method="post">
+
+            <div class="row mb-3">
+                {{ .Person.SchemaIDLabel }}
+                <div class="col-sm-10">
+                    {{ .Person.SchemaIDSelectBox .Schemas (index .Ft.FormValues "SchemaID") }}
+                </div>
+            </div>
+
+            <div class="card-footer bg-transparent border-success">
+                <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+                <a href="/persons/{{ .Person.ID }}" class="btn btn-success" role="button ">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

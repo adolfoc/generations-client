@@ -139,5 +139,3 @@ func patchEvent(w http.ResponseWriter, r *http.Request, eRequest *model.EventReq
 
 	return code, body, nil
 }
-
-

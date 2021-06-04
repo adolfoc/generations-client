@@ -367,6 +367,41 @@ func PatchMultipartResource(w http.ResponseWriter, r *http.Request, url string, 
 	return code, body, nil
 }
 
+func preparePutRequest(r *http.Request, url string, payload []byte) (*http.Request, error) {
+	request, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(payload))
+	if err != nil {
+		return nil, err
+	}
+
+	err = prepareStandardHeader(request, r)
+	if err != nil {
+		return nil, err
+	}
+
+	request.Header.Set("Content-Type", "application/json")
+
+	return request, nil
+}
+
+func PutResource(w http.ResponseWriter, r *http.Request, url string, payload []byte) (int, []byte, error) {
+	log := common.StartLog("handlers-utils", "PutResource")
+	log.Log(fmt.Sprintf("url: %s", url))
+
+	request, err := preparePutRequest(r, url, payload)
+	if err != nil {
+		return 0, nil, err
+	}
+
+	code, body, err := performStandardHttpRequest(w, r, request)
+	if err != nil {
+		log.FailedReturn()
+		return code, nil, err
+	}
+
+	log.NormalReturn()
+	return code, body, nil
+}
+
 // performStandardHttpRequest performs an HTTP request using our standard client and performs a series of checks
 // once the transaction returns: 1. checks for general errors (such as connectivity); 2. checks for authorization
 // error codes; 3. reads the response body and reports any errors; 4. updates our session with the cookies received.
