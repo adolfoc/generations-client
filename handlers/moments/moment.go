@@ -78,4 +78,3 @@ func GetMoment(w http.ResponseWriter, r *http.Request) {
 
 	log.NormalReturn()
 }
-

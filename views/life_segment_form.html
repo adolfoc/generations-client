@@ -1,0 +1,38 @@
+{{ define "life_segment_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header border-success">
+    <b>{{.Ft.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <form action="{{.Ft.URL}}" method="post">
+      {{ .LifeSegment.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+      {{ .LifeSegment.PersonIDInput (index .Ft.FormErrorMessages "PersonID") (index .Ft.FormValues "PersonID") }}
+      {{ .LifeSegment.LifePhaseIDInput (index .Ft.FormErrorMessages "LifePhaseID") (index .Ft.FormValues "LifePhaseID") }}
+
+      <div class="row mb-3">
+        {{ .LifeSegment.SummaryLabel }}
+        <div class="col-sm-10">
+          {{ .LifeSegment.SummaryInput (index .Ft.FormErrorMessages "Summary") (index .Ft.FormValues "Summary") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .LifeSegment.DescriptionLabel }}
+        <div class="col-sm-10">
+          {{ .LifeSegment.DescriptionInput (index .Ft.FormErrorMessages "Description") (index .Ft.FormValues "Description") }}
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent border-success">
+        <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+        <a href="/persons/{{ .LifeSegment.PersonID }}" class="btn btn-success" role="button ">Volver</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

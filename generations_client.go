@@ -4,9 +4,13 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/adolfoc/generations-client/handlers"
 	"github.com/adolfoc/generations-client/handlers/authentication"
+	"github.com/adolfoc/generations-client/handlers/events"
 	"github.com/adolfoc/generations-client/handlers/generations"
+	"github.com/adolfoc/generations-client/handlers/life_segments"
 	"github.com/adolfoc/generations-client/handlers/moments"
+	"github.com/adolfoc/generations-client/handlers/persons"
 	"github.com/adolfoc/generations-client/handlers/schemas"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -134,7 +138,7 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/authenticate", authentication.Authenticate).Methods("POST")
 	r.HandleFunc("/logout", authentication.Logout).Methods("GET")
 	//r.HandleFunc("/session-expired", handlers.SessionExpiredHandler).Methods("GET")
-	//r.HandleFunc("/general-error", handlers.GetErrorPage).Methods("GET")
+	r.HandleFunc("/general-error", handlers.GetErrorPage).Methods("GET")
 
 	r.HandleFunc("/schemas/index", schemas.GetGenerationSchemas).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}", schemas.GetGenerationSchema).Methods("GET")
@@ -152,6 +156,23 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/{moment_id:[0-9]+}/update", moments.UpdateMoment).Methods("POST")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/new", moments.NewMoment).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/create", moments.CreateMoment).Methods("POST")
+
+	r.HandleFunc("/persons/index", persons.GetPersons).Methods("GET")
+	r.HandleFunc("/persons/{person_id:[0-9]+}", persons.GetPerson).Methods("GET")
+	r.HandleFunc("/persons/new-person", persons.NewPerson).Methods("GET")
+	//r.HandleFunc("/persons/{person_id:[0-9]+}/create", persons.CreatePerson).Methods("POST")
+	r.HandleFunc("/persons/{person_id:[0-9]+}/edit", persons.EditPerson).Methods("GET")
+	//r.HandleFunc("/persons/{person_id:[0-9]+}/update", persons.UpdatePerson).Methods("POST")
+
+	r.HandleFunc("/persons/{person_id:[0-9]+}/life-segments/{life_segment_id:[0-9]+}/edit", life_segments.EditLifeSegment).Methods("GET")
+	r.HandleFunc("/persons/{person_id:[0-9]+}/life-segments/{life_segment_id:[0-9]+}/update", life_segments.UpdateLifeSegment).Methods("POST")
+
+	r.HandleFunc("/events/index", events.GetEvents).Methods("GET")
+	r.HandleFunc("/events/{event_id:[0-9]+}", events.GetEvent).Methods("GET")
+	r.HandleFunc("/events/new", events.NewEvent).Methods("GET")
+	r.HandleFunc("/events/create", events.CreateEvent).Methods("POST")
+	r.HandleFunc("/events/{event_id:[0-9]+}/edit", events.EditEvent).Methods("GET")
+	r.HandleFunc("/events/{event_id:[0-9]+}/update", events.UpdateEvent).Methods("POST")
 
 	return r
 }

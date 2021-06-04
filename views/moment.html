@@ -1,10 +1,34 @@
 {{ define "moment" }}
 {{ template "top_frame" . }}
 
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header">
+    <b>{{.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <b>Nombre</b>: {{ .Moment.Name }}
+    </p>
+    <p class="card-text">
+      <b>Tipo</b>: {{ .Moment.Type.Name }}
+    </p>
+    <p class="card-text">
+      <b>Duración</b>: {{ .Moment.Start }}--{{ .Moment.End }}
+    </p>
+    <p class="card-text">
+      <b>Resumen</b>: {{ .Moment.Summary }}
+    </p>
+    <p class="card-text">
+      <b>Descripción</b>: {{ .Moment.Description }}
+    </p>
+  </div>
+  <div class="card-footer bg-transparent border-success">
+    <a class="btn btn-danger" href="/schemas/{{ .SchemaID }}/moments/{{ .Moment.ID }}/edit" role="button">Editar Momento</a>
+    <a class="btn btn-success" href="/schemas/{{ .SchemaID }}/moments" role="button">Momentos</a>
+  </div>
+</div>
+
 <div style="margin-top: 1em;">
-  <a class="btn btn-primary" data-bs-toggle="collapse" href="#description" role="button" aria-expanded="true" aria-controls="description">
-    Descripción
-  </a>
   <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#constellation" aria-expanded="false" aria-controls="constellation">
     Configuración Generacional
   </button>
@@ -14,35 +38,6 @@
   <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#cohorts" aria-expanded="false" aria-controls="cohorts">
     Contemporáneos
   </button>
-</div>
-
-<div class="collapse" id="description">
-  <div class="card text-dark border-dark bg-light mb-3 school-card">
-    <div class="card-header">
-      <b>{{.Ct.PageTitle}}</b>
-    </div>
-    <div class="card-body">
-      <p class="card-text">
-        <b>Nombre</b>: {{ .Moment.Name }}
-      </p>
-      <p class="card-text">
-        <b>Tipo</b>: {{ .Moment.Type.Name }}
-      </p>
-      <p class="card-text">
-        <b>Duración</b>: {{ .Moment.Start }}--{{ .Moment.End }}
-      </p>
-      <p class="card-text">
-        <b>Resumen</b>: {{ .Moment.Summary }}
-      </p>
-      <p class="card-text">
-        <b>Descripción</b>: {{ .Moment.Description }}
-      </p>
-    </div>
-    <div class="card-footer bg-transparent border-success">
-      <a class="btn btn-danger" href="/schemas/{{ .SchemaID }}/moments/{{ .Moment.ID }}/edit" role="button">Editar Momento</a>
-      <a class="btn btn-success" href="/schemas/{{ .SchemaID }}/moments" role="button">Momentos</a>
-    </div>
-  </div>
 </div>
 
 <div class="collapse" id="constellation">

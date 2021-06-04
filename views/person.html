@@ -1,0 +1,63 @@
+{{ define "person" }}
+{{ template "top_frame" . }}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header">
+    <b>{{.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <b>Nombres</b>: {{ .Person.Names }}
+    </p>
+    <p class="card-text">
+      <b>Alias</b>: {{ .Person.AliasHTML }}
+    </p>
+    <p class="card-text">
+      <b>Conocido como</b>: {{ .Person.KnownAsHTML }}
+    </p>
+    <p class="card-text">
+      <b>Sexo</b>: {{ .Person.Sex }}
+    </p>
+    <p class="card-text">
+      <b>Fecha de nacimiento</b>: {{ .Person.BirthDate }}
+    </p>
+    <p class="card-text">
+      <b>Lugar de nacimiento</b>: {{ .Person.BirthPlace.PlaceName }}
+    </p>
+    <p class="card-text">
+      <b>Fecha de fallecimiento</b>: {{ .Person.DeathDate }}
+    </p>
+    <p class="card-text">
+      <b>Lugar de fallecimiento</b>: {{ .Person.DeathPlace.PlaceName }}
+    </p>
+    <p class="card-text">
+      <b>Resumen</b>: {{ .Person.Summary }}
+    </p>
+    {{ if (eq .HaveLifeSegments true) }}
+    <h5>Segmentos</h5>
+    {{ range .Person.LifeSegments }}
+    <div class="life-segment-block">
+      <div class="life-segment-heading">{{ .TitleHTML ($.Person) }}</div>
+      <p class="card-text">
+        <b>Resumen</b>: {{ .Summary }}
+      </p>
+      <p class="card-text">
+        <b>Descripción</b>: {{ .Description }}
+      </p>
+      <a class="btn btn-warning btn-sm" href="/persons/{{ $.Person.ID }}/life-segments/{{.ID}}/edit" role="button">Editar segmento</a>
+    </div>
+    {{ end }}
+    {{ end }}
+  </div>
+  <div class="card-footer bg-transparent border-success">
+    <a class="btn btn-danger" href="/persons/{{ .Person.ID }}/edit" role="button">Editar Persona</a>
+    {{ if (eq .HaveLifeSegments false) }}
+    <a class="btn btn-danger" href="/persons/{{ .Person.ID }}/generate-life-segments" role="button">Generar segmentos de vida</a>
+    {{ end }}
+    <a class="btn btn-success" href="/persons/index" role="button">Personas</a>
+  </div>
+</div>
+
+{{ template "bottom_frame" . }}
+
+{{ end }}

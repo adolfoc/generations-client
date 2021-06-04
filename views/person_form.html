@@ -1,0 +1,78 @@
+{{ define "person_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+    <div class="card-header border-success">
+        <b>{{.Ft.Ct.PageTitle}}</b>
+    </div>
+    <div class="card-body">
+        <form action="{{.Ft.URL}}" method="post">
+            {{ .Person.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+
+            <div class="row mb-3">
+                {{ .Person.NamesLabel }}
+                <div class="col-sm-10">
+                    {{ .Person.NamesInput (index .Ft.FormErrorMessages "Names") (index .Ft.FormValues "Names") }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ .Person.AliasesLabel }}
+                <div class="col-sm-10">
+                    {{ .Person.AliasesInput (index .Ft.FormErrorMessages "Aliases") (index .Ft.FormValues "Aliases") }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ .Person.KnownAsLabel }}
+                <div class="col-sm-10">
+                    {{ .Person.KnownAsInput (index .Ft.FormErrorMessages "KnownAs") (index .Ft.FormValues "KnownAs") }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ .Person.BirthDateLabel }}
+                <div class="col-sm-10">
+                    {{ .Person.BirthDateInput (index .Ft.FormErrorMessages "BirthDate") (index .Ft.FormValues "BirthDate") }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ .Person.BirthPlaceLabel }}
+                <div class="col-sm-10">
+                    {{ .Person.BirthPlaceSelectBox .Places (index .Ft.FormValues "BirthPlaceID") }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ .Person.DeathDateLabel }}
+                <div class="col-sm-10">
+                    {{ .Person.DeathDateInput (index .Ft.FormErrorMessages "DeathDate") (index .Ft.FormValues "DeathDate") }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ .Person.DeathPlaceLabel }}
+                <div class="col-sm-10">
+                    {{ .Person.DeathPlaceSelectBox .Places (index .Ft.FormValues "DeathPlaceID") }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ .Person.SummaryLabel }}
+                <div class="col-sm-10">
+                    {{ .Person.SummaryInput (index .Ft.FormErrorMessages "Summary") (index .Ft.FormValues "Summary") }}
+                </div>
+            </div>
+
+            <div class="card-footer bg-transparent border-success">
+                <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+                <a href="/persons/index" class="btn btn-success" role="button ">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

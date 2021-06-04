@@ -1,0 +1,41 @@
+{{ define "events" }}
+{{template "top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header">
+    <b>{{.Ct.PageTitle}}, Fichas seleccionadas: {{ .Events.RecordCount }}</b>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Tipo de Evento</th>
+        <th>Período</th>
+        <th>Resumen</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      {{range .Events.Events}}
+      <tr>
+        <td><a href="/events/{{.ID}}">{{ .Name }}</a></td>
+        <td>{{ .EventType.Name }}</td>
+        <td>{{ .Start }}</td>
+        <td>{{ .Summary }}</td>
+        <td><a href="/events/{{.ID}}/delete" class="btn btn-danger btn-sm" role="button">Eliminar</a></td>
+      </tr>
+      {{end}}
+      </tbody>
+    </table>
+    {{ .Pagination.HTML .Pagination.CurrentPage }}
+    <div class="card-footer bg-transparent border-success">
+      <a class="btn btn-danger" href="/events/new" role="button">Nuevo evento</a>
+    </div>
+  </div>
+</div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

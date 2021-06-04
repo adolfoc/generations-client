@@ -1,0 +1,41 @@
+{{ define "persons" }}
+{{template "top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header">
+    <b>{{.Ct.PageTitle}}, Fichas seleccionadas: {{ .Persons.RecordCount }}</b>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Nombres</th>
+        <th>Alias</th>
+        <th>Conocido como</th>
+        <th>Años de vida</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      {{range .Persons.Persons}}
+      <tr>
+        <td><a href="/persons/{{.ID}}">{{ .Names }}</a></td>
+        <td>{{ .AliasHTML }}</td>
+        <td>{{ .KnownAsHTML }}</td>
+        <td>{{ .Lifespan }}</td>
+        <td><a href="/persons/{{.ID}}/delete" class="btn btn-danger btn-sm" role="button">Eliminar</a></td>
+      </tr>
+      {{end}}
+      </tbody>
+    </table>
+    {{ .Pagination.HTML .Pagination.CurrentPage }}
+    <div class="card-footer bg-transparent border-success">
+      <a class="btn btn-danger" href="/persons/new-person" role="button">Nueva Persona</a>
+    </div>
+  </div>
+</div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

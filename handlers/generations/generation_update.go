@@ -25,6 +25,7 @@ func UpdateGeneration(w http.ResponseWriter, r *http.Request) {
 	if code == http.StatusUnprocessableEntity {
 		responseErrors, _ := handlers.OnUpdateError(r, body, GetLabel(GenerationUpdateErrorsReceivedIndex))
 		EditGenerationRetry(w, r, generationRequest, *responseErrors)
+		log.NormalReturn()
 		return
 	}
 
@@ -32,9 +33,11 @@ func UpdateGeneration(w http.ResponseWriter, r *http.Request) {
 		handlers.WriteSessionInfoMessage(r, GetLabel(GenerationUpdatedIndex))
 		url := fmt.Sprintf("/schemas/%d/generations/%d", generationRequest.SchemaID, generationRequest.ID)
 		http.Redirect(w, r, url, http.StatusMovedPermanently)
+		log.NormalReturn()
 		return
 	} else {
 		fmt.Fprintf(w, "received %d", code)
+		log.FailedReturn()
 		return
 	}
 }
