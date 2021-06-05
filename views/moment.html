@@ -86,7 +86,14 @@
         </tr>
         </thead>
         <tbody>
-
+        {{ range .Events }}
+        <tr>
+          <td>{{ .Name }}</td>
+          <td>{{ .Start }}--{{ .End }}</td>
+          <td>{{ .EventType.Name }}</td>
+          <td>{{ .Summary }}</td>
+        </tr>
+        {{ end }}
         </tbody>
       </table>
       <div class="card-footer bg-transparent border-success">
@@ -111,7 +118,14 @@
         </tr>
         </thead>
         <tbody>
-
+        {{ range .People }}
+        <tr>
+          <td>{{ .Names }}</td>
+          <td>{{ .AliasHTML }}</td>
+          <td>{{ .KnownAsHTML }}</td>
+          <td>{{ .Lifespan }}</td>
+        </tr>
+        {{ end }}
         </tbody>
       </table>
       <div class="card-footer bg-transparent border-success">

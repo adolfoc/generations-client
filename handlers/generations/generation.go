@@ -19,11 +19,12 @@ type GenerationTemplate struct {
 	GenerationalLandscape     *model.GenerationalLandscape
 	HavePositions             bool
 	Positions                 []*model.GenerationFullPosition
+	Cohort                    []*model.Person
 }
 
 func MakeGenerationTemplate(r *http.Request, pageTitle string, generation *model.Generation,
 	formationMoment *model.HistoricalMoment, calculatedFormationMoment *model.HistoricalMoment,
-	generationalLandscape *model.GenerationalLandscape, positions []*model.GenerationFullPosition) (*GenerationTemplate, error) {
+	generationalLandscape *model.GenerationalLandscape, positions []*model.GenerationFullPosition, persons []*model.Person) (*GenerationTemplate, error) {
 	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
 	if err != nil {
 		return nil, err
@@ -60,6 +61,7 @@ func MakeGenerationTemplate(r *http.Request, pageTitle string, generation *model
 		GenerationalLandscape:     generationalLandscape,
 		HavePositions:             havePositions,
 		Positions:                 positions,
+		Cohort:                    persons,
 	}
 
 	return generationTemplate, nil
@@ -104,6 +106,12 @@ func GetGeneration(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	persons, err := getCohort(w, r, generation)
+	if handlers.HandleError(w, r, err) {
+		log.FailedReturn()
+		return
+	}
+
 	var formationMoment *model.HistoricalMoment
 	if generationalLandscape != nil && generationalLandscape.ID > 0 && generationalLandscape.FormationMomentID > 0 {
 		formationMoment, err = getHistoricalMoment(w, r, generationalLandscape.FormationMomentID)
@@ -120,7 +128,7 @@ func GetGeneration(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ct, err := MakeGenerationTemplate(r, GetLabel(GenerationPageTitleIndex), generation,
-		formationMoment, calculatedMoment, generationalLandscape, positions)
+		formationMoment, calculatedMoment, generationalLandscape, positions, persons)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

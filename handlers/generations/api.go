@@ -10,8 +10,9 @@ import (
 
 const (
 	ResourceGenerationSchema = "generation-schemas"
-	ResourceGenerations = "generations"
-	ResourceMoments = "historical-moments"
+	ResourceGenerations      = "generations"
+	ResourceMoments          = "historical-moments"
+	ResourcePersons          = "persons"
 )
 
 func getSchemaGenerationsURL(generationSchemaID int) string {
@@ -44,6 +45,10 @@ func getMomentURL(momentID int) string {
 
 func getGenerationPositionsURL(generationID int) string {
 	return fmt.Sprintf("%s%s/%d/full-positions", handlers.GetAPIHostURL(), ResourceGenerations, generationID)
+}
+
+func getCohortURL(startYear, endYear int) string {
+	return fmt.Sprintf("%s%s/born-between/%d/%d", handlers.GetAPIHostURL(), ResourcePersons, startYear, endYear)
 }
 
 func getSchemaGenerations(w http.ResponseWriter, r *http.Request, generationSchemaID int) (*model.Generations, error) {
@@ -170,6 +175,27 @@ func getPositions(w http.ResponseWriter, r *http.Request, generationID int) ([]*
 	}
 
 	return positions, nil
+}
+
+func getCohort(w http.ResponseWriter, r *http.Request, generation *model.Generation) ([]*model.Person, error) {
+	url := getCohortURL(generation.StartYear, generation.EndYear)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var persons *model.Persons
+	err = json.Unmarshal(body, &persons)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return persons.Persons, nil
 }
 
 func getUrlGenerationSchemaID(w http.ResponseWriter, r *http.Request) (int, error) {

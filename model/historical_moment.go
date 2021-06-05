@@ -3,6 +3,7 @@ package model
 import (
 	"fmt"
 	"html/template"
+	"strconv"
 	"strings"
 )
 
@@ -17,6 +18,24 @@ type HistoricalMoment struct {
 	Description     string                `json:"description"`
 	DescriptionHTML string                `json:"description_html"`
 	Positions       []*GenerationPosition `json:"positions"`
+}
+
+func (hm *HistoricalMoment) extractYear(date string) int {
+	parts := strings.Split(date, "-")
+	if len(parts) > 0 {
+		year, _ := strconv.Atoi(parts[0])
+		return year
+	}
+
+	return 0
+}
+
+func (hm *HistoricalMoment) StartYear() int {
+	return extractYear(hm.Start)
+}
+
+func (hm *HistoricalMoment) EndYear() int {
+	return extractYear(hm.End)
 }
 
 func (hm *HistoricalMoment) Span() string {

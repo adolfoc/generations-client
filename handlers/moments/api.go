@@ -10,8 +10,10 @@ import (
 
 const (
 	ResourceGenerationSchema = "generation-schemas"
-	ResourceMoments = "historical-moments"
-	ResourcePositions = "generation-positions"
+	ResourceMoments          = "historical-moments"
+	ResourcePositions        = "generation-positions"
+	ResourceEvents           = "events"
+	ResourcePersons          = "persons"
 )
 
 func getSchemaMomentsURL(generationSchemaID int) string {
@@ -32,6 +34,14 @@ func getGenerationURL(momentID int) string {
 
 func getGenerationPositionsURL(generationSchemaID, momentID int) string {
 	return fmt.Sprintf("%s%s/by-moment/%d", handlers.GetAPIHostURL(), ResourcePositions, momentID)
+}
+
+func getMomentsBetweenURL(startYear, endYear int) string {
+	return fmt.Sprintf("%s%s/between/%d/%d", handlers.GetAPIHostURL(), ResourceEvents, startYear, endYear)
+}
+
+func getPeopleAliveBetweenURL(startYear, endYear int) string {
+	return fmt.Sprintf("%s%s/alive-during/%d/%d", handlers.GetAPIHostURL(), ResourcePersons, startYear, endYear)
 }
 
 func getSchemaMoments(w http.ResponseWriter, r *http.Request, generationSchemaID int) (*model.HistoricalMoments, error) {
@@ -95,6 +105,48 @@ func getGenerationPositions(w http.ResponseWriter, r *http.Request, schemaID, mo
 	}
 
 	return positions, nil
+}
+
+func getEvents(w http.ResponseWriter, r *http.Request, moment *model.HistoricalMoment) ([]*model.Event, error){
+	url := getMomentsBetweenURL(moment.StartYear(), moment.EndYear())
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var events *model.Events
+	err = json.Unmarshal(body, &events)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return events.Events, nil
+}
+
+func getContemporaries(w http.ResponseWriter, r *http.Request, moment *model.HistoricalMoment) ([]*model.Person, error){
+	url := getPeopleAliveBetweenURL(moment.StartYear(), moment.EndYear())
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var persons *model.Persons
+	err = json.Unmarshal(body, &persons)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return persons.Persons, nil
 }
 
 func getUrlGenerationSchemaID(w http.ResponseWriter, r *http.Request) (int, error) {
