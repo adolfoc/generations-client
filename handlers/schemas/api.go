@@ -32,6 +32,10 @@ func getGenerationSchemaMomentTypesURL(generationSchemaID int) string {
 	return fmt.Sprintf("%s%s/%d/moment-types", handlers.GetAPIHostURL(), ResourceGenerationSchema, generationSchemaID)
 }
 
+func getGenerateTemplateURL(generationSchemaID int) string {
+	return fmt.Sprintf("%s%s/%d/generate-template", handlers.GetAPIHostURL(), ResourceGenerationSchema, generationSchemaID)
+}
+
 func getGenerationSchemas(w http.ResponseWriter, r *http.Request) (*model.GenerationSchemas, error) {
 	url := getGenerationSchemasURL()
 	code, body, err := handlers.GetResource(w, r, url)
@@ -139,4 +143,25 @@ func getMomentTypes(w http.ResponseWriter, r *http.Request, gsID int) ([]*model.
 	}
 
 	return momentTypes, nil
+}
+
+func generateTemplate(w http.ResponseWriter, r *http.Request, gsID int) (int, *model.GenerationSchema, error){
+	url := getGenerateTemplateURL(gsID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return 0, nil, err
+	}
+
+	if code != 200 {
+		return 0, nil, fmt.Errorf("received %d", code)
+	}
+
+	var schema *model.GenerationSchema
+	err = json.Unmarshal(body, &schema)
+	if err != nil {
+		return 0, nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return code, schema, nil
 }

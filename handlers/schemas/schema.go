@@ -8,11 +8,12 @@ import (
 )
 
 type GenerationSchemaTemplate struct {
-	Ct               handlers.CommonTemplate
-	GenerationSchema *model.GenerationSchema
-	LifePhases       []*model.LifePhase
-	GenerationTypes  []*model.GenerationType
-	MomentTypes      []*model.MomentType
+	Ct                      handlers.CommonTemplate
+	GenerationSchema        *model.GenerationSchema
+	LifePhases              []*model.LifePhase
+	GenerationTypes         []*model.GenerationType
+	MomentTypes             []*model.MomentType
+	AllowTemplateGeneration bool
 }
 
 func MakeGenerationSchemaTemplate(r *http.Request, pageTitle string, gs *model.GenerationSchema,
@@ -22,12 +23,17 @@ func MakeGenerationSchemaTemplate(r *http.Request, pageTitle string, gs *model.G
 		return nil, err
 	}
 
+	allowTemplateGeneration := true
+	if len(lifePhases) > 0 && len(generationTypes) > 0 && len(momentTypes) > 0 {
+		allowTemplateGeneration = false
+	}
 	schemaTemplate := &GenerationSchemaTemplate{
-		Ct:               *ct,
-		GenerationSchema: gs,
-		LifePhases:       lifePhases,
-		GenerationTypes:  generationTypes,
-		MomentTypes:      momentTypes,
+		Ct:                      *ct,
+		GenerationSchema:        gs,
+		LifePhases:              lifePhases,
+		GenerationTypes:         generationTypes,
+		MomentTypes:             momentTypes,
+		AllowTemplateGeneration: allowTemplateGeneration,
 	}
 
 	return schemaTemplate, nil

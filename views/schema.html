@@ -82,10 +82,12 @@
     </div>
     <div class="card-footer bg-transparent border-success">
         <a class="btn btn-danger" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Editar Esquema</a>
+        {{ if (eq .AllowTemplateGeneration true) }}
+        <a class="btn btn-danger" href="/schemas/{{ .GenerationSchema.ID }}/generate-template" role="button">Generar plantilla</a>
+        {{ end }}
         <a class="btn btn-success" href="/schemas/{{ .GenerationSchema.ID }}/generations" role="button">Generaciones</a>
         <a class="btn btn-success" href="/schemas/{{ .GenerationSchema.ID }}/moments" role="button">Momentos</a>
     </div>
-</div>
 </div>
 {{ template "bottom_frame" . }}
 

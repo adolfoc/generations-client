@@ -139,11 +139,12 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/request-authentication", authentication.PerformAuthentication).Methods("POST")
 	r.HandleFunc("/authenticate", authentication.Authenticate).Methods("POST")
 	r.HandleFunc("/logout", authentication.Logout).Methods("GET")
-	//r.HandleFunc("/session-expired", handlers.SessionExpiredHandler).Methods("GET")
+	r.HandleFunc("/session-expired", handlers.SessionExpiredHandler).Methods("GET")
 	r.HandleFunc("/general-error", handlers.GetErrorPage).Methods("GET")
 
 	r.HandleFunc("/schemas/index", schemas.GetGenerationSchemas).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}", schemas.GetGenerationSchema).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generate-template", schemas.GenerateTemplate).Methods("GET")
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations", generations.GetSchemaGenerations).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/{generation_id:[0-9]+}", generations.GetGeneration).Methods("GET")

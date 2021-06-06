@@ -1,0 +1,19 @@
+{{ define "session_expired" }}
+{{template "html_head" .}}
+<body>
+<div class="main-title-frame">
+    <div class="main-title">{{.Ct.Title}}</div>
+    <div class="park-name">{{.Ct.ParkName}}</div>
+</div>
+<body>
+<div class="container">
+    <div class="session-expired">
+        Su sesión ha expirado. ¡Que descanse en paz!
+    </div>
+    <div style="text-align: center;">
+        <a class="btn btn-primary" href="/" role="button">Inicio</a>
+    </div>
+</div>
+{{template "footer" .}}
+</body>
+{{ end }}
