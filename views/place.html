@@ -1,0 +1,37 @@
+{{ define "place" }}
+{{ template "top_frame" . }}
+
+<div class="card-header">
+  <b>{{.Ct.PageTitle}}</b>
+</div>
+<div class="card-body">
+  <p class="card-text">
+    <b>Nombre</b>: {{ .Place.Name }}
+  </p>
+  <p class="card-text">
+    <b>Tipo</b>: {{ .Place.PlaceType.Name }}
+  </p>
+  <p class="card-text">
+    <b>Pertenece a</b>: {{ .Place.ParentPlace.Name }}
+  </p>
+  <p class="card-text">
+    <b>Fecha de inicio</b>: {{ .Place.Start }}
+  </p>
+  <p class="card-text">
+    <b>Fecha de término</b>: {{ .Place.End }}
+  </p>
+  <p class="card-text">
+    <b>Resumen</b>: {{ .Place.Summary }}
+  </p>
+  <p class="card-text">
+    <b>Descripción</b>: {{ .Place.Description }}
+  </p>
+</div>
+<div class="card-footer bg-transparent border-success">
+  <a class="btn btn-danger" href="/places/{{ .Place.ID }}/edit" role="button">Editar Lugar</a>
+  <a class="btn btn-success" href="/places/index" role="button">Lugares</a>
+</div>
+
+{{ template "bottom_frame" . }}
+
+{{ end }}

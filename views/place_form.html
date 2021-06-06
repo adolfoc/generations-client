@@ -1,0 +1,71 @@
+{{ define "place_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header border-success">
+    <b>{{.Ft.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <form action="{{.Ft.URL}}" method="post">
+      {{ .Place.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+
+      <div class="row mb-3">
+        {{ .Place.NameLabel }}
+        <div class="col-sm-10">
+          {{ .Place.NameInput (index .Ft.FormErrorMessages "Name") (index .Ft.FormValues "Name") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Place.PlaceTypeIDLabel }}
+        <div class="col-sm-10">
+          {{ .Place.PlaceTypeIDSelectBox .PlaceTypes (index .Ft.FormValues "PlaceTypeID") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Place.ParentPlaceIDLabel }}
+        <div class="col-sm-10">
+          {{ .Place.ParentPlaceIDSelectBox .Parents (index .Ft.FormValues "ParentPlaceID") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Place.StartLabel }}
+        <div class="col-sm-10">
+          {{ .Place.StartInput (index .Ft.FormErrorMessages "Start") (index .Ft.FormValues "Start") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Place.EndLabel }}
+        <div class="col-sm-10">
+          {{ .Place.EndInput (index .Ft.FormErrorMessages "End") (index .Ft.FormValues "End") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Place.SummaryLabel }}
+        <div class="col-sm-10">
+          {{ .Place.SummaryInput (index .Ft.FormErrorMessages "Summary") (index .Ft.FormValues "Summary") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Place.DescriptionLabel }}
+        <div class="col-sm-10">
+          {{ .Place.DescriptionInput (index .Ft.FormErrorMessages "Description") (index .Ft.FormValues "Description") }}
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent border-success">
+        <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+        <a href="/places/{{ .Place.ID }}" class="btn btn-success" role="button ">Volver</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

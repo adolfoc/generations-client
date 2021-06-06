@@ -1,0 +1,41 @@
+{{ define "places" }}
+{{template "top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header">
+    <b>{{.Ct.PageTitle}}, Fichas seleccionadas: {{ .Places.RecordCount }}</b>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Tipo de Lugar</th>
+        <th>Pertenece a</th>
+        <th>Resumen</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      {{range .Places.Places}}
+      <tr>
+        <td><a href="/places/{{.ID}}">{{ .Name }}</a></td>
+        <td>{{ .PlaceType.Name }}</td>
+        <td>{{ .ParentPlace.Name }}</td>
+        <td>{{ .Summary }}</td>
+        <td><a href="/events/{{.ID}}/delete" class="btn btn-danger btn-sm" role="button">Eliminar</a></td>
+      </tr>
+      {{end}}
+      </tbody>
+    </table>
+    {{ .Pagination.HTML .Pagination.CurrentPage }}
+    <div class="card-footer bg-transparent border-success">
+      <a class="btn btn-danger" href="/places/new" role="button">Nuevo lugar</a>
+    </div>
+  </div>
+</div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

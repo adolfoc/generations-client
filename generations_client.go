@@ -11,6 +11,8 @@ import (
 	"github.com/adolfoc/generations-client/handlers/life_segments"
 	"github.com/adolfoc/generations-client/handlers/moments"
 	"github.com/adolfoc/generations-client/handlers/persons"
+	"github.com/adolfoc/generations-client/handlers/place_types"
+	"github.com/adolfoc/generations-client/handlers/places"
 	"github.com/adolfoc/generations-client/handlers/schemas"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -175,6 +177,20 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/events/create", events.CreateEvent).Methods("POST")
 	r.HandleFunc("/events/{event_id:[0-9]+}/edit", events.EditEvent).Methods("GET")
 	r.HandleFunc("/events/{event_id:[0-9]+}/update", events.UpdateEvent).Methods("POST")
+
+	r.HandleFunc("/places/index", places.GetPlaces).Methods("GET")
+	r.HandleFunc("/places/{place_id:[0-9]+}", places.GetPlace).Methods("GET")
+	r.HandleFunc("/places/new", places.NewPlace).Methods("GET")
+	r.HandleFunc("/places/create", places.CreatePlace).Methods("POST")
+	r.HandleFunc("/places/{place_id:[0-9]+}/edit", places.EditPlace).Methods("GET")
+	r.HandleFunc("/places/{place_id:[0-9]+}/update", places.UpdatePlace).Methods("POST")
+
+	r.HandleFunc("/place-types/index", place_types.GetPlaceTypes).Methods("GET")
+	r.HandleFunc("/place-types/{place_type_id:[0-9]+}", place_types.GetPlaceType).Methods("GET")
+	//r.HandleFunc("/places/new", place_types.NewPlaceType).Methods("GET")
+	//r.HandleFunc("/places/create", place_types.CreatePlaceType).Methods("POST")
+	r.HandleFunc("/place-types/{place_type_id:[0-9]+}/edit", place_types.EditPlaceType).Methods("GET")
+	r.HandleFunc("/place-types/{place_type_id:[0-9]+}/update", place_types.UpdatePlaceType).Methods("POST")
 
 	return r
 }

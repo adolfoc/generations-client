@@ -1,4 +1,4 @@
-package persons
+package places
 
 import (
 	"fmt"
@@ -8,36 +8,36 @@ import (
 	"net/http"
 )
 
-type PersonsTemplate struct {
+type PlacesTemplate struct {
 	Ct               handlers.CommonTemplate
-	Persons          *model.Persons
+	Places           *model.Places
 	Pagination       *handlers.Pagination
 }
 
 func getPaginationBaseURL() string {
-	stem := fmt.Sprintf("/persons/index")
+	stem := fmt.Sprintf("/places/index")
 	return stem + "?page=%d"
 }
 
-func MakePersonsTemplate(r *http.Request, pageTitle string, page int, persons *model.Persons) (*PersonsTemplate, error) {
+func MakePlacesTemplate(r *http.Request, pageTitle string, page int, places *model.Places) (*PlacesTemplate, error) {
 	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
 	if err != nil {
 		return nil, err
 	}
 
-	pagination := handlers.MakePagination(persons.RecordCount, getPaginationBaseURL(), page)
+	pagination := handlers.MakePagination(places.RecordCount, getPaginationBaseURL(), page)
 
-	personsTemplate := &PersonsTemplate{
+	placesTemplate := &PlacesTemplate{
 		Ct:         *ct,
-		Persons:    persons,
+		Places:     places,
 		Pagination: pagination,
 	}
 
-	return personsTemplate, nil
+	return placesTemplate, nil
 }
 
-func GetPersons(w http.ResponseWriter, r *http.Request) {
-	log := common.StartLog("handlers-persons", "GetPersons")
+func GetPlaces(w http.ResponseWriter, r *http.Request) {
+	log := common.StartLog("handlers-places", "GetPlaces")
 
 	if handlers.UserAuthenticated(w, r) == false {
 		log.FailedReturn()
@@ -46,20 +46,20 @@ func GetPersons(w http.ResponseWriter, r *http.Request) {
 	}
 
 	page := handlers.GetURLPageParameter(r)
-	persons, err := getPersons(w, r, page, "names")
+	places, err := getPlaces(w, r, page, "names")
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
 		return
 	}
 
-	ct, err := MakePersonsTemplate(r, GetLabel(PersonIndexPageTitleIndex), page, persons)
+	ct, err := MakePlacesTemplate(r, GetLabel(PlaceIndexPageTitleIndex), page, places)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
 		return
 	}
 
-	err = handlers.ExecuteView("persons", ct, w)
+	err = handlers.ExecuteView("places", ct, w)
 	if err != nil {
 		log.FailedReturn()
 		return
@@ -67,3 +67,5 @@ func GetPersons(w http.ResponseWriter, r *http.Request) {
 
 	log.NormalReturn()
 }
+
+
