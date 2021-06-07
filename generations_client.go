@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/adolfoc/generations-client/handlers"
 	"github.com/adolfoc/generations-client/handlers/authentication"
+	"github.com/adolfoc/generations-client/handlers/event_types"
 	"github.com/adolfoc/generations-client/handlers/events"
 	"github.com/adolfoc/generations-client/handlers/generations"
 	"github.com/adolfoc/generations-client/handlers/life_segments"
@@ -180,6 +181,13 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/events/create", events.CreateEvent).Methods("POST")
 	r.HandleFunc("/events/{event_id:[0-9]+}/edit", events.EditEvent).Methods("GET")
 	r.HandleFunc("/events/{event_id:[0-9]+}/update", events.UpdateEvent).Methods("POST")
+
+	r.HandleFunc("/event-types/index", event_types.GetEventTypes).Methods("GET")
+	r.HandleFunc("/event-types/{event_type_id:[0-9]+}", event_types.GetEventType).Methods("GET")
+	//r.HandleFunc("/event-types/new", event_types.NewEventType).Methods("GET")
+	//r.HandleFunc("/event-types/create", event_types.CreateEventType).Methods("POST")
+	r.HandleFunc("/event-types/{event_type_id:[0-9]+}/edit", event_types.EditEventType).Methods("GET")
+	r.HandleFunc("/event-types/{event_type_id:[0-9]+}/update", event_types.UpdateEventType).Methods("POST")
 
 	r.HandleFunc("/places/index", places.GetPlaces).Methods("GET")
 	r.HandleFunc("/places/{place_id:[0-9]+}", places.GetPlace).Methods("GET")

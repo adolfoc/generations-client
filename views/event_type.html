@@ -1,0 +1,25 @@
+{{ define "event_type" }}
+{{ template "top_frame" . }}
+
+<div class="card-header">
+  <b>{{.Ct.PageTitle}}</b>
+</div>
+<div class="card-body">
+  <p class="card-text">
+    <b>Nombre</b>: {{ .EventType.Name }}
+  </p>
+  <p class="card-text">
+    <b>Es natural</b>: {{ .EventType.IsNatural }}
+  </p>
+  <p class="card-text">
+    <b>Descripción</b>: {{ .EventType.Description }}
+  </p>
+</div>
+<div class="card-footer bg-transparent border-success">
+  <a class="btn btn-danger" href="/event-types/{{ .EventType.ID }}/edit" role="button">Editar Tipo de evento</a>
+  <a class="btn btn-success" href="/event-types/index" role="button">Tipos de evento</a>
+</div>
+
+{{ template "bottom_frame" . }}
+
+{{ end }}

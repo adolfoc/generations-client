@@ -1,0 +1,39 @@
+{{ define "event_types" }}
+{{template "top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header">
+    <b>{{.Ct.PageTitle}}, Fichas seleccionadas: {{ .EventTypes.RecordCount }}</b>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Es natural</th>
+        <th>Descripción</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      {{range .EventTypes.EventTypes}}
+      <tr>
+        <td><a href="/event-types/{{.ID}}">{{ .Name }}</a></td>
+        <td>{{ .IsNatural }}</td>
+        <td>{{ .Description }}</td>
+        <td><a href="/events/{{.ID}}/delete" class="btn btn-danger btn-sm" role="button">Eliminar</a></td>
+      </tr>
+      {{end}}
+      </tbody>
+    </table>
+    {{ .Pagination.HTML .Pagination.CurrentPage }}
+    <div class="card-footer bg-transparent border-success">
+      <a class="btn btn-danger" href="/event-types/new" role="button">Nuevo tipo de evento</a>
+    </div>
+  </div>
+</div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

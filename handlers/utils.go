@@ -139,6 +139,15 @@ func GetStringFormValue(r *http.Request, id string) string {
 	return stringValue
 }
 
+func GetBoolFormValue(r *http.Request, id string) bool {
+	stringValue := r.FormValue(id)
+	if stringValue == "t" || stringValue == "true" {
+		return true
+	}
+
+	return false
+}
+
 func prepareStandardHeader(request *http.Request, clientRequest *http.Request) error {
 	session, err := GetCurrentSessionFromRequest(clientRequest)
 	if err != nil || session == nil {
