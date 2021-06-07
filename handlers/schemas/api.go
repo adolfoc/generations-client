@@ -16,6 +16,10 @@ func getGenerationSchemasURL() string {
 	return fmt.Sprintf("%s%s", handlers.GetAPIHostURL(), ResourceGenerationSchema)
 }
 
+func getSimpleSchemaURL() string {
+	return fmt.Sprintf("%s%s", handlers.GetAPIHostURL(), ResourceGenerationSchema)
+}
+
 func getGenerationSchemaURL(generationSchemaID int) string {
 	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceGenerationSchema, generationSchemaID)
 }
@@ -165,3 +169,76 @@ func generateTemplate(w http.ResponseWriter, r *http.Request, gsID int) (int, *m
 
 	return code, schema, nil
 }
+
+func buildSchemaRequest(schema *model.GenerationSchema) *model.GenerationSchemaRequest {
+	schemaRequest := &model.GenerationSchemaRequest{
+		ID:                    schema.ID,
+		Name:                  schema.Name,
+		Description:           schema.Description,
+		StartYear:             schema.StartYear,
+		EndYear:               schema.EndYear,
+		MinimumGenerationSpan: schema.MinimumGenerationSpan,
+		MaximumGenerationSpan: schema.MaximumGenerationSpan,
+		PlaceID:               schema.Place.ID,
+	}
+
+	return schemaRequest
+}
+
+
+func makeSchemaRequest(r *http.Request) (*model.GenerationSchemaRequest, error) {
+	normalizedID := handlers.GetIntFormValue(r, "inputID")
+	name := handlers.GetStringFormValue(r, "inputName")
+	description := handlers.GetStringFormValue(r, "inputDescription")
+	startYear := handlers.GetIntFormValue(r, "inputStartYear")
+	endYear := handlers.GetIntFormValue(r, "inputEndYear")
+	minimumGenerationSpan := handlers.GetIntFormValue(r, "inputMinimumGenerationSpan")
+	maximumGenerationSpan := handlers.GetIntFormValue(r, "inputMaximumGenerationSpan")
+	placeID := handlers.GetIntFormValue(r, "inputPlaceID")
+
+	sr := &model.GenerationSchemaRequest{
+		ID:                    normalizedID,
+		Name:                  name,
+		Description:           description,
+		StartYear:             startYear,
+		EndYear:               endYear,
+		MinimumGenerationSpan: minimumGenerationSpan,
+		MaximumGenerationSpan: maximumGenerationSpan,
+		PlaceID:               placeID,
+	}
+
+	return sr, nil
+}
+func postPerson(w http.ResponseWriter, r *http.Request, sRequest *model.GenerationSchemaRequest) (int, []byte, error) {
+	url := getSimpleSchemaURL()
+
+	payload, err := json.Marshal(sRequest)
+	if err != nil {
+		return 0, nil, err
+	}
+
+	if err != nil {
+		return 0, nil, err
+	}
+
+	code, body, err := handlers.PostResource(w, r, url, payload)
+
+	return code, body, nil
+}
+
+func patchSchema(w http.ResponseWriter, r *http.Request, sRequest *model.GenerationSchemaRequest) (int, []byte, error) {
+	url := getGenerationSchemaURL(sRequest.ID)
+
+	payload, err := json.Marshal(sRequest)
+	if err != nil {
+		return 0, nil, err
+	}
+
+	code, body, err := handlers.PatchResource(w, r, url, payload)
+	if err != nil {
+		return 0, nil, err
+	}
+
+	return code, body, nil
+}
+

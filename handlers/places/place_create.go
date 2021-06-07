@@ -46,4 +46,3 @@ func CreatePlace(w http.ResponseWriter, r *http.Request) {
 
 	log.NormalReturn()
 }
-

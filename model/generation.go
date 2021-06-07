@@ -19,8 +19,8 @@ type Generation struct {
 	FormationLandscapeID int             `json:"formation_landscape_id"`
 }
 
-func (g *Generation) Span() string {
-	return fmt.Sprintf("%d--%d", g.StartYear, g.EndYear)
+func (g *Generation) Span() template.HTML {
+	return template.HTML(fmt.Sprintf("%d&mdash;%d", g.StartYear, g.EndYear))
 }
 
 func (g *Generation) IDInput(message, value string) template.HTML {

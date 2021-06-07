@@ -10,78 +10,20 @@
             <b>Nombre</b>: {{ .GenerationSchema.Name }}
         </p>
         <p class="card-text">
-            <b>Rango</b>: {{ .GenerationSchema.Span }}
+            <b>Rango generacional</b>: {{ .GenerationSchema.GenerationalSpan }}
+        </p>
+        <p class="card-text">
+            <b>Duración</b>: {{ .GenerationSchema.DurationSpan }}
+        </p>
+        <p class="card-text">
+            <b>Lugar</b>: {{ .GenerationSchema.Place.Name }}
         </p>
         <p class="card-text">
             <b>Descripción</b>: {{ .GenerationSchema.Description }}
         </p>
-        <h6 class="card-subtitle mb-2 text-muted">Tipos de generación</h6>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Arquetipo</th>
-                <th>Descripción</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{ range .GenerationTypes }}
-            <tr>
-                <td><a href="/generation-types/{{ .ID }}">{{ .Archetype }}</a></td>
-                <td>{{ .Description }}</td>
-            </tr>
-            {{ end }}
-            </tbody>
-        </table>
-        <div class="middle-card-button-row">
-            <a class="btn btn-danger btn-sm" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Nuevo tipo de generación</a>
-        </div>
-
-        <h6 class="card-subtitle mb-2 text-muted">Etapas de vida</h6>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Etapa</th>
-                <th>Años</th>
-                <th>Rol</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{ range .LifePhases }}
-            <tr>
-                <td><a href="/life-phases/{{ .ID }}">{{ .Name }}</a></td>
-                <td>{{ .StartYear }}--{{ .EndYear }}</td>
-                <td>{{ .Role }}</td>
-            </tr>
-            {{ end }}
-            </tbody>
-        </table>
-        <div class="middle-card-button-row">
-            <a class="btn btn-danger btn-sm" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Nuevo tipo de etapa de vida</a>
-        </div>
-
-        <h6 class="card-subtitle mb-2 text-muted">Tipos de momento</h6>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{range .MomentTypes}}
-            <tr>
-                <td><a href="/moment-types/{{ .ID }}">{{ .Name }}</a></td>
-                <td>{{ .Description }}</td>
-            </tr>
-            {{ end }}
-            </tbody>
-        </table>
-        <div class="middle-card-button-row">
-            <a class="btn btn-danger btn-sm" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Nuevo tipo de momento</a>
-        </div>
     </div>
     <div class="card-footer bg-transparent border-success">
-        <a class="btn btn-danger" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Editar Esquema</a>
+        <a class="btn btn-danger" href="/schemas/{{ .GenerationSchema.ID }}/edit" role="button">Editar Esquema</a>
         {{ if (eq .AllowTemplateGeneration true) }}
         <a class="btn btn-danger" href="/schemas/{{ .GenerationSchema.ID }}/generate-template" role="button">Generar plantilla</a>
         {{ end }}
@@ -89,6 +31,108 @@
         <a class="btn btn-success" href="/schemas/{{ .GenerationSchema.ID }}/moments" role="button">Momentos</a>
     </div>
 </div>
+
+<div style="margin-top: 1em;">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#generation-types" aria-expanded="false" aria-controls="generation-types">
+        Tipos de generación
+    </button>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#life-phases" aria-expanded="false" aria-controls="life-phases">
+        Etapas de vida
+    </button>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#moment-types" aria-expanded="false" aria-controls="moment-types">
+        Tipos de momento
+    </button>
+</div>
+
+<div class="collapse" id="generation-types">
+    <div class="card text-dark border-dark bg-light mb-3 school-card">
+        <div class="card-header">
+            <b>Tipos de generación</b>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Arquetipo</th>
+                    <th>Descripción</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{ range .GenerationTypes }}
+                <tr>
+                    <td><a href="/generation-types/{{ .ID }}">{{ .Archetype }}</a></td>
+                    <td>{{ .Description }}</td>
+                </tr>
+                {{ end }}
+                </tbody>
+            </table>
+            <div class="middle-card-button-row">
+                <a class="btn btn-danger btn-sm" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Nuevo tipo de generación</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="collapse" id="life-phases">
+    <div class="card text-dark border-dark bg-light mb-3 school-card">
+        <div class="card-header">
+            <b>Etapas de vida</b>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Etapa</th>
+                    <th style="text-align: right;">Años</th>
+                    <th>Rol</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{ range .LifePhases }}
+                <tr>
+                    <td><a href="/life-phases/{{ .ID }}">{{ .Name }}</a></td>
+                    <td style="text-align: right;">{{ .Span }}</td>
+                    <td>{{ .Role }}</td>
+                </tr>
+                {{ end }}
+                </tbody>
+            </table>
+            <div class="middle-card-button-row">
+                <a class="btn btn-danger btn-sm" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Nueva etapa de vida</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="collapse" id="moment-types">
+    <div class="card text-dark border-dark bg-light mb-3 school-card">
+        <div class="card-header">
+            <b>Tipos de momento</b>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{range .MomentTypes}}
+                <tr>
+                    <td><a href="/moment-types/{{ .ID }}">{{ .Name }}</a></td>
+                    <td>{{ .Description }}</td>
+                </tr>
+                {{ end }}
+                </tbody>
+            </table>
+            <div class="middle-card-button-row">
+                <a class="btn btn-danger btn-sm" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Nuevo tipo de momento</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{ template "bottom_frame" . }}
 
 {{ end }}

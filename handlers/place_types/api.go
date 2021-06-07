@@ -94,6 +94,12 @@ func makePlaceTypeRequest(r *http.Request) (*model.PlaceTypeRequest, error) {
 	return ptr, nil
 }
 
+func newPlaceTypeRequest() *model.PlaceTypeRequest {
+	ptRequest := &model.PlaceTypeRequest{}
+
+	return ptRequest
+}
+
 func postPlaceType(w http.ResponseWriter, r *http.Request, placeTypeRequest *model.PlaceTypeRequest) (int, []byte, error) {
 	url := getSimplePlaceTypesURL()
 

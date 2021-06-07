@@ -144,6 +144,8 @@ func makeRouter() *mux.Router {
 
 	r.HandleFunc("/schemas/index", schemas.GetGenerationSchemas).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}", schemas.GetGenerationSchema).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/edit", schemas.EditSchema).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/update", schemas.UpdateSchema).Methods("POST")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generate-template", schemas.GenerateTemplate).Methods("GET")
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations", generations.GetSchemaGenerations).Methods("GET")
@@ -188,8 +190,8 @@ func makeRouter() *mux.Router {
 
 	r.HandleFunc("/place-types/index", place_types.GetPlaceTypes).Methods("GET")
 	r.HandleFunc("/place-types/{place_type_id:[0-9]+}", place_types.GetPlaceType).Methods("GET")
-	//r.HandleFunc("/places/new", place_types.NewPlaceType).Methods("GET")
-	//r.HandleFunc("/places/create", place_types.CreatePlaceType).Methods("POST")
+	r.HandleFunc("/place-types/new", place_types.NewPlaceType).Methods("GET")
+	r.HandleFunc("/place-types/create", place_types.CreatePlaceType).Methods("POST")
 	r.HandleFunc("/place-types/{place_type_id:[0-9]+}/edit", place_types.EditPlaceType).Methods("GET")
 	r.HandleFunc("/place-types/{place_type_id:[0-9]+}/update", place_types.UpdatePlaceType).Methods("POST")
 

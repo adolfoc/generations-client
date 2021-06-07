@@ -1,0 +1,71 @@
+{{ define "schema_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header border-success">
+    <b>{{.Ft.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <form action="{{.Ft.URL}}" method="post">
+      {{ .Schema.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+
+      <div class="row mb-3">
+        {{ .Schema.NameLabel }}
+        <div class="col-sm-10">
+          {{ .Schema.NameInput (index .Ft.FormErrorMessages "Name") (index .Ft.FormValues "Name") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Schema.DescriptionLabel }}
+        <div class="col-sm-10">
+          {{ .Schema.DescriptionInput (index .Ft.FormErrorMessages "Description") (index .Ft.FormValues "Description") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Schema.StartYearLabel }}
+        <div class="col-sm-10">
+          {{ .Schema.StartYearInput (index .Ft.FormErrorMessages "StartYear") (index .Ft.FormValues "StartYear") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Schema.EndYearLabel }}
+        <div class="col-sm-10">
+          {{ .Schema.EndYearInput (index .Ft.FormErrorMessages "EndYear") (index .Ft.FormValues "EndYear") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Schema.MinimumGenerationSpanLabel }}
+        <div class="col-sm-10">
+          {{ .Schema.MinimumGenerationSpanInput (index .Ft.FormErrorMessages "MinimumGenerationSpan") (index .Ft.FormValues "MinimumGenerationSpan") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Schema.MaximumGenerationSpanLabel }}
+        <div class="col-sm-10">
+          {{ .Schema.MaximumGenerationSpanInput (index .Ft.FormErrorMessages "MaximumGenerationSpan") (index .Ft.FormValues "MaximumGenerationSpan") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .Schema.PlaceLabel }}
+        <div class="col-sm-10">
+          {{ .Schema.PlaceSelectBox .Places (index .Ft.FormValues "PlaceID") }}
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent border-success">
+        <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+        <a href="/schemas/{{ .Schema.ID }}" class="btn btn-success" role="button ">Volver</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

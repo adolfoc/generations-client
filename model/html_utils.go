@@ -23,6 +23,19 @@ func BuildTextInput(inputID string, value interface{}, errorMessage string) temp
 	}
 }
 
+func BuildIntegerInput(inputID string, value interface{}, errorMessage string) template.HTML {
+	if len(errorMessage) == 0 {
+		return template.HTML(fmt.Sprintf("<input style='background-color: cornflowerblue;' type=%q class=%q id=%q name=%q value=%d>\n",
+			"text", "form-control library-control", inputID, inputID, value))
+	} else {
+		inputCtl := fmt.Sprintf("<input type=%q class=%q id=%q name=%q value=%d>\n",
+			"text", "form-control library-control is-invalid", inputID, inputID, value)
+		msgDivID := fmt.Sprintf("%s%s", inputID, "Feedback")
+		msgDiv := fmt.Sprintf("<div id=%q class=%q>%s</div>\n", msgDivID, "invalid-feedback", errorMessage)
+		return template.HTML(fmt.Sprintf("%s%s", inputCtl, msgDiv))
+	}
+}
+
 func BuildDateInput(inputID string, value interface{}, errorMessage string) template.HTML {
 	if len(errorMessage) == 0 {
 		return template.HTML(fmt.Sprintf("<input style='background-color: cornflowerblue;' type=%q class=%q id=%q name=%q value=%q placeholder=%q>\n",

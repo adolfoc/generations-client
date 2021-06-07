@@ -76,4 +76,3 @@ func EditPlaceTypeRetry(w http.ResponseWriter, r *http.Request, placeTypeRequest
 	log.NormalReturn()
 	return
 }
-

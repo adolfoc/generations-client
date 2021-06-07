@@ -25,7 +25,11 @@
 
       <div class="card-footer bg-transparent border-success">
         <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+        {{ if (eq .PlaceType.ID 0) }}
+        <a href="/place-types/index" class="btn btn-success" role="button">Volver</a>
+        {{ else }}
         <a href="/place-types/{{ .PlaceType.ID }}" class="btn btn-success" role="button ">Volver</a>
+        {{ end }}
       </div>
     </form>
   </div>

@@ -38,8 +38,8 @@ func (hm *HistoricalMoment) EndYear() int {
 	return extractYear(hm.End)
 }
 
-func (hm *HistoricalMoment) Span() string {
-	return fmt.Sprintf("%s--%s", hm.Start, hm.End)
+func (hm *HistoricalMoment) Span() template.HTML {
+	return template.HTML(fmt.Sprintf("%s&mdash;%s", hm.Start, hm.End))
 }
 
 func (hm *HistoricalMoment) IDInput(message, value string) template.HTML {

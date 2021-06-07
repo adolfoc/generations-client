@@ -15,16 +15,16 @@ const (
 	GenerationSchemaUpdateErrorsReceivedIndex = 9
 	GenerationSchemaTemplateGeneratedIndex    = 10
 
-	GenerationSchemaIndexPageTitleES       = "Todos los esquemas"
-	GenerationSchemaPageTitleES            = "Esquema Generacional"
-	GenerationSchemaNewPageTitleES         = "Nuevo Esquema Generacional"
-	GenerationSchemaNewSubmitLabelES       = "Crear Esquema Generacional"
-	GenerationSchemaEditPageTitleES        = "Editar Esquema Generacional"
-	GenerationSchemaEditSubmitLabelES      = "Actualizar Esquema Generacional"
-	GenerationSchemaCreatedES              = "El esquema generacional fue creado satisfactoriamente"
-	GenerationSchemaUpdatedES              = "El esquema generacional fue actualizado satisfactoriamente"
-	GenerationSchemaCreateErrorsReceivedES = "Por favor corrija los errores para poder crear el esquema generacional"
-	GenerationSchemaUpdateErrorsReceivedES = "Por favor corrija los errores para poder actualizar el esquema generacional"
+	GenerationSchemaIndexPageTitleES       = "Todos los estudios"
+	GenerationSchemaPageTitleES            = "Estudio Generacional"
+	GenerationSchemaNewPageTitleES         = "Nuevo Estudio Generacional"
+	GenerationSchemaNewSubmitLabelES       = "Crear Estudio Generacional"
+	GenerationSchemaEditPageTitleES        = "Editar Estudio Generacional"
+	GenerationSchemaEditSubmitLabelES      = "Actualizar Estudio Generacional"
+	GenerationSchemaCreatedES              = "El estudio generacional fue creado satisfactoriamente"
+	GenerationSchemaUpdatedES              = "El estudio generacional fue actualizado satisfactoriamente"
+	GenerationSchemaCreateErrorsReceivedES = "Por favor corrija los errores para poder crear el estudio generacional"
+	GenerationSchemaUpdateErrorsReceivedES = "Por favor corrija los errores para poder actualizar el estudio generacional"
 	GenerationSchemaTemplateGeneratedES    = "La plantilla fue generada exitosamente"
 )
 

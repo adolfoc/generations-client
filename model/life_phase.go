@@ -1,5 +1,10 @@
 package model
 
+import (
+	"fmt"
+	"html/template"
+)
+
 type LifePhase struct {
 	ID        int    `json:"id"`
 	SchemaID  int    `json:"schema_id"`
@@ -9,3 +14,6 @@ type LifePhase struct {
 	Role      string `json:"role"`
 }
 
+func (lp *LifePhase) Span() template.HTML {
+	return template.HTML(fmt.Sprintf("%d&mdash;%d", lp.StartYear, lp.EndYear))
+}
