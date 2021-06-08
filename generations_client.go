@@ -8,6 +8,7 @@ import (
 	"github.com/adolfoc/generations-client/handlers/authentication"
 	"github.com/adolfoc/generations-client/handlers/event_types"
 	"github.com/adolfoc/generations-client/handlers/events"
+	"github.com/adolfoc/generations-client/handlers/generation_types"
 	"github.com/adolfoc/generations-client/handlers/generational_landscape"
 	"github.com/adolfoc/generations-client/handlers/generations"
 	"github.com/adolfoc/generations-client/handlers/life_segments"
@@ -156,6 +157,11 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/{generation_id:[0-9]+}/update", generations.UpdateGeneration).Methods("POST")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/new", generations.NewGeneration).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/create", generations.CreateGeneration).Methods("POST")
+
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generation-types/{generation_type_id:[0-9]+}/edit", generation_types.EditGenerationType).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generation-types/{generation_type_id:[0-9]+}/update", generation_types.UpdateGenerationType).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generation-types/new", generation_types.NewGenerationType).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generation-types/create", generation_types.CreateGenerationType).Methods("POST")
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generation_id:[0-9]+}/new", generational_landscape.NewGenerationalLandscape).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/create", generational_landscape.CreateGenerationalLandscape).Methods("POST")

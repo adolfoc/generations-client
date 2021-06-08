@@ -60,19 +60,21 @@
                         <tr>
                             <th>Arquetipo</th>
                             <th>Descripción</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         {{ range .GenerationTypes }}
                         <tr>
-                            <td><a href="/generation-types/{{ .ID }}">{{ .Archetype }}</a></td>
+                            <td>{{ .Archetype }}</td>
                             <td>{{ .Description }}</td>
+                            <td><a class="btn btn-danger btn-sm" href="/schemas/{{ .SchemaID }}/generation-types/{{ .ID }}/edit" role="button">Editar</a></td>
                         </tr>
                         {{ end }}
                         </tbody>
                     </table>
                     <div class="middle-card-button-row">
-                        <a class="btn btn-danger" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Nuevo tipo de generación</a>
+                        <a class="btn btn-danger" href="/schemas/{{ .GenerationSchema.ID }}/generation-types/new" role="button">Nuevo tipo de generación</a>
                     </div>
                 </div>
             </div>

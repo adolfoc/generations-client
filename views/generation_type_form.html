@@ -1,0 +1,41 @@
+{{ define "generation_type_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header border-success">
+    <b>{{.Ft.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <form action="{{.Ft.URL}}" method="post">
+      {{ .GenerationType.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+      {{ .GenerationType.SchemaIDInput (index .Ft.FormErrorMessages "SchemaID") (index .Ft.FormValues "SchemaID") }}
+
+      <div class="row mb-3">
+        {{ .GenerationType.ArchetypeLabel }}
+        <div class="col-sm-10">
+          {{ .GenerationType.ArchetypeInput (index .Ft.FormErrorMessages "Archetype") (index .Ft.FormValues "Archetype") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .GenerationType.DescriptionLabel }}
+        <div class="col-sm-10">
+          {{ .GenerationType.DescriptionInput (index .Ft.FormErrorMessages "Description") (index .Ft.FormValues "Description") }}
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent border-success">
+        <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+        {{ if (eq .GenerationType.ID 0) }}
+        <a href="/schemas/{{ .SchemaID }}" class="btn btn-success" role="button">Volver</a>
+        {{ else }}
+        <a href="/schemas/{{ .GenerationType.SchemaID }}" class="btn btn-success" role="button ">Volver</a>
+        {{ end }}
+      </div>
+    </form>
+  </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}
