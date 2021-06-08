@@ -117,5 +117,3 @@ func patchGenerationType(w http.ResponseWriter, r *http.Request, generationTypeR
 
 	return code, body, nil
 }
-
-
