@@ -1,134 +1,139 @@
 {{ define "moment" }}
 {{ template "top_frame" . }}
 
-<div class="card text-dark border-dark bg-light mb-3 school-card">
-  <div class="card-header">
-    <b>{{.Ct.PageTitle}}</b>
-  </div>
-  <div class="card-body">
-    <p class="card-text">
-      <b>Nombre</b>: {{ .Moment.Name }}
-    </p>
-    <p class="card-text">
-      <b>Tipo</b>: {{ .Moment.Type.Name }}
-    </p>
-    <p class="card-text">
-      <b>Duración</b>: {{ .Moment.Start }}--{{ .Moment.End }}
-    </p>
-    <p class="card-text">
-      <b>Resumen</b>: {{ .Moment.Summary }}
-    </p>
-    <p class="card-text">
-      <b>Descripción</b>: {{ .Moment.Description }}
-    </p>
-  </div>
-  <div class="card-footer bg-transparent border-success">
-    <a class="btn btn-danger" href="/schemas/{{ .SchemaID }}/moments/{{ .Moment.ID }}/edit" role="button">Editar Momento</a>
-    <a class="btn btn-success" href="/schemas/{{ .SchemaID }}/moments" role="button">Momentos</a>
-  </div>
-</div>
-
-<div style="margin-top: 1em;">
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#constellation" aria-expanded="false" aria-controls="constellation">
-    Configuración Generacional
-  </button>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#events" aria-expanded="false" aria-controls="events">
-    Eventos
-  </button>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#cohorts" aria-expanded="false" aria-controls="cohorts">
-    Contemporáneos
-  </button>
-</div>
-
-<div class="collapse" id="constellation">
-  <div class="card text-dark border-dark bg-light mb-3 school-card">
-    <div class="card-header">
-      <b>Configuración Generacional</b>
+<div class="row">
+  <div class="col-2">
+    <div class="bd-toc mt-4 mb-5 my-md-0 mb-lg-5">
+      <nav id="TableOfContents" class="section-toc">
+        <ul>
+          <li class="bg-primary section-marker"><a href="#description">Descripción</a></li>
+          <li class="bg-primary section-marker"><a href="#constellation">Configuración Generacional</a></li>
+          <li class="bg-primary section-marker"><a href="#positions">Posiciones</a></li>
+          <li class="bg-primary section-marker"><a href="#events">Eventos</a></li>
+          <li class="bg-primary section-marker"><a href="#cohorts">Contemporáneos</a></li>
+        </ul>
+      </nav>
     </div>
-    <div class="card-body">
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Generación</th>
-          <th>Etapa de vida</th>
-          <th>Situación</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{ range .Constellation }}
-        <tr>
-          <td>{{ .Generation.Name }}</td>
-          <td>{{ .LifePhase.Name }}</td>
-          <td>{{ .Name }}</td>
-        </tr>
-        {{ end }}
-        </tbody>
-      </table>
-      <div class="card-footer bg-transparent border-success">
+  </div>
+
+  <div class="col-10">
+    <div id="description">
+      <div class="card text-dark border-dark bg-light mb-3 school-card">
+        <div class="card-header">
+          <b>{{.Ct.PageTitle}}</b>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            <b>Nombre</b>: {{ .Moment.Name }}
+          </p>
+          <p class="card-text">
+            <b>Tipo</b>: {{ .Moment.Type.Name }}
+          </p>
+          <p class="card-text">
+            <b>Duración</b>: {{ .Moment.Start }}--{{ .Moment.End }}
+          </p>
+          <p class="card-text">
+            <b>Resumen</b>: {{ .Moment.Summary }}
+          </p>
+          <p class="card-text">
+            <b>Descripción</b>: {{ .Moment.Description }}
+          </p>
+        </div>
+        <div class="card-footer bg-transparent border-success">
+          <a class="btn btn-danger" href="/schemas/{{ .SchemaID }}/moments/{{ .Moment.ID }}/edit" role="button">Editar Momento</a>
+          <a class="btn btn-success" href="/schemas/{{ .SchemaID }}/moments" role="button">Momentos</a>
+        </div>
+    </div>
+  </div>
+    <div id="constellation">
+      <div class="card text-dark border-dark bg-light mb-3 school-card">
+        <div class="card-header">
+          <b>Configuración Generacional</b>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Generación</th>
+              <th>Etapa de vida</th>
+              <th>Situación</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{ range .Constellation }}
+            <tr>
+              <td>{{ .Generation.Name }}</td>
+              <td>{{ .LifePhase.Name }}</td>
+              <td>{{ .Name }}</td>
+            </tr>
+            {{ end }}
+            </tbody>
+          </table>
+          <div class="card-footer bg-transparent border-success">
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="collapse" id="events">
-  <div class="card text-dark border-dark bg-light mb-3 school-card">
-    <div class="card-header">
-      <b>Eventos</b>
-    </div>
-    <div class="card-body">
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Período</th>
-          <th>Tipo</th>
-          <th>Resumen</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{ range .Events }}
-        <tr>
-          <td>{{ .Name }}</td>
-          <td>{{ .Start }}--{{ .End }}</td>
-          <td>{{ .EventType.Name }}</td>
-          <td>{{ .Summary }}</td>
-        </tr>
-        {{ end }}
-        </tbody>
-      </table>
-      <div class="card-footer bg-transparent border-success">
+    <div id="events">
+      <div class="card text-dark border-dark bg-light mb-3 school-card">
+        <div class="card-header">
+          <b>Eventos</b>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Período</th>
+              <th>Tipo</th>
+              <th>Resumen</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{ range .Events }}
+            <tr>
+              <td>{{ .Name }}</td>
+              <td>{{ .Start }}--{{ .End }}</td>
+              <td>{{ .EventType.Name }}</td>
+              <td>{{ .Summary }}</td>
+            </tr>
+            {{ end }}
+            </tbody>
+          </table>
+          <div class="card-footer bg-transparent border-success">
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="collapse" id="cohorts">
-  <div class="card text-dark border-dark bg-light mb-3 school-card">
-    <div class="card-header">
-      <b>Contemporáneos</b>
-    </div>
-    <div class="card-body">
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Nombres</th>
-          <th>Alias</th>
-          <th>Conocido como</th>
-          <th>Años de vida</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{ range .People }}
-        <tr>
-          <td>{{ .Names }}</td>
-          <td>{{ .AliasHTML }}</td>
-          <td>{{ .KnownAsHTML }}</td>
-          <td>{{ .Lifespan }}</td>
-        </tr>
-        {{ end }}
-        </tbody>
-      </table>
-      <div class="card-footer bg-transparent border-success">
+    <div id="cohorts">
+      <div class="card text-dark border-dark bg-light mb-3 school-card">
+        <div class="card-header">
+          <b>Contemporáneos</b>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Nombres</th>
+              <th>Alias</th>
+              <th>Conocido como</th>
+              <th>Años de vida</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{ range .People }}
+            <tr>
+              <td>{{ .Names }}</td>
+              <td>{{ .AliasHTML }}</td>
+              <td>{{ .KnownAsHTML }}</td>
+              <td>{{ .Lifespan }}</td>
+            </tr>
+            {{ end }}
+            </tbody>
+          </table>
+          <div class="card-footer bg-transparent border-success">
+          </div>
+        </div>
       </div>
     </div>
   </div>

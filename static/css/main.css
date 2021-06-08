@@ -98,3 +98,22 @@ textarea {
     text-align: center;
     color: white;
 }
+
+/* Sidebar */
+.section-toc {
+    margin-top: 1em;
+}
+.section-marker {
+    border: 1px solid blue;
+    color: white;
+    /*background-color: cornflowerblue;*/
+    font-weight: bold;
+    margin-bottom: 0.3em;
+    padding: 4px;
+}
+
+.section-marker a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}

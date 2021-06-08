@@ -24,7 +24,8 @@ func (gs *GenerationSchema) GenerationalSpan() template.HTML {
 }
 
 func (gs *GenerationSchema) DurationSpan() template.HTML {
-	return template.HTML(fmt.Sprintf("%d&mdash;%d", gs.StartYear, gs.EndYear))
+	extension := gs.EndYear - gs.StartYear
+	return template.HTML(fmt.Sprintf("%d&mdash;%d (%d años)", gs.StartYear, gs.EndYear, extension))
 }
 
 func (gs *GenerationSchema) IDInput(message, value string) template.HTML {

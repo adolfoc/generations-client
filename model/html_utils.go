@@ -6,7 +6,7 @@ import (
 )
 
 func BuildHiddenIDInput(inputID string, value interface{}) template.HTML {
-	return template.HTML(fmt.Sprintf("<input type=%q class=%q id=%q name=%q value=%q>\n",
+	return template.HTML(fmt.Sprintf("<input type=%q class=%q id=%q name=%q value=%d>\n",
 		"text", "form-control d-none", inputID, inputID, value))
 }
 
