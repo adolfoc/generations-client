@@ -1,4 +1,4 @@
-{{ define "place" }}
+{{ define "group" }}
 {{ template "top_frame" . }}
 
 <div class="card text-dark border-dark bg-light mb-3 school-card">
@@ -7,30 +7,30 @@
   </div>
   <div class="card-body">
     <p class="card-text">
-      <b>Nombre</b>: {{ .Place.Name }}
+      <b>Nombre</b>: {{ .Group.Name }}
     </p>
     <p class="card-text">
-      <b>Tipo</b>: {{ .Place.PlaceType.Name }}
+      <b>Tipo</b>: {{ .Group.GroupType.Name }}
     </p>
     <p class="card-text">
-      <b>Pertenece a</b>: {{ .Place.ParentPlace.Name }}
+      <b>Pertenece a</b>: {{ .Group.ParentGroupID }}
     </p>
     <p class="card-text">
-      <b>Fecha de inicio</b>: {{ .Place.Start }}
+      <b>Fecha de inicio</b>: {{ .Group.Start }}
     </p>
     <p class="card-text">
-      <b>Fecha de término</b>: {{ .Place.End }}
+      <b>Fecha de término</b>: {{ .Group.End }}
     </p>
     <p class="card-text">
-      <b>Resumen</b>: {{ .Place.Summary }}
+      <b>Resumen</b>: {{ .Group.Summary }}
     </p>
     <p class="card-text">
-      <b>Descripción</b>: {{ .Place.Description }}
+      <b>Descripción</b>: {{ .Group.Description }}
     </p>
   </div>
   <div class="card-footer bg-transparent border-success">
-    <a class="btn btn-danger" href="/places/{{ .Place.ID }}/edit" role="button">Editar Lugar</a>
-    <a class="btn btn-success" href="/places/index" role="button">Lugares</a>
+    <a class="btn btn-danger" href="/groups/{{ .Group.ID }}/edit" role="button">Editar Grupo</a>
+    <a class="btn btn-success" href="/groups/index" role="button">Grupos</a>
   </div>
 </div>
 

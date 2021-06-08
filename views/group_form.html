@@ -1,4 +1,4 @@
-{{ define "event_form" }}
+{{ define "group_form" }}
 {{template "form_top_frame" .}}
 
 <div class="card text-dark border-dark bg-light mb-3 school-card">
@@ -7,53 +7,53 @@
   </div>
   <div class="card-body">
     <form action="{{.Ft.URL}}" method="post">
-      {{ .Event.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+      {{ .Group.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
 
       <div class="row mb-3">
-        {{ .Event.NameLabel }}
+        {{ .Group.NameLabel }}
         <div class="col-sm-10">
-          {{ .Event.NameInput (index .Ft.FormErrorMessages "Name") (index .Ft.FormValues "Name") }}
+          {{ .Group.NameInput (index .Ft.FormErrorMessages "Name") (index .Ft.FormValues "Name") }}
         </div>
       </div>
 
       <div class="row mb-3">
-        {{ .Event.TypeIDLabel }}
+        {{ .Group.TypeIDLabel }}
         <div class="col-sm-10">
-          {{ .Event.TypeIDSelectBox .EventTypes (index .Ft.FormValues "TypeID") }}
+          {{ .Group.TypeIDSelectBox .GroupTypes (index .Ft.FormValues "GroupTypeID") }}
         </div>
       </div>
 
       <div class="row mb-3">
-        {{ .Event.StartLabel }}
+        {{ .Group.StartLabel }}
         <div class="col-sm-10">
-          {{ .Event.StartInput (index .Ft.FormErrorMessages "Start") (index .Ft.FormValues "Start") }}
+          {{ .Group.StartInput (index .Ft.FormErrorMessages "Start") (index .Ft.FormValues "Start") }}
         </div>
       </div>
 
       <div class="row mb-3">
-        {{ .Event.EndLabel }}
+        {{ .Group.EndLabel }}
         <div class="col-sm-10">
-          {{ .Event.EndInput (index .Ft.FormErrorMessages "End") (index .Ft.FormValues "End") }}
+          {{ .Group.EndInput (index .Ft.FormErrorMessages "End") (index .Ft.FormValues "End") }}
         </div>
       </div>
 
       <div class="row mb-3">
-        {{ .Event.SummaryLabel }}
+        {{ .Group.SummaryLabel }}
         <div class="col-sm-10">
-          {{ .Event.SummaryInput (index .Ft.FormErrorMessages "Summary") (index .Ft.FormValues "Summary") }}
+          {{ .Group.SummaryInput (index .Ft.FormErrorMessages "Summary") (index .Ft.FormValues "Summary") }}
         </div>
       </div>
 
       <div class="row mb-3">
-        {{ .Event.DescriptionLabel }}
+        {{ .Group.DescriptionLabel }}
         <div class="col-sm-10">
-          {{ .Event.DescriptionInput (index .Ft.FormErrorMessages "Description") (index .Ft.FormValues "Description") }}
+          {{ .Group.DescriptionInput (index .Ft.FormErrorMessages "Description") (index .Ft.FormValues "Description") }}
         </div>
       </div>
 
       <div class="card-footer bg-transparent border-success">
         <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
-        <a href="/events/{{ .Event.ID }}" class="btn btn-success" role="button ">Volver</a>
+        <a href="/groups/{{ .Group.ID }}" class="btn btn-success" role="button ">Volver</a>
       </div>
     </form>
   </div>

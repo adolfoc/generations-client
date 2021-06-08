@@ -1,20 +1,22 @@
 {{ define "place_type" }}
 {{ template "top_frame" . }}
 
-<div class="card-header">
-  <b>{{.Ct.PageTitle}}</b>
-</div>
-<div class="card-body">
-  <p class="card-text">
-    <b>Nombre</b>: {{ .PlaceType.Name }}
-  </p>
-  <p class="card-text">
-    <b>Descripción</b>: {{ .PlaceType.Description }}
-  </p>
-</div>
-<div class="card-footer bg-transparent border-success">
-  <a class="btn btn-danger" href="/place-types/{{ .PlaceType.ID }}/edit" role="button">Editar Tipo de lugar</a>
-  <a class="btn btn-success" href="/place-types/index" role="button">Tipos de lugares</a>
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header bg-primary text-white">
+    <b>{{.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <b>Nombre</b>: {{ .PlaceType.Name }}
+    </p>
+    <p class="card-text">
+      <b>Descripción</b>: {{ .PlaceType.Description }}
+    </p>
+  </div>
+  <div class="card-footer bg-transparent border-success">
+    <a class="btn btn-danger" href="/place-types/{{ .PlaceType.ID }}/edit" role="button">Editar Tipo de lugar</a>
+    <a class="btn btn-success" href="/place-types/index" role="button">Tipos de lugares</a>
+  </div>
 </div>
 
 {{ template "bottom_frame" . }}

@@ -1,36 +1,36 @@
-{{ define "places" }}
+{{ define "groups" }}
 {{template "top_frame" .}}
 
 <div class="card text-dark border-dark bg-light mb-3 school-card">
   <div class="card-header bg-primary text-white">
-    <b>{{.Ct.PageTitle}}, Fichas seleccionadas: {{ .Places.RecordCount }}</b>
+    <b>{{.Ct.PageTitle}}, Fichas seleccionadas: {{ .Groups.RecordCount }}</b>
   </div>
   <div class="card-body">
     <table class="table">
       <thead>
       <tr>
-        <th>Nombre</th>
-        <th>Tipo de Lugar</th>
+        <th>Nombres</th>
+        <th>Tipo</th>
         <th>Pertenece a</th>
-        <th>Resumen</th>
+        <th>Duración</th>
         <th></th>
       </tr>
       </thead>
       <tbody>
-      {{range .Places.Places}}
+      {{range .Groups.Groups}}
       <tr>
-        <td><a href="/places/{{.ID}}">{{ .Name }}</a></td>
-        <td>{{ .PlaceType.Name }}</td>
-        <td>{{ .ParentPlace.Name }}</td>
-        <td>{{ .Summary }}</td>
-        <td><a href="/events/{{.ID}}/delete" class="btn btn-danger btn-sm" role="button">Eliminar</a></td>
+        <td><a href="/groups/{{.ID}}">{{ .Name }}</a></td>
+        <td>{{ .GroupType.Name }}</td>
+        <td>{{ .ParentGroupID }}</td>
+        <td>{{ .Start }}--{{ .End }}</td>
+        <td><a href="/groups/{{.ID}}/delete" class="btn btn-danger btn-sm" role="button">Eliminar</a></td>
       </tr>
       {{end}}
       </tbody>
     </table>
     {{ .Pagination.HTML .Pagination.CurrentPage }}
     <div class="card-footer bg-transparent border-success">
-      <a class="btn btn-danger" href="/places/new" role="button">Nuevo lugar</a>
+      <a class="btn btn-danger" href="/groups/new" role="button">Nuevo Grupo</a>
     </div>
   </div>
 </div>

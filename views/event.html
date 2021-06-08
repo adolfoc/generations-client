@@ -1,32 +1,34 @@
 {{ define "event" }}
 {{ template "top_frame" . }}
 
-<div class="card-header">
-  <b>{{.Ct.PageTitle}}</b>
-</div>
-<div class="card-body">
-  <p class="card-text">
-    <b>Nombre</b>: {{ .Event.Name }}
-  </p>
-  <p class="card-text">
-    <b>Tipo</b>: {{ .Event.EventType.Name }}
-  </p>
-  <p class="card-text">
-    <b>Fehca de inicio</b>: {{ .Event.Start }}
-  </p>
-  <p class="card-text">
-    <b>Fecha de término</b>: {{ .Event.End }}
-  </p>
-  <p class="card-text">
-    <b>Resumen</b>: {{ .Event.Summary }}
-  </p>
-  <p class="card-text">
-    <b>Descripción</b>: {{ .Event.Description }}
-  </p>
-</div>
-<div class="card-footer bg-transparent border-success">
-  <a class="btn btn-danger" href="/events/{{ .Event.ID }}/edit" role="button">Editar Evento</a>
-  <a class="btn btn-success" href="/events/index" role="button">Eventos</a>
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header bg-primary text-white">
+    <b>{{.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <b>Nombre</b>: {{ .Event.Name }}
+    </p>
+    <p class="card-text">
+      <b>Tipo</b>: {{ .Event.EventType.Name }}
+    </p>
+    <p class="card-text">
+      <b>Fehca de inicio</b>: {{ .Event.Start }}
+    </p>
+    <p class="card-text">
+      <b>Fecha de término</b>: {{ .Event.End }}
+    </p>
+    <p class="card-text">
+      <b>Resumen</b>: {{ .Event.Summary }}
+    </p>
+    <p class="card-text">
+      <b>Descripción</b>: {{ .Event.Description }}
+    </p>
+  </div>
+  <div class="card-footer bg-transparent border-success">
+    <a class="btn btn-danger" href="/events/{{ .Event.ID }}/edit" role="button">Editar Evento</a>
+    <a class="btn btn-success" href="/events/index" role="button">Eventos</a>
+  </div>
 </div>
 
 {{ template "bottom_frame" . }}
