@@ -1,0 +1,55 @@
+{{ define "life_phase_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header border-success">
+    <b>{{.Ft.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <form action="{{.Ft.URL}}" method="post">
+      {{ .LifePhase.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+      {{ .LifePhase.SchemaIDInput (index .Ft.FormErrorMessages "SchemaID") (index .Ft.FormValues "SchemaID") }}
+
+      <div class="row mb-3">
+        {{ .LifePhase.NameLabel }}
+        <div class="col-sm-10">
+          {{ .LifePhase.NameInput (index .Ft.FormErrorMessages "Name") (index .Ft.FormValues "Name") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .LifePhase.StartYearLabel }}
+        <div class="col-sm-10">
+          {{ .LifePhase.StartYearInput (index .Ft.FormErrorMessages "StartYear") (index .Ft.FormValues "StartYear") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .LifePhase.EndYearLabel }}
+        <div class="col-sm-10">
+          {{ .LifePhase.EndYearInput (index .Ft.FormErrorMessages "EndYear") (index .Ft.FormValues "EndYear") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .LifePhase.RoleLabel }}
+        <div class="col-sm-10">
+          {{ .LifePhase.RoleInput (index .Ft.FormErrorMessages "Role") (index .Ft.FormValues "Role") }}
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent border-success">
+        <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+        {{ if (eq .LifePhase.ID 0) }}
+        <a href="/schemas/{{ .SchemaID }}" class="btn btn-success" role="button">Volver</a>
+        {{ else }}
+        <a href="/schemas/{{ .LifePhase.SchemaID }}" class="btn btn-success" role="button ">Volver</a>
+        {{ end }}
+      </div>
+    </form>
+  </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

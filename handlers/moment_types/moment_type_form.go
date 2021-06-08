@@ -60,4 +60,3 @@ func MakeMomentTypeForm(w http.ResponseWriter, r *http.Request, url string, page
 
 	return momentTypeTemplate, nil
 }
-

@@ -20,8 +20,8 @@ const (
 	MomentTypeNewSubmitLabelES       = "Crear Tipo de Momento"
 	MomentTypeEditPageTitleES        = "Editar Tipo de Momento"
 	MomentTypeEditSubmitLabelES      = "Actualizar Tipo de Momento"
-	MomentTypeCreatedES              = "El tipo de momento fue creada satisfactoriamente"
-	MomentTypeUpdatedES              = "El tipo de momento fue actualizada satisfactoriamente"
+	MomentTypeCreatedES              = "El tipo de momento fue creado satisfactoriamente"
+	MomentTypeUpdatedES              = "El tipo de momento fue actualizado satisfactoriamente"
 	MomentTypeCreateErrorsReceivedES = "Por favor corrija los errores para poder crear el tipo de momento"
 	MomentTypeUpdateErrorsReceivedES = "Por favor corrija los errores para poder actualizar el tipo momento"
 )

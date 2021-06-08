@@ -92,20 +92,22 @@
                             <th>Etapa</th>
                             <th style="text-align: right;">Años</th>
                             <th>Rol</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         {{ range .LifePhases }}
                         <tr>
-                            <td><a href="/life-phases/{{ .ID }}">{{ .Name }}</a></td>
+                            <td>{{ .Name }}</td>
                             <td style="text-align: right;">{{ .Span }}</td>
                             <td>{{ .Role }}</td>
+                            <td><a class="btn btn-danger btn-sm" href="/schemas/{{ .SchemaID }}/life-phases/{{ .ID }}/edit" role="button">Editar</a></td>
                         </tr>
                         {{ end }}
                         </tbody>
                     </table>
                     <div class="middle-card-button-row">
-                        <a class="btn btn-danger" href="/schemas/edit/{{ .GenerationSchema.ID }}" role="button">Nueva etapa de vida</a>
+                        <a class="btn btn-danger" href="/schemas/{{ .GenerationSchema.ID }}/life-phases/new" role="button">Nueva etapa de vida</a>
                     </div>
                 </div>
             </div>

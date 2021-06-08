@@ -76,4 +76,3 @@ func NewMomentTypeRetry(w http.ResponseWriter, r *http.Request, momentTypeReques
 	log.NormalReturn()
 	return
 }
-
