@@ -62,4 +62,3 @@ func GetGroupType(w http.ResponseWriter, r *http.Request) {
 
 	log.NormalReturn()
 }
-

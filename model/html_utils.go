@@ -50,7 +50,7 @@ func BuildDateInput(inputID string, value interface{}, errorMessage string) temp
 }
 
 func BuildCheckboxInput(inputID, label string, value interface{}, errorMessage string) template.HTML {
-	if value == "true" {
+	if value == true {
 		return template.HTML(fmt.Sprintf("<label class=%q><input type=%q checked id=%q name=%q> %s</label>",
 			"checkbox", "checkbox", inputID, inputID, label))
 	} else {

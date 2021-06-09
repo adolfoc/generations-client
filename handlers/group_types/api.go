@@ -128,4 +128,3 @@ func patchGroupType(w http.ResponseWriter, r *http.Request, groupTypeRequest *mo
 
 	return code, body, nil
 }
-

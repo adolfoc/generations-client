@@ -1,4 +1,4 @@
-package group_types
+package users
 
 import (
 	"fmt"
@@ -8,36 +8,36 @@ import (
 	"net/http"
 )
 
-type GroupTypesTemplate struct {
+type UsersTemplate struct {
 	Ct         handlers.CommonTemplate
-	GroupTypes *model.GroupTypes
+	Users      *model.Users
 	Pagination *handlers.Pagination
 }
 
 func getPaginationBaseURL() string {
-	stem := fmt.Sprintf("/groups-types/index")
+	stem := fmt.Sprintf("/users/index")
 	return stem + "?page=%d"
 }
 
-func MakeGroupTypesTemplate(r *http.Request, pageTitle string, page int, groupTypes *model.GroupTypes) (*GroupTypesTemplate, error) {
+func MakeUsersTemplate(r *http.Request, pageTitle string, page int, users *model.Users) (*UsersTemplate, error) {
 	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
 	if err != nil {
 		return nil, err
 	}
 
-	pagination := handlers.MakePagination(groupTypes.RecordCount, getPaginationBaseURL(), page)
+	pagination := handlers.MakePagination(users.RecordCount, getPaginationBaseURL(), page)
 
-	groupsTypesTemplate := &GroupTypesTemplate{
+	usersTemplate := &UsersTemplate{
 		Ct:         *ct,
-		GroupTypes: groupTypes,
+		Users:      users,
 		Pagination: pagination,
 	}
 
-	return groupsTypesTemplate, nil
+	return usersTemplate, nil
 }
 
-func GetGroupTypes(w http.ResponseWriter, r *http.Request) {
-	log := common.StartLog("handlers-group_types", "GetGroupTypes")
+func GetUsers(w http.ResponseWriter, r *http.Request) {
+	log := common.StartLog("handlers-users", "GetUsers")
 
 	if handlers.UserAuthenticated(w, r) == false {
 		log.FailedReturn()
@@ -46,20 +46,20 @@ func GetGroupTypes(w http.ResponseWriter, r *http.Request) {
 	}
 
 	page := handlers.GetURLPageParameter(r)
-	events, err := getGroupTypes(w, r, page)
+	users, err := getUsers(w, r, page)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
 		return
 	}
 
-	ct, err := MakeGroupTypesTemplate(r, GetLabel(GroupTypeIndexPageTitleIndex), page, events)
+	ct, err := MakeUsersTemplate(r, GetLabel(UserIndexPageTitleIndex), page, users)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
 		return
 	}
 
-	err = handlers.ExecuteView("group_types", ct, w)
+	err = handlers.ExecuteView("users", ct, w)
 	if err != nil {
 		log.FailedReturn()
 		return
@@ -67,3 +67,4 @@ func GetGroupTypes(w http.ResponseWriter, r *http.Request) {
 
 	log.NormalReturn()
 }
+

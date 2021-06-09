@@ -21,6 +21,7 @@ import (
 	"github.com/adolfoc/generations-client/handlers/place_types"
 	"github.com/adolfoc/generations-client/handlers/places"
 	"github.com/adolfoc/generations-client/handlers/schemas"
+	"github.com/adolfoc/generations-client/handlers/users"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"log"
@@ -243,6 +244,14 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/group-types/{group_type_id:[0-9]+}/edit", group_types.EditGroupType).Methods("GET")
 	r.HandleFunc("/group-types/{group_type_id:[0-9]+}/update", group_types.UpdateGroupType).Methods("POST")
 
+	r.HandleFunc("/users/index", users.GetUsers).Methods("GET")
+	r.HandleFunc("/users/{user_id:[0-9]+}", users.GetUser).Methods("GET")
+	r.HandleFunc("/users/new", users.NewUser).Methods("GET")
+	r.HandleFunc("/users/create", users.CreateUser).Methods("POST")
+	r.HandleFunc("/users/{user_id:[0-9]+}/edit", users.EditUser).Methods("GET")
+	r.HandleFunc("/users/{user_id:[0-9]+}/update", users.UpdateUser).Methods("POST")
+	r.HandleFunc("/users/{user_id:[0-9]+}/edit-password", users.EditPassword).Methods("GET")
+	r.HandleFunc("/users/{user_id:[0-9]+}/update-password", users.UpdatePassword).Methods("POST")
+
 	return r
 }
-

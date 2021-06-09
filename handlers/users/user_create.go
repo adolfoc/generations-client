@@ -1,4 +1,4 @@
-package groups
+package users
 
 import (
 	"encoding/json"
@@ -9,34 +9,34 @@ import (
 	"net/http"
 )
 
-func CreateGroup(w http.ResponseWriter, r *http.Request) {
-	log := common.StartLog("handlers-groups", "CreateGroup")
+func CreateUser(w http.ResponseWriter, r *http.Request) {
+	log := common.StartLog("handlers-users", "CreateUser")
 
-	groupRequest, err := makeGroupRequest(r)
+	newUserRequest, err := makeNewUserRequest(r)
 	if err != nil {
 		log.FailedReturn()
 		return
 	}
 
-	code, body, err := postGroup(w, r, groupRequest)
+	code, body, err := postUser(w, r, newUserRequest)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
 		return
 	}
 
 	if code == http.StatusUnprocessableEntity {
-		responseErrors, _ := handlers.OnUpdateError(r, body, GetLabel(GroupCreateErrorsReceivedIndex))
-		NewGroupRetry(w, r, groupRequest, *responseErrors)
+		responseErrors, _ := handlers.OnUpdateError(r, body, GetLabel(UserCreateErrorsReceivedIndex))
+		NewUserRetry(w, r, newUserRequest, *responseErrors)
 		log.FailedReturn()
 		return
 	}
 
 	if code == http.StatusCreated || code == http.StatusOK {
-		var group *model.Group
-		_ = json.Unmarshal(body, &group)
+		var user *model.User
+		_ = json.Unmarshal(body, &user)
 
-		handlers.WriteSessionInfoMessage(r, GetLabel(GroupCreatedIndex))
-		url := fmt.Sprintf("/groups/%d", group.ID)
+		handlers.WriteSessionInfoMessage(r, GetLabel(UserCreatedIndex))
+		url := fmt.Sprintf("/users/%d", user.ID)
 		http.Redirect(w, r, url, http.StatusMovedPermanently)
 		return
 	} else {
@@ -46,5 +46,3 @@ func CreateGroup(w http.ResponseWriter, r *http.Request) {
 
 	log.NormalReturn()
 }
-
-

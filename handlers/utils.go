@@ -141,7 +141,7 @@ func GetStringFormValue(r *http.Request, id string) string {
 
 func GetBoolFormValue(r *http.Request, id string) bool {
 	stringValue := r.FormValue(id)
-	if stringValue == "t" || stringValue == "true" {
+	if stringValue == "on" {
 		return true
 	}
 

@@ -1,0 +1,34 @@
+{{ define "user" }}
+{{ template "top_frame" . }}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header bg-primary text-white">
+    <b>{{.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <b>Nombre</b>: {{ .User.UserName }}
+    </p>
+    <p class="card-text">
+      <b>Rol</b>: {{ .User.Role }}
+    </p>
+    <p class="card-text">
+      <b>Correo</b>: {{ .User.Email }}
+    </p>
+    <p class="card-text">
+      <b>Nombre</b>: {{ .User.FirstNames }} {{ .User.LastNames }}
+    </p>
+    <p class="card-text">
+      <b>Activo</b>: {{ .User.IsActive }}
+    </p>
+  </div>
+  <div class="card-footer bg-transparent border-success">
+    <a class="btn btn-danger" href="/users/{{ .User.ID }}/edit" role="button">Editar Usuario</a>
+    <a class="btn btn-danger" href="/users/{{ .User.ID }}/edit-password" role="button">Cambiar contraseña</a>
+    <a class="btn btn-success" href="/users/index" role="button">Usuarios</a>
+  </div>
+</div>
+
+{{ template "bottom_frame" . }}
+
+{{ end }}

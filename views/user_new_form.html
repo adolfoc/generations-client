@@ -1,0 +1,81 @@
+{{ define "user_new_form" }}
+{{template "form_top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header bg-primary text-white">
+    <b>{{.Ft.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <form action="{{.Ft.URL}}" method="post">
+      {{ .User.IDInput (index .Ft.FormErrorMessages "ID") (index .Ft.FormValues "ID") }}
+
+      <div class="row mb-3">
+        {{ .User.UserNameLabel }}
+        <div class="col-sm-10">
+          {{ .User.UserNameInput (index .Ft.FormErrorMessages "UserName") (index .Ft.FormValues "UserName") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .User.RoleLabel }}
+        <div class="col-sm-10">
+          {{ .User.RoleSelectBox (index .Ft.FormErrorMessages "Role") (index .Ft.FormValues "Role") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .User.EmailLabel }}
+        <div class="col-sm-10">
+          {{ .User.EmailInput (index .Ft.FormErrorMessages "Email") (index .Ft.FormValues "Email") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .User.FirstNamesLabel }}
+        <div class="col-sm-10">
+          {{ .User.FirstNamesInput (index .Ft.FormErrorMessages "FirstNames") (index .Ft.FormValues "FirstNames") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .User.LastNamesLabel }}
+        <div class="col-sm-10">
+          {{ .User.LastNamesInput (index .Ft.FormErrorMessages "LastNames") (index .Ft.FormValues "LastNames") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .User.PasswordLabel }}
+        <div class="col-sm-10">
+          {{ .User.PasswordInput (index .Ft.FormErrorMessages "Password") (index .Ft.FormValues "Password") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ .User.PasswordConfirmationLabel }}
+        <div class="col-sm-10">
+          {{ .User.PasswordConfirmationInput (index .Ft.FormErrorMessages "PasswordConfirmation") (index .Ft.FormValues "PasswordConfirmation") }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-sm-10">
+          {{ .User.IsActiveInput (index .Ft.FormErrorMessages "IsActive") (index .Ft.FormValues "IsActive") }}
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent border-success">
+        <button type="submit" class="btn btn-primary">{{ .Ft.SubmitLabel }}</button>
+        {{ if (eq .User.ID 0) }}
+        <a href="/users/index" class="btn btn-success" role="button">Volver</a>
+        {{ else }}
+        <a href="/users/{{ .User.ID }}" class="btn btn-success" role="button ">Volver</a>
+        {{ end }}
+      </div>
+    </form>
+  </div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}
