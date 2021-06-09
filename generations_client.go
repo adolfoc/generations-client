@@ -11,6 +11,7 @@ import (
 	"github.com/adolfoc/generations-client/handlers/generation_types"
 	"github.com/adolfoc/generations-client/handlers/generational_landscape"
 	"github.com/adolfoc/generations-client/handlers/generations"
+	"github.com/adolfoc/generations-client/handlers/group_types"
 	"github.com/adolfoc/generations-client/handlers/groups"
 	life_phases "github.com/adolfoc/generations-client/handlers/life-phases"
 	"github.com/adolfoc/generations-client/handlers/life_segments"
@@ -234,6 +235,13 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/groups/create", groups.CreateGroup).Methods("POST")
 	r.HandleFunc("/groups/{group_id:[0-9]+}/edit", groups.EditGroup).Methods("GET")
 	r.HandleFunc("/groups/{group_id:[0-9]+}/update", groups.UpdateGroup).Methods("POST")
+
+	r.HandleFunc("/group-types/index", group_types.GetGroupTypes).Methods("GET")
+	r.HandleFunc("/group-types/{group_type_id:[0-9]+}", group_types.GetGroupType).Methods("GET")
+	r.HandleFunc("/group-types/new", group_types.NewGroupType).Methods("GET")
+	r.HandleFunc("/group-types/create", group_types.CreateGroupType).Methods("POST")
+	r.HandleFunc("/group-types/{group_type_id:[0-9]+}/edit", group_types.EditGroupType).Methods("GET")
+	r.HandleFunc("/group-types/{group_type_id:[0-9]+}/update", group_types.UpdateGroupType).Methods("POST")
 
 	return r
 }

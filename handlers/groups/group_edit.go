@@ -129,5 +129,3 @@ func matchGroupType(typeID int, groupTypes []*model.GroupType) *model.GroupType 
 
 	return nil
 }
-
-

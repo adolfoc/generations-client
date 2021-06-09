@@ -1,0 +1,24 @@
+{{ define "group_type" }}
+{{ template "top_frame" . }}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header bg-primary text-white">
+    <b>{{.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      <b>Nombre</b>: {{ .GroupType.Name }}
+    </p>
+    <p class="card-text">
+      <b>Descripción</b>: {{ .GroupType.Description }}
+    </p>
+  </div>
+  <div class="card-footer bg-transparent border-success">
+    <a class="btn btn-danger" href="/group-types/{{ .GroupType.ID }}/edit" role="button">Editar Tipo de Grupo</a>
+    <a class="btn btn-success" href="/group-types/index" role="button">Tipos de Grupo</a>
+  </div>
+</div>
+
+{{ template "bottom_frame" . }}
+
+{{ end }}

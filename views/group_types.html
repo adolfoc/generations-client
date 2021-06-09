@@ -1,0 +1,37 @@
+{{ define "group_types" }}
+{{template "top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+    <div class="card-header bg-primary text-white">
+        <b>{{.Ct.PageTitle}}, Fichas seleccionadas: {{ .GroupTypes.RecordCount }}</b>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{range .GroupTypes.GroupTypes}}
+            <tr>
+                <td><a href="/group-types/{{.ID}}">{{ .Name }}</a></td>
+                <td>{{ .Description }}</td>
+                <td><a href="/group-types/{{.ID}}/delete" class="btn btn-danger btn-sm" role="button">Eliminar</a></td>
+            </tr>
+            {{end}}
+            </tbody>
+        </table>
+        {{ .Pagination.HTML .Pagination.CurrentPage }}
+        <div class="card-footer bg-transparent border-success">
+            <a class="btn btn-danger" href="/group-types/new" role="button">Nuevo Tipo de Grupo</a>
+        </div>
+    </div>
+</div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

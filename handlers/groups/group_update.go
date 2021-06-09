@@ -39,4 +39,3 @@ func UpdateGroup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-
