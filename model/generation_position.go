@@ -48,7 +48,7 @@ func (gp *GenerationPosition) LifePhaseIDSelectBox(lifePhases []*LifePhase, sele
 	startSelect := fmt.Sprintf("<select class='form-select library-control' id='inputLifePhaseID' name='inputLifePhaseID'>")
 	selectBox = append(selectBox, startSelect)
 
-	blankOption := "<option value='' selected disabled hidden>Elija un momento histórico...</option>"
+	blankOption := "<option value='' selected disabled hidden>Elija una etapa de vida...</option>"
 	selectBox = append(selectBox, blankOption)
 
 	for _, lp := range lifePhases {

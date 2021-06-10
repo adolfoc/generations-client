@@ -164,8 +164,8 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/new", generations.NewGeneration).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/create", generations.CreateGeneration).Methods("POST")
 
-	//r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/{generation_id:[0-9]+}/generation-positions/new", generation_positions.NewGenerationPosition).Methods("GET")
-	//r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/{generation_id:[0-9]+}/generation-positions/create", generation_positions.CreateGenerationPosition).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/{generation_id:[0-9]+}/generation-positions/new", generation_positions.NewGenerationPosition).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/{generation_id:[0-9]+}/generation-positions/create", generation_positions.CreateGenerationPosition).Methods("POST")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/{generation_id:[0-9]+}/generation-positions/{generation_position_id:[0-9]+}/edit", generation_positions.EditGenerationPosition).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/{generation_id:[0-9]+}/generation-positions/{generation_position_id:[0-9]+}/update", generation_positions.UpdateGenerationPosition).Methods("POST")
 
