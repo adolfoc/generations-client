@@ -117,3 +117,15 @@ func patchGenerationType(w http.ResponseWriter, r *http.Request, generationTypeR
 
 	return code, body, nil
 }
+
+func deleteGenerationType(w http.ResponseWriter, r *http.Request, schemaID, generationTypeID int) (int, []byte, error) {
+	url := getSchemaGenerationTypeURL(schemaID, generationTypeID)
+
+	code, body, err := handlers.DeleteResource(w, r, url)
+	if err != nil {
+		return 0, nil, err
+	}
+
+
+	return code, body, nil
+}

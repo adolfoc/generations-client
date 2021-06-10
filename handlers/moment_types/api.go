@@ -117,3 +117,15 @@ func patchMomentType(w http.ResponseWriter, r *http.Request, momentTypeRequest *
 
 	return code, body, nil
 }
+
+func deleteMomentType(w http.ResponseWriter, r *http.Request, schemaID, momentTypeID int) (int, []byte, error) {
+	url := getSchemaMomentTypeURL(schemaID, momentTypeID)
+
+	code, body, err := handlers.DeleteResource(w, r, url)
+	if err != nil {
+		return 0, nil, err
+	}
+
+
+	return code, body, nil
+}

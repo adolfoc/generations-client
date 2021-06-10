@@ -13,6 +13,7 @@ const (
 	MomentTypeUpdatedIndex              = 7
 	MomentTypeCreateErrorsReceivedIndex = 8
 	MomentTypeUpdateErrorsReceivedIndex = 9
+	MomentTypeDeletedIndex              = 10
 
 	MomentTypeIndexPageTitleES       = "Todos los tipos de momento"
 	MomentTypePageTitleES            = "Tipo de Momento"
@@ -24,6 +25,7 @@ const (
 	MomentTypeUpdatedES              = "El tipo de momento fue actualizado satisfactoriamente"
 	MomentTypeCreateErrorsReceivedES = "Por favor corrija los errores para poder crear el tipo de momento"
 	MomentTypeUpdateErrorsReceivedES = "Por favor corrija los errores para poder actualizar el tipo momento"
+	MomentTypeDeletedES              = "El tipo de momento fue eliminado satisfactoriamente"
 )
 
 var LangES map[int]string
@@ -41,6 +43,7 @@ func initializeMaps() {
 		LangES[MomentTypeUpdatedIndex] = MomentTypeUpdatedES
 		LangES[MomentTypeCreateErrorsReceivedIndex] = MomentTypeCreateErrorsReceivedES
 		LangES[MomentTypeUpdateErrorsReceivedIndex] = MomentTypeUpdateErrorsReceivedES
+		LangES[MomentTypeDeletedIndex] = MomentTypeDeletedES
 	}
 }
 

@@ -68,7 +68,8 @@
                         <tr>
                             <td>{{ .Archetype }}</td>
                             <td>{{ .Description }}</td>
-                            <td><a class="btn btn-danger btn-sm" href="/schemas/{{ .SchemaID }}/generation-types/{{ .ID }}/edit" role="button">Editar</a></td>
+                            <td><a class="btn btn-warning btn-sm" href="/schemas/{{ .SchemaID }}/generation-types/{{ .ID }}/edit" role="button">E</a></td>
+                            <td><a class="btn btn-danger btn-sm" href="/schemas/{{ .SchemaID }}/generation-types/{{ .ID }}/delete" role="button">X</a></td>
                         </tr>
                         {{ end }}
                         </tbody>
@@ -132,7 +133,8 @@
                         <tr>
                             <td>{{ .Name }}</td>
                             <td>{{ .Description }}</td>
-                            <td><a class="btn btn-danger btn-sm" href="/schemas/{{ .SchemaID }}/moment-types/{{ .ID }}/edit" role="button">Editar</a></td>
+                            <td><a class="btn btn-danger btn-sm" href="/schemas/{{ .SchemaID }}/moment-types/{{ .ID }}/edit" role="button">E</a></td>
+                            <td><a class="btn btn-danger btn-sm" href="/schemas/{{ .SchemaID }}/moment-types/{{ .ID }}/delete" role="button">X</a></td>
                         </tr>
                         {{ end }}
                         </tbody>

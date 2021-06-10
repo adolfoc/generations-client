@@ -411,6 +411,41 @@ func PutResource(w http.ResponseWriter, r *http.Request, url string, payload []b
 	return code, body, nil
 }
 
+func prepareDeleteRequest(r *http.Request, url string) (*http.Request, error) {
+	request, err := http.NewRequest(http.MethodDelete, url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = prepareStandardHeader(request, r)
+	if err != nil {
+		return nil, err
+	}
+
+	request.Header.Set("Content-Type", "application/json")
+
+	return request, nil
+}
+
+func DeleteResource(w http.ResponseWriter, r *http.Request, url string) (int, []byte, error) {
+	log := common.StartLog("handlers-utils", "DeleteResource")
+	log.Log(fmt.Sprintf("url: %s", url))
+
+	request, err := prepareDeleteRequest(r, url)
+	if err != nil {
+		return 0, nil, err
+	}
+
+	code, body, err := performStandardHttpRequest(w, r, request)
+	if err != nil {
+		log.FailedReturn()
+		return code, nil, err
+	}
+
+	log.NormalReturn()
+	return code, body, nil
+}
+
 // performStandardHttpRequest performs an HTTP request using our standard client and performs a series of checks
 // once the transaction returns: 1. checks for general errors (such as connectivity); 2. checks for authorization
 // error codes; 3. reads the response body and reports any errors; 4. updates our session with the cookies received.
@@ -499,9 +534,37 @@ func OnUpdateError(r *http.Request, body []byte, message string) (*ResponseError
 	return &responseErrors, err
 }
 
+func OnDeleteError(r *http.Request, body []byte) (*ResponseErrors, error) {
+	log := common.StartLog("handlers-utils", "OnDeleteError")
+
+	var responseErrors ResponseErrors
+	err := json.Unmarshal(body, &responseErrors)
+	if err != nil {
+		log.FailedReturn()
+		return nil, err
+	}
+
+	log.NormalReturn()
+	return &responseErrors, err
+}
+
+func ExtractFirstError(errors *ResponseErrors) string {
+	if len(errors.Errors) > 0 {
+		thisError := errors.Errors[0]
+		return thisError.Detail
+	}
+
+	return ""
+}
+
 func WriteSessionInfoMessage(r *http.Request, message string) {
 	currentSession, _ := GetCurrentSessionFromRequest(r)
 	currentSession.WriteSessionInfoMessage(r, message)
+}
+
+func WriteSessionErrorMessage(r *http.Request, message string) {
+	currentSession, _ := GetCurrentSessionFromRequest(r)
+	currentSession.WriteSessionErrorMessage(r, message)
 }
 
 // collectCookies is invoked after each api call to collect the cookies that the api server sends.

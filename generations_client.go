@@ -171,6 +171,7 @@ func makeRouter() *mux.Router {
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generation-types/{generation_type_id:[0-9]+}/edit", generation_types.EditGenerationType).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generation-types/{generation_type_id:[0-9]+}/update", generation_types.UpdateGenerationType).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generation-types/{generation_type_id:[0-9]+}/delete", generation_types.DeleteGenerationType).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generation-types/new", generation_types.NewGenerationType).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generation-types/create", generation_types.CreateGenerationType).Methods("POST")
 
@@ -181,6 +182,7 @@ func makeRouter() *mux.Router {
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moment-types/{moment_type_id:[0-9]+}/edit", moment_types.EditMomentType).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moment-types/{moment_type_id:[0-9]+}/update", moment_types.UpdateMomentType).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moment-types/{moment_type_id:[0-9]+}/delete", moment_types.DeleteMomentType).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moment-types/new", moment_types.NewMomentType).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moment-types/create", moment_types.CreateMomentType).Methods("POST")
 

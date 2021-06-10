@@ -13,6 +13,7 @@ const (
 	GenerationTypeUpdatedIndex              = 7
 	GenerationTypeCreateErrorsReceivedIndex = 8
 	GenerationTypeUpdateErrorsReceivedIndex = 9
+	GenerationTypeDeletedIndex              = 10
 
 	GenerationTypeIndexPageTitleES       = "Todos los tipos de generación"
 	GenerationTypePageTitleES            = "Tipo de Generación"
@@ -24,6 +25,7 @@ const (
 	GenerationTypeUpdatedES              = "El tipo de generación fue actualizada satisfactoriamente"
 	GenerationTypeCreateErrorsReceivedES = "Por favor corrija los errores para poder crear el tipo de generación"
 	GenerationTypeUpdateErrorsReceivedES = "Por favor corrija los errores para poder actualizar el tipo generación"
+	GenerationTypeDeletedES              = "El tipo de generación fue eliminado satisfactoriamente"
 )
 
 var LangES map[int]string
@@ -41,6 +43,7 @@ func initializeMaps() {
 		LangES[GenerationTypeUpdatedIndex] = GenerationTypeUpdatedES
 		LangES[GenerationTypeCreateErrorsReceivedIndex] = GenerationTypeCreateErrorsReceivedES
 		LangES[GenerationTypeUpdateErrorsReceivedIndex] = GenerationTypeUpdateErrorsReceivedES
+		LangES[GenerationTypeDeletedIndex] = GenerationTypeDeletedES
 	}
 }
 
