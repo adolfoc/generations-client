@@ -85,4 +85,3 @@ func EditGenerationTypeRetry(w http.ResponseWriter, r *http.Request, generationT
 	log.NormalReturn()
 	return
 }
-
