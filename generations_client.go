@@ -183,6 +183,16 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/edit", generational_landscape.EditGenerationalLandscape).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/update", generational_landscape.UpdateGenerationalLandscape).Methods("POST")
 
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/tangibles/add", generational_landscape.NewTangible).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/tangibles/create", generational_landscape.CreateTangible).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/tangibles/{tangible_id:[0-9]+}/edit", generational_landscape.EditTangible).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/tangibles/{tangible_id:[0-9]+}/update", generational_landscape.UpdateTangible).Methods("POST")
+
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/intangibles/add", generational_landscape.NewIntangible).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/intangibles/create", generational_landscape.CreateIntangible).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/intangibles/{intangible_id:[0-9]+}/edit", generational_landscape.EditIntangible).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/intangibles/{intangible_id:[0-9]+}/update", generational_landscape.UpdateIntangible).Methods("POST")
+
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments", moments.GetSchemaMoments).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/{moment_id:[0-9]+}", moments.GetMoment).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/{moment_id:[0-9]+}/edit", moments.EditMoment).Methods("GET")
@@ -211,8 +221,8 @@ func makeRouter() *mux.Router {
 
 	r.HandleFunc("/event-types/index", event_types.GetEventTypes).Methods("GET")
 	r.HandleFunc("/event-types/{event_type_id:[0-9]+}", event_types.GetEventType).Methods("GET")
-	//r.HandleFunc("/event-types/new", event_types.NewEventType).Methods("GET")
-	//r.HandleFunc("/event-types/create", event_types.CreateEventType).Methods("POST")
+	r.HandleFunc("/event-types/new", event_types.NewEventType).Methods("GET")
+	r.HandleFunc("/event-types/create", event_types.CreateEventType).Methods("POST")
 	r.HandleFunc("/event-types/{event_type_id:[0-9]+}/edit", event_types.EditEventType).Methods("GET")
 	r.HandleFunc("/event-types/{event_type_id:[0-9]+}/update", event_types.UpdateEventType).Methods("POST")
 

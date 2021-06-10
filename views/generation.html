@@ -88,7 +88,7 @@
               <td>{{ .Name }}</td>
               <td>{{ .Description }}</td>
               <td>
-                <a class="btn btn-warning btn-sm" href="/schemas/{{ $.SchemaID }}/generations/{{ $.Generation.ID }}/edit" role="button">E</a>
+                <a class="btn btn-warning btn-sm" href="/schemas/{{ $.SchemaID }}/generational-landscape/{{ $.GenerationalLandscape.ID }}/tangibles/{{ .ID }}/edit" role="button">E</a>
                 <a class="btn btn-danger btn-sm" href="/schemas/{{ $.SchemaID }}/generations/{{ $.Generation.ID }}/edit" role="button">X</a>
               </td>
             </tr>
@@ -96,7 +96,7 @@
             </tbody>
           </table>
           <div class="card-footer bg-transparent border-success" style="margin-bottom: 1em;">
-            <a class="btn btn-warning btn-sm" href="/schemas/{{ .SchemaID }}/generations/{{ .Generation.ID }}/edit" role="button">Nuevo Tangible</a>
+            <a class="btn btn-danger btn-sm" href="/schemas/{{ $.SchemaID }}/generational-landscape/{{ $.GenerationalLandscape.ID }}/tangibles/add" role="button">Nuevo Tangible</a>
           </div>
           <h5>Intangibles</h5>
           <table class="table">
@@ -113,7 +113,7 @@
               <td>{{ .Name }}</td>
               <td>{{ .Description }}</td>
               <td>
-                <a class="btn btn-warning btn-sm" href="/schemas/{{ $.SchemaID }}/generations/{{ $.Generation.ID }}/edit" role="button">E</a>
+                <a class="btn btn-warning btn-sm" href="/schemas/{{ $.SchemaID }}/generational-landscape/{{ $.GenerationalLandscape.ID }}/intangibles/{{ .ID }}/edit" role="button">E</a>
                 <a class="btn btn-danger btn-sm" href="/schemas/{{ $.SchemaID }}/generations/{{ $.Generation.ID }}/edit" role="button">X</a>
               </td>
             </tr>
@@ -121,7 +121,7 @@
             </tbody>
           </table>
           <div class="card-footer bg-transparent border-success" style="margin-bottom: 1em;">
-            <a class="btn btn-danger" href="/schemas/{{ .SchemaID }}/generations/{{ .Generation.ID }}/edit" role="button">Nuevo Intangible</a>
+            <a class="btn btn-danger btn-sm" href="/schemas/{{ $.SchemaID }}/generational-landscape/{{ $.GenerationalLandscape.ID }}/intangibles/add" role="button">Nuevo Intangible</a>
           </div>
           {{ end }}
         </div>

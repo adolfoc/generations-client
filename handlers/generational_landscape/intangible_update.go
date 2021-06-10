@@ -7,8 +7,8 @@ import (
 	"net/http"
 )
 
-func UpdateGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
-	log := common.StartLog("handlers-generational-landscapes", "UpdateGenerationalLandscape")
+func UpdateIntangible(w http.ResponseWriter, r *http.Request) {
+	log := common.StartLog("handlers-generational-landscapes", "UpdateIntangible")
 
 	schemaID, err := getUrlGenerationSchemaID(w, r)
 	if handlers.HandleError(w, r, err) {
@@ -16,28 +16,30 @@ func UpdateGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	glRequest, err := makeGenerationalLandscapeRequest(r)
+	itRequest, err := makeIntangibleRequest(r)
 	if err != nil {
 		log.FailedReturn()
 		return
 	}
 
-	code, body, err := patchGenerationalLandscape(w, r, glRequest)
+	code, body, err := patchIntangible(w, r, itRequest)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
 		return
 	}
 
 	if code == http.StatusUnprocessableEntity {
-		responseErrors, _ := handlers.OnUpdateError(r, body, GetLabel(GenerationalLandscapeUpdateErrorsReceivedIndex))
-		EditGenerationalLandscapeRetry(w, r, glRequest, schemaID, *responseErrors)
+		responseErrors, _ := handlers.OnUpdateError(r, body, GetLabel(IntangibleUpdateErrorsReceivedIndex))
+		EditIntangibleRetry(w, r, itRequest, schemaID, *responseErrors)
 		log.NormalReturn()
 		return
 	}
 
 	if code == http.StatusOK || code == http.StatusCreated {
-		handlers.WriteSessionInfoMessage(r, GetLabel(GenerationalLandscapeUpdatedIndex))
-		url := fmt.Sprintf("/schemas/%d/generations/%d", schemaID, glRequest.GenerationID)
+		generationalLandscape, _ := getGenerationalLandscape(w, r, schemaID, itRequest.LandscapeID)
+
+		handlers.WriteSessionInfoMessage(r, GetLabel(IntangibleUpdatedIndex))
+		url := fmt.Sprintf("/schemas/%d/generations/%d", schemaID, generationalLandscape.GenerationID)
 		http.Redirect(w, r, url, http.StatusMovedPermanently)
 		log.NormalReturn()
 		return
@@ -47,3 +49,5 @@ func UpdateGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+

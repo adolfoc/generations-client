@@ -63,4 +63,3 @@ func MakeGenerationalLandscapeForm(w http.ResponseWriter, r *http.Request, url s
 
 	return generationalLandscapeTemplate, nil
 }
-
