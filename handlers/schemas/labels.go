@@ -14,6 +14,7 @@ const (
 	GenerationSchemaCreateErrorsReceivedIndex = 8
 	GenerationSchemaUpdateErrorsReceivedIndex = 9
 	GenerationSchemaTemplateGeneratedIndex    = 10
+	GenerationSchemaComparativePageTitleIndex = 11
 
 	GenerationSchemaIndexPageTitleES       = "Todos los estudios"
 	GenerationSchemaPageTitleES            = "Estudio Generacional"
@@ -26,6 +27,7 @@ const (
 	GenerationSchemaCreateErrorsReceivedES = "Por favor corrija los errores para poder crear el estudio generacional"
 	GenerationSchemaUpdateErrorsReceivedES = "Por favor corrija los errores para poder actualizar el estudio generacional"
 	GenerationSchemaTemplateGeneratedES    = "La plantilla fue generada exitosamente"
+	GenerationSchemaComparativePageTitleES = "Cuadro comparativo"
 )
 
 var LangES map[int]string
@@ -44,6 +46,7 @@ func initializeMaps() {
 		LangES[GenerationSchemaCreateErrorsReceivedIndex] = GenerationSchemaCreateErrorsReceivedES
 		LangES[GenerationSchemaUpdateErrorsReceivedIndex] = GenerationSchemaUpdateErrorsReceivedES
 		LangES[GenerationSchemaTemplateGeneratedIndex] = GenerationSchemaTemplateGeneratedES
+		LangES[GenerationSchemaComparativePageTitleIndex] = GenerationSchemaComparativePageTitleES
 	}
 }
 

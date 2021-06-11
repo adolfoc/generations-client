@@ -24,6 +24,14 @@ func getGenerationSchemaURL(generationSchemaID int) string {
 	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceGenerationSchema, generationSchemaID)
 }
 
+func getComparativeReportURL(generationSchemaID int) string {
+	return fmt.Sprintf("%s%s/%d/comparative", handlers.GetAPIHostURL(), ResourceGenerationSchema, generationSchemaID)
+}
+
+func getPrintSchemaURL(generationSchemaID int) string {
+	return fmt.Sprintf("%s%s/%d/print", handlers.GetAPIHostURL(), ResourceGenerationSchema, generationSchemaID)
+}
+
 func getGenerationSchemaLifePhasesURL(generationSchemaID int) string {
 	return fmt.Sprintf("%s%s/%d/life-phases", handlers.GetAPIHostURL(), ResourceGenerationSchema, generationSchemaID)
 }
@@ -80,6 +88,42 @@ func getGenerationSchema(w http.ResponseWriter, r *http.Request, gsID int) (*mod
 	}
 
 	return generationSchema, nil
+}
+
+func getComparativeReport(w http.ResponseWriter, r *http.Request, gsID int) (*model.SchemaComparative, error) {
+	url := getComparativeReportURL(gsID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var schemaComparative *model.SchemaComparative
+	err = json.Unmarshal(body, &schemaComparative)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return schemaComparative, nil
+}
+
+func printSchema(w http.ResponseWriter, r *http.Request, schemaID int) ([]byte, error) {
+	url := getPrintSchemaURL(schemaID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	return body, nil
 }
 
 func getUrlGenerationSchemaID(w http.ResponseWriter, r *http.Request) (int, error) {

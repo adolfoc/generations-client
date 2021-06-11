@@ -42,11 +42,11 @@ func (hm *HistoricalMoment) Span() template.HTML {
 	return template.HTML(fmt.Sprintf("%s&mdash;%s", hm.Start, hm.End))
 }
 
-func (hm *HistoricalMoment) IDInput(message, value string) template.HTML {
+func (hm *HistoricalMoment) IDInput(message string, value int) template.HTML {
 	return BuildHiddenIDInput("inputID", value)
 }
 
-func (hm *HistoricalMoment) SchemaIDInput(message, value string) template.HTML {
+func (hm *HistoricalMoment) SchemaIDInput(message string, value int) template.HTML {
 	return BuildHiddenIDInput("inputSchemaID", value)
 }
 

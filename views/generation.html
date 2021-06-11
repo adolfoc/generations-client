@@ -31,6 +31,12 @@
             <b>Tipo</b>: {{ .Generation.Type.Archetype }}
           </p>
           <p class="card-text">
+            <b>Año de inicio</b>: {{ .Generation.StartYear }}
+          </p>
+          <p class="card-text">
+            <b>Año de término</b>: {{ .Generation.EndYear }}
+          </p>
+          <p class="card-text">
             <b>País</b>: {{ .Generation.Place.Name }}
           </p>
           <p class="card-text">
@@ -137,6 +143,7 @@
           <table class="table">
             <thead>
             <tr>
+              <th>Ordinal</th>
               <th>Etapa de vida</th>
               <th>Nombre</th>
               <th>Momento histórico</th>
@@ -147,9 +154,10 @@
             {{ if (eq .HavePositions true) }}
             {{ range .Positions }}
             <tr>
-              <td>{{ .Position.LifePhase.Name }}</td>
+              <td>{{ .Position.Ordinal }}</td>
+              <td>{{ .Position.LifePhase.CalendarSpan .Position.Generation .HistoricalMoment }} </td>
               <td>{{ .Position.Name }}</td>
-              <td>{{ .HistoricalMoment.Name }}</td>
+              <td>{{ .HistoricalMoment.Name }} ({{ .HistoricalMoment.Span }})</td>
               <td>
                 <a class="btn btn-warning btn-sm" href="/schemas/{{ $.SchemaID }}/generations/{{ $.Generation.ID }}/generation-positions/{{ .Position.ID }}/edit" role="button">E</a>
                 <a class="btn btn-danger btn-sm" href="/schemas/{{ $.SchemaID }}/generations/{{ $.Generation.ID }}/edit" role="button">X</a>

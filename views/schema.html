@@ -45,6 +45,8 @@
                     {{ end }}
                     <a class="btn btn-success" href="/schemas/{{ .GenerationSchema.ID }}/generations" role="button">Generaciones</a>
                     <a class="btn btn-success" href="/schemas/{{ .GenerationSchema.ID }}/moments" role="button">Momentos</a>
+                    <a class="btn btn-success" href="/schemas/{{ .GenerationSchema.ID }}/comparative" role="button">Comparativo</a>
+                    <a class="btn btn-success" href="/schemas/{{ .GenerationSchema.ID }}/print" role="button">Imprimir</a>
                 </div>
             </div>
         </div>
@@ -102,7 +104,8 @@
                             <td>{{ .Name }}</td>
                             <td style="text-align: right;">{{ .Span }}</td>
                             <td>{{ .Role }}</td>
-                            <td><a class="btn btn-danger btn-sm" href="/schemas/{{ .SchemaID }}/life-phases/{{ .ID }}/edit" role="button">Editar</a></td>
+                            <td><a class="btn btn-warning btn-sm" href="/schemas/{{ .SchemaID }}/life-phases/{{ .ID }}/edit" role="button">E</a></td>
+                            <td><a class="btn btn-danger btn-sm" href="/schemas/{{ .SchemaID }}/life-phases/{{ .ID }}/delete" role="button">X</a></td>
                         </tr>
                         {{ end }}
                         </tbody>

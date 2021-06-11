@@ -43,7 +43,7 @@ func EditMoment(w http.ResponseWriter, r *http.Request) {
 
 	momentRequest := buildMomentRequest(moment)
 
-	url := fmt.Sprintf("/schemas/%d/moment/%d/update", schemaID, momentID)
+	url := fmt.Sprintf("/schemas/%d/moments/%d/update", schemaID, momentID)
 	generationForm, err := MakeMomentForm(w, r, url, GetLabel(MomentEditPageTitleIndex),
 		GetLabel(MomentEditSubmitLabelIndex), moment, momentRequest, momentTypes, handlers.ResponseErrors{})
 	if err != nil {

@@ -1,7 +1,6 @@
 package generations
 
 import (
-	"fmt"
 	"github.com/adolfoc/generations-client/handlers"
 	"github.com/adolfoc/generations-client/model"
 	"net/http"
@@ -22,12 +21,12 @@ type GenerationForm struct {
 
 func makeGenerationFormValues(generationRequest *model.GenerationRequest) map[string]interface{} {
 	formValues := make(map[string]interface{})
-	formValues["ID"] = fmt.Sprintf("%d", generationRequest.ID)
+	formValues["ID"] = generationRequest.ID
 	formValues["Name"] = generationRequest.Name
-	formValues["SchemaID"] = fmt.Sprintf("%d", generationRequest.SchemaID)
+	formValues["SchemaID"] = generationRequest.SchemaID
 	formValues["TypeID"] = generationRequest.TypeID
-	formValues["StartYear"] = fmt.Sprintf("%d", generationRequest.StartYear)
-	formValues["EndYear"] = fmt.Sprintf("%d", generationRequest.EndYear)
+	formValues["StartYear"] = generationRequest.StartYear
+	formValues["EndYear"] = generationRequest.EndYear
 	formValues["PlaceID"] = generationRequest.PlaceID
 	formValues["FormationLandscapeID"] = generationRequest.FormationLandscapeID
 	formValues["Description"] = generationRequest.Description

@@ -13,6 +13,7 @@ const (
 	LifePhaseUpdatedIndex              = 7
 	LifePhaseCreateErrorsReceivedIndex = 8
 	LifePhaseUpdateErrorsReceivedIndex = 9
+	LifePhaseDeletedIndex              = 10
 
 	LifePhaseIndexPageTitleES       = "Todos las etapas de vida"
 	LifePhasePageTitleES            = "Etapa de Vida"
@@ -24,6 +25,7 @@ const (
 	LifePhaseUpdatedES              = "La etapa de vida fue actualizada satisfactoriamente"
 	LifePhaseCreateErrorsReceivedES = "Por favor corrija los errores para poder crear la etapa de vida"
 	LifePhaseUpdateErrorsReceivedES = "Por favor corrija los errores para poder actualizar la etapa de vida"
+	LifePhaseDeletedES              = "La etapa de vida fue eliminada satisfactoriamente"
 )
 
 var LangES map[int]string
@@ -41,6 +43,7 @@ func initializeMaps() {
 		LangES[LifePhaseUpdatedIndex] = LifePhaseUpdatedES
 		LangES[LifePhaseCreateErrorsReceivedIndex] = LifePhaseCreateErrorsReceivedES
 		LangES[LifePhaseUpdateErrorsReceivedIndex] = LifePhaseUpdateErrorsReceivedES
+		LangES[LifePhaseDeletedIndex] = LifePhaseDeletedES
 	}
 }
 

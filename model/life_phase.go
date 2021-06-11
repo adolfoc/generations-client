@@ -18,6 +18,14 @@ func (lp *LifePhase) Span() template.HTML {
 	return template.HTML(fmt.Sprintf("%d&mdash;%d", lp.StartYear, lp.EndYear))
 }
 
+func (lp *LifePhase) CalendarSpan(generation *Generation, moment *HistoricalMoment) template.HTML {
+	fromCalendar := generation.StartYear + lp.StartYear
+	toCalendar := generation.EndYear + lp.StartYear
+
+	return template.HTML(fmt.Sprintf("%d&mdash;%d (%d&mdash;%d)", lp.StartYear, lp.EndYear, fromCalendar, toCalendar))
+}
+
+
 func (lp *LifePhase) IDInput(message string, value int) template.HTML {
 	return BuildHiddenIDInput("inputID", value)
 }

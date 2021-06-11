@@ -1,7 +1,6 @@
 package moments
 
 import (
-	"fmt"
 	"github.com/adolfoc/generations-client/handlers"
 	"github.com/adolfoc/generations-client/model"
 	"net/http"
@@ -20,9 +19,9 @@ type MomentForm struct {
 
 func makeMomentFormValues(momentRequest *model.HistoricalMomentRequest) map[string]interface{} {
 	formValues := make(map[string]interface{})
-	formValues["ID"] = fmt.Sprintf("%d", momentRequest.ID)
+	formValues["ID"] = momentRequest.ID
 	formValues["Name"] = momentRequest.Name
-	formValues["SchemaID"] = fmt.Sprintf("%d", momentRequest.SchemaID)
+	formValues["SchemaID"] = momentRequest.SchemaID
 	formValues["TypeID"] = momentRequest.TypeID
 	formValues["Start"] = momentRequest.Start
 	formValues["End"] = momentRequest.End

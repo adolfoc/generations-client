@@ -123,3 +123,13 @@ type GenerationSchemaRequest struct {
 	MaximumGenerationSpan int    `json:"maximum_generation_span"`
 	PlaceID               int    `json:"place_id"`
 }
+
+type SchemaComparativeItem struct {
+	Moment    *HistoricalMoment     `json:"historical_moment"`
+	Positions []*GenerationPosition `json:"generation_positions"`
+}
+
+type SchemaComparative struct {
+	Schema *GenerationSchema        `json:"generation_schema"`
+	Items  []*SchemaComparativeItem `json:"comparative_items"`
+}

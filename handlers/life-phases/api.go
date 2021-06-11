@@ -123,3 +123,15 @@ func patchLifePhase(w http.ResponseWriter, r *http.Request, lifePhaseRequest *mo
 
 	return code, body, nil
 }
+
+func deleteLifePhase(w http.ResponseWriter, r *http.Request, schemaID, lifePhaseID int) (int, []byte, error) {
+	url := getSchemaLifePhaseURL(schemaID, lifePhaseID)
+
+	code, body, err := handlers.DeleteResource(w, r, url)
+	if err != nil {
+		return 0, nil, err
+	}
+
+
+	return code, body, nil
+}

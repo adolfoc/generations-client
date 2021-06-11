@@ -1,7 +1,6 @@
 package schemas
 
 import (
-	"fmt"
 	"github.com/adolfoc/generations-client/handlers"
 	"github.com/adolfoc/generations-client/model"
 	"net/http"
@@ -19,7 +18,7 @@ type SchemaForm struct {
 
 func makeSchemaFormValues(sRequest *model.GenerationSchemaRequest) map[string]interface{} {
 	formValues := make(map[string]interface{})
-	formValues["ID"] = fmt.Sprintf("%d", sRequest.ID)
+	formValues["ID"] = sRequest.ID
 	formValues["Name"] = sRequest.Name
 	formValues["Description"] = sRequest.Description
 	formValues["StartYear"] = sRequest.StartYear

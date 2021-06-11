@@ -156,6 +156,8 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/edit", schemas.EditSchema).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/update", schemas.UpdateSchema).Methods("POST")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generate-template", schemas.GenerateTemplate).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/comparative", schemas.GetComparative).Methods("GET")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/print", schemas.PrintSchema).Methods("GET")
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations", generations.GetSchemaGenerations).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generations/{generation_id:[0-9]+}", generations.GetGeneration).Methods("GET")
@@ -177,6 +179,7 @@ func makeRouter() *mux.Router {
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/life-phases/{life_phase_id:[0-9]+}/edit", life_phases.EditLifePhase).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/life-phases/{life_phase_id:[0-9]+}/update", life_phases.UpdateLifePhase).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/life-phases/{life_phase_id:[0-9]+}/delete", life_phases.DeleteLifePhase).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/life-phases/new", life_phases.NewLifePhase).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/life-phases/create", life_phases.CreateLifePhase).Methods("POST")
 

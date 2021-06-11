@@ -1,0 +1,40 @@
+{{ define "comparative_report" }}
+{{template "top_frame" .}}
+
+<div class="card text-dark border-dark bg-light mb-3 school-card">
+  <div class="card-header bg-primary text-white">
+    <b>{{.Ct.PageTitle}}</b>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Momento histórico</th>
+        <th>Duración</th>
+        <th>Generación</th>
+        <th>Rol</th>
+        <th>Años de nacimiento</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{range .Rows}}
+      <tr>
+        <td>{{ .MomentName }}</a></td>
+        <td>{{ .Span }}</td>
+        <td>{{ .GenerationName }}</td>
+        <td>{{ .Role }}</td>
+        <td>{{ .BirthYears }}</td>
+      </tr>
+      {{end}}
+      </tbody>
+    </table>
+    <div class="card-footer bg-transparent border-success">
+      <a class="btn btn-danger" href="/schemas/{{ .SchemaID }}" role="button">Volver</a>
+    </div>
+  </div>
+</div>
+</div>
+
+{{template "bottom_frame" .}}
+
+{{ end }}

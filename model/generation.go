@@ -23,11 +23,11 @@ func (g *Generation) Span() template.HTML {
 	return template.HTML(fmt.Sprintf("%d&mdash;%d", g.StartYear, g.EndYear))
 }
 
-func (g *Generation) IDInput(message, value string) template.HTML {
+func (g *Generation) IDInput(message string, value int) template.HTML {
 	return BuildHiddenIDInput("inputID", value)
 }
 
-func (g *Generation) SchemaIDInput(message, value string) template.HTML {
+func (g *Generation) SchemaIDInput(message string, value int) template.HTML {
 	return BuildHiddenIDInput("inputSchemaID", value)
 }
 
@@ -68,16 +68,16 @@ func (g *Generation) StartYearLabel() template.HTML {
 	return BuildLabel("inputStartYear", "Año de comienzo")
 }
 
-func (g *Generation) StartYearInput(message, value string) template.HTML {
-	return BuildTextInput("inputStartYear", value, message)
+func (g *Generation) StartYearInput(message string, value int) template.HTML {
+	return BuildIntegerInput("inputStartYear", value, message)
 }
 
 func (g *Generation) EndYearLabel() template.HTML {
 	return BuildLabel("inputEndYear", "Año de término")
 }
 
-func (g *Generation) EndYearInput(message, value string) template.HTML {
-	return BuildTextInput("inputEndYear", value, message)
+func (g *Generation) EndYearInput(message string, value int) template.HTML {
+	return BuildIntegerInput("inputEndYear", value, message)
 }
 
 func (g *Generation) PlaceLabel() template.HTML {
