@@ -30,11 +30,17 @@ func EditLifeSegment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	person, err := getPerson(w, r, lifeSegment.PersonID)
+	if handlers.HandleError(w, r, err) {
+		log.FailedReturn()
+		return
+	}
+
 	lifeSegmentRequest := buildLifeSegmentRequest(lifeSegment)
 
 	url := fmt.Sprintf("/persons/%d/life-segments/%d/update", lifeSegment.PersonID, lifeSegmentID)
 	generationForm, err := MakeLifeSegmentForm(w, r, url, GetLabel(LifeSegmentEditPageTitleIndex),
-		GetLabel(LifeSegmentEditSubmitLabelIndex), lifeSegment, lifeSegmentRequest, handlers.ResponseErrors{})
+		GetLabel(LifeSegmentEditSubmitLabelIndex), lifeSegment, lifeSegmentRequest, person, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
@@ -60,6 +66,12 @@ func EditLifeSegmentRetry(w http.ResponseWriter, r *http.Request, lsRequest *mod
 		return
 	}
 
+	person, err := getPerson(w, r, lsRequest.PersonID)
+	if handlers.HandleError(w, r, err) {
+		log.FailedReturn()
+		return
+	}
+
 	lifeSegment := &model.LifeSegment{
 		ID:          lsRequest.ID,
 		PersonID:    lsRequest.PersonID,
@@ -70,7 +82,7 @@ func EditLifeSegmentRetry(w http.ResponseWriter, r *http.Request, lsRequest *mod
 
 	url := fmt.Sprintf("/life-segments/%d/update", lsRequest.ID)
 	generationForm, err := MakeLifeSegmentForm(w, r, url, GetLabel(LifeSegmentEditPageTitleIndex),
-		GetLabel(LifeSegmentEditSubmitLabelIndex), lifeSegment, lsRequest, errors)
+		GetLabel(LifeSegmentEditSubmitLabelIndex), lifeSegment, lsRequest, person, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

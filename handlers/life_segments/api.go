@@ -10,10 +10,15 @@ import (
 
 const (
 	ResourceLifeSegments = "life-segments"
+	ResourcePersons      = "persons"
 )
 
 func getLifeSegmentURL(generalifeSegmentID int) string {
 	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceLifeSegments, generalifeSegmentID)
+}
+
+func getPersonURL(personID int) string {
+	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourcePersons, personID)
 }
 
 func getLifeSegment(w http.ResponseWriter, r *http.Request, lifeSegmentID int) (*model.LifeSegment, error) {
@@ -35,6 +40,27 @@ func getLifeSegment(w http.ResponseWriter, r *http.Request, lifeSegmentID int) (
 	}
 
 	return lifeSegment, nil
+}
+
+func getPerson(w http.ResponseWriter, r *http.Request, personID int) (*model.Person, error) {
+	url := getPersonURL(personID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var person *model.Person
+	err = json.Unmarshal(body, &person)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return person, nil
 }
 
 func getUrlLifeSegmentID(w http.ResponseWriter, r *http.Request) (int, error) {

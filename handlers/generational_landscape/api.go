@@ -13,6 +13,7 @@ const (
 	ResourceSchemas               = "generation-schemas"
 	ResourceTangibles             = "tangibles"
 	ResourceIntangibles           = "intangibles"
+	ResourceGenerations           = "generations"
 )
 
 func getGenerationalLandscapesURL(generationSchemaID int) string {
@@ -41,6 +42,10 @@ func getAddIntangibleURL(generationalLandscapeID int) string {
 
 func getIntangibleURL(intangibleID int) string {
 	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceIntangibles, intangibleID)
+}
+
+func getGenerationURL(generationID int) string {
+	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceGenerations, generationID)
 }
 
 func getGenerationalLandscape(w http.ResponseWriter, r *http.Request, generationSchemaID, generationalLandscapeID int) (*model.GenerationalLandscape, error) {
@@ -95,6 +100,27 @@ func getMomentsForSchema(w http.ResponseWriter, r *http.Request, schemaID int) (
 	}
 
 	return moments, nil
+}
+
+func getGeneration(w http.ResponseWriter, r *http.Request, generationID int) (*model.Generation, error) {
+	url := getGenerationURL(generationID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var generation *model.Generation
+	err = json.Unmarshal(body, &generation)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return generation, nil
 }
 
 func buildGenerationalLandscapeRequest(generationalLandscape *model.GenerationalLandscape) *model.GenerationalLandscapeRequest {

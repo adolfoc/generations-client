@@ -10,6 +10,7 @@ import (
 
 const (
 	ResourceGenerationSchema = "generation-schemas"
+	ResourceLandscape        = "generational-landscapes"
 )
 
 func getGenerationSchemasURL() string {
@@ -46,6 +47,10 @@ func getGenerationSchemaMomentTypesURL(generationSchemaID int) string {
 
 func getGenerateTemplateURL(generationSchemaID int) string {
 	return fmt.Sprintf("%s%s/%d/generate-template", handlers.GetAPIHostURL(), ResourceGenerationSchema, generationSchemaID)
+}
+
+func getGenerationalLandscapeURL(generationalLandscapeID int) string {
+	return fmt.Sprintf("%s%s/%d", handlers.GetAPIHostURL(), ResourceLandscape, generationalLandscapeID)
 }
 
 func getGenerationSchemas(w http.ResponseWriter, r *http.Request) (*model.GenerationSchemas, error) {
@@ -88,6 +93,27 @@ func getGenerationSchema(w http.ResponseWriter, r *http.Request, gsID int) (*mod
 	}
 
 	return generationSchema, nil
+}
+
+func getGenerationalLandscape(w http.ResponseWriter, r *http.Request, generationalLandscapeID int) (*model.GenerationalLandscape, error) {
+	url := getGenerationalLandscapeURL(generationalLandscapeID)
+	code, body, err := handlers.GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var generationnalLandscape *model.GenerationalLandscape
+	err = json.Unmarshal(body, &generationnalLandscape)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return generationnalLandscape, nil
 }
 
 func getComparativeReport(w http.ResponseWriter, r *http.Request, gsID int) (*model.SchemaComparative, error) {

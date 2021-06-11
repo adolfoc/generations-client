@@ -33,15 +33,15 @@ func (ls *LifeSegment) TitleHTML(person *Person) template.HTML {
 		ls.LifePhase.Name, ls.LifePhase.StartYear, ls.LifePhase.EndYear, startYear, endYear))
 }
 
-func (ls *LifeSegment) IDInput(message, value string) template.HTML {
+func (ls *LifeSegment) IDInput(message string, value int) template.HTML {
 	return BuildHiddenIDInput("inputID", value)
 }
 
-func (ls *LifeSegment) PersonIDInput(message, value string) template.HTML {
+func (ls *LifeSegment) PersonIDInput(message string, value int) template.HTML {
 	return BuildHiddenIDInput("inputPersonID", value)
 }
 
-func (ls *LifeSegment) LifePhaseIDInput(message, value string) template.HTML {
+func (ls *LifeSegment) LifePhaseIDInput(message string, value int) template.HTML {
 	return BuildHiddenIDInput("inputLifePhaseID", value)
 }
 

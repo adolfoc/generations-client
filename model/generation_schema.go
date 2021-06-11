@@ -28,7 +28,7 @@ func (gs *GenerationSchema) DurationSpan() template.HTML {
 	return template.HTML(fmt.Sprintf("%d&mdash;%d (%d años)", gs.StartYear, gs.EndYear, extension))
 }
 
-func (gs *GenerationSchema) IDInput(message, value string) template.HTML {
+func (gs *GenerationSchema) IDInput(message string, value int) template.HTML {
 	return BuildHiddenIDInput("inputID", value)
 }
 
@@ -124,12 +124,20 @@ type GenerationSchemaRequest struct {
 	PlaceID               int    `json:"place_id"`
 }
 
+type SchemaComparativePosition struct {
+	Role       string            `json:"role"`
+	LifePhase  *LifePhase        `json:"life_phase"`
+	Generation *Generation       `json:"generation"`
+	Landscape  *HistoricalMoment `json:"landscape"`
+}
+
 type SchemaComparativeItem struct {
-	Moment    *HistoricalMoment     `json:"historical_moment"`
-	Positions []*GenerationPosition `json:"generation_positions"`
+	Moment    *HistoricalMoment            `json:"historical_moment"`
+	Positions []*SchemaComparativePosition `json:"schema_comparative_position"`
 }
 
 type SchemaComparative struct {
 	Schema *GenerationSchema        `json:"generation_schema"`
 	Items  []*SchemaComparativeItem `json:"comparative_items"`
 }
+

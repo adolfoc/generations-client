@@ -20,7 +20,7 @@ type GenerationalLandscapeForm struct {
 
 func makeGenerationalLandscapeFormValues(generationalLandscapeRequest *model.GenerationalLandscapeRequest) map[string]interface{} {
 	formValues := make(map[string]interface{})
-	formValues["ID"] = fmt.Sprintf("%d", generationalLandscapeRequest.ID)
+	formValues["ID"] = generationalLandscapeRequest.ID
 	formValues["GenerationID"] = generationalLandscapeRequest.GenerationID
 	formValues["FormationMomentID"] = generationalLandscapeRequest.FormationMomentID
 	formValues["Description"] = generationalLandscapeRequest.Description
@@ -45,11 +45,12 @@ func makeGenerationalLandscapeErrorMessages(errors handlers.ResponseErrors) map[
 
 func MakeGenerationalLandscapeForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string,
 	generationalLandscape *model.GenerationalLandscape, glRequest *model.GenerationalLandscapeRequest, schemaID int,
-	formationMoments *model.HistoricalMoments, errors handlers.ResponseErrors) (*GenerationalLandscapeForm, error) {
+	formationMoments *model.HistoricalMoments, generation *model.Generation, errors handlers.ResponseErrors) (*GenerationalLandscapeForm, error) {
 
+	fullTitle := fmt.Sprintf("%s: %s (%d-%d)", pageTitle, generation.Name, generation.StartYear, generation.EndYear)
 	formValues := makeGenerationalLandscapeFormValues(glRequest)
 	formErrorMessages := makeGenerationalLandscapeErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, fullTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

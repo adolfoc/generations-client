@@ -14,6 +14,7 @@ type ComparativeRow struct {
 	GenerationName string
 	Role           string
 	BirthYears     string
+	Landscape      string
 }
 
 type ComparativeTemplate struct {
@@ -33,14 +34,24 @@ func buildRows(comparative *model.SchemaComparative) []*ComparativeRow {
 				MomentName:     momentName,
 				Span:           momentSpan,
 				GenerationName: pos.Generation.Name,
-				Role:           pos.Name,
+				Role:           pos.Role,
 				BirthYears:     fmt.Sprintf("%d--%d (%d)", pos.Generation.StartYear, pos.Generation.EndYear, pos.Generation.EndYear - pos.Generation.StartYear),
+				Landscape:      pos.Landscape.Name,
 			}
 
 			rows = append(rows, row)
 			momentName = ""
 			momentSpan = ""
 		}
+		row := &ComparativeRow{
+			MomentName:     "",
+			Span:           "",
+			GenerationName: "",
+			Role:           "",
+			BirthYears:     "",
+			Landscape:      "",
+		}
+		rows = append(rows, row)
 	}
 
 	return rows

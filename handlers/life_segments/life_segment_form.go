@@ -5,6 +5,8 @@ import (
 	"github.com/adolfoc/generations-client/handlers"
 	"github.com/adolfoc/generations-client/model"
 	"net/http"
+	"strconv"
+	"strings"
 )
 
 const (
@@ -18,9 +20,9 @@ type LifeSegmentForm struct {
 
 func makeLifeSegmentFormValues(lsRequest *model.LifeSegmentRequest) map[string]interface{} {
 	formValues := make(map[string]interface{})
-	formValues["ID"] = fmt.Sprintf("%d", lsRequest.ID)
-	formValues["PersonID"] = fmt.Sprintf("%d", lsRequest.PersonID)
-	formValues["LifePhaseID"] = fmt.Sprintf("%d", lsRequest.LifePhaseID)
+	formValues["ID"] = lsRequest.ID
+	formValues["PersonID"] = lsRequest.PersonID
+	formValues["LifePhaseID"] = lsRequest.LifePhaseID
 	formValues["Summary"] = lsRequest.Summary
 	formValues["Description"] = lsRequest.Description
 
@@ -44,12 +46,26 @@ func makeLifeSegmentErrorMessages(errors handlers.ResponseErrors) map[string]str
 	return formErrorMessages
 }
 
-func MakeLifeSegmentForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string, lifeSegment *model.LifeSegment,
-	lsRequest *model.LifeSegmentRequest, errors handlers.ResponseErrors) (*LifeSegmentForm, error) {
+func extractYear(date string) int {
+	parts := strings.Split(date, "-")
+	if len(parts) > 0 {
+		year, _ := strconv.Atoi(parts[0])
+		return year
+	}
 
+	return 0
+}
+
+func MakeLifeSegmentForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string, lifeSegment *model.LifeSegment,
+	lsRequest *model.LifeSegmentRequest, person *model.Person, errors handlers.ResponseErrors) (*LifeSegmentForm, error) {
+
+	yearOfBirth := extractYear(person.BirthDate)
+	fullPageTitle := fmt.Sprintf("%s: %d-%d años (%d-%d)",
+		pageTitle, lifeSegment.LifePhase.StartYear, lifeSegment.LifePhase.EndYear,
+		yearOfBirth + lifeSegment.LifePhase.StartYear, yearOfBirth + lifeSegment.LifePhase.EndYear)
 	formValues := makeLifeSegmentFormValues(lsRequest)
 	formErrorMessages := makeLifeSegmentErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, fullPageTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

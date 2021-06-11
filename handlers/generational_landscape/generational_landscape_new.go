@@ -29,6 +29,12 @@ func NewGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generation, err := getGeneration(w, r, generationID)
+	if handlers.HandleError(w, r, err) {
+		log.FailedReturn()
+		return
+	}
+
 	moments, err := getMomentsForSchema(w, r, schemaID)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
@@ -44,7 +50,7 @@ func NewGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/create", schemaID)
 	generationalLandscapeForm, err := MakeGenerationalLandscapeForm(w, r, url, GetLabel(GenerationalLandscapeNewPageTitleIndex),
 		GetLabel(GenerationalLandscapeNewSubmitLabelIndex), generationalLandscape, generationalLandscapeRequest, schemaID, moments,
-		handlers.ResponseErrors{})
+		generation, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
@@ -75,6 +81,12 @@ func NewGenerationalLandscapeRetry(w http.ResponseWriter, r *http.Request, glReq
 		return
 	}
 
+	generation, err := getGeneration(w, r, glRequest.GenerationID)
+	if handlers.HandleError(w, r, err) {
+		log.FailedReturn()
+		return
+	}
+
 	generationalLandscape := &model.GenerationalLandscape{
 		ID:                0,
 		GenerationID:      glRequest.GenerationID,
@@ -84,7 +96,7 @@ func NewGenerationalLandscapeRetry(w http.ResponseWriter, r *http.Request, glReq
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/create", schemaID)
 	generationalLandscapeForm, err := MakeGenerationalLandscapeForm(w, r, url, GetLabel(GenerationalLandscapeNewPageTitleIndex),
-		GetLabel(GenerationalLandscapeNewSubmitLabelIndex), generationalLandscape, glRequest, schemaID, moments, errors)
+		GetLabel(GenerationalLandscapeNewSubmitLabelIndex), generationalLandscape, glRequest, schemaID, moments, generation, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
