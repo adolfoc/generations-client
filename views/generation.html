@@ -1,7 +1,6 @@
 {{ define "generation" }}
 {{ template "top_frame" . }}
 
-
 <div class="row">
   <div class="col-2">
     <div class="bd-toc mt-4 mb-5 my-md-0 mb-lg-5">
@@ -95,7 +94,7 @@
               <td>{{ .Description }}</td>
               <td>
                 <a class="btn btn-warning btn-sm" href="/schemas/{{ $.SchemaID }}/generational-landscape/{{ $.GenerationalLandscape.ID }}/tangibles/{{ .ID }}/edit" role="button">E</a>
-                <a class="btn btn-danger btn-sm" href="/schemas/{{ $.SchemaID }}/generations/{{ $.Generation.ID }}/edit" role="button">X</a>
+                <a class="btn btn-danger btn-sm" href="/schemas/{{ $.SchemaID }}/generational-landscape/{{ $.GenerationalLandscape.ID }}/tangibles/{{ .ID}}/delete" role="button">X</a>
               </td>
             </tr>
             {{ end }}
@@ -120,7 +119,7 @@
               <td>{{ .Description }}</td>
               <td>
                 <a class="btn btn-warning btn-sm" href="/schemas/{{ $.SchemaID }}/generational-landscape/{{ $.GenerationalLandscape.ID }}/intangibles/{{ .ID }}/edit" role="button">E</a>
-                <a class="btn btn-danger btn-sm" href="/schemas/{{ $.SchemaID }}/generations/{{ $.Generation.ID }}/edit" role="button">X</a>
+                <a class="btn btn-danger btn-sm" href="/schemas/{{ $.SchemaID }}/generational-landscape/{{ $.GenerationalLandscape.ID }}/intangibles/{{ .ID}}/delete" role="button">X</a>
               </td>
             </tr>
             {{ end }}

@@ -13,7 +13,7 @@ type PlaceTypeTemplate struct {
 }
 
 func MakePlaceTypeTemplate(r *http.Request, pageTitle string, placeType *model.PlaceType) (*PlaceTypeTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, "")
 	if err != nil {
 		return nil, err
 	}

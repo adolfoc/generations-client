@@ -19,8 +19,8 @@ func getPaginationBaseURL() string {
 	return stem + "?page=%d"
 }
 
-func MakePersonsTemplate(r *http.Request, pageTitle string, page int, persons *model.Persons) (*PersonsTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakePersonsTemplate(r *http.Request, pageTitle, studyTitle string, page int, persons *model.Persons) (*PersonsTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, studyTitle, pageTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func GetPersons(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakePersonsTemplate(r, GetLabel(PersonIndexPageTitleIndex), page, persons)
+	ct, err := MakePersonsTemplate(r, GetLabel(PersonIndexPageTitleIndex), "", page, persons)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

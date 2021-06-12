@@ -19,6 +19,10 @@ type GenerationSchema struct {
 	Place                 *Place            `json:"place"`
 }
 
+func (gs *GenerationSchema) MakeStudyTitle() string {
+	return fmt.Sprintf("%s (%d-%d)", gs.Name, gs.StartYear, gs.EndYear)
+}
+
 func (gs *GenerationSchema) GenerationalSpan() template.HTML {
 	return template.HTML(fmt.Sprintf("%d&mdash;%d", gs.MinimumGenerationSpan, gs.MaximumGenerationSpan))
 }

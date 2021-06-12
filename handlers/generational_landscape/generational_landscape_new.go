@@ -23,6 +23,12 @@ func NewGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationID, err := getUrlGenerationID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -49,7 +55,7 @@ func NewGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/create", schemaID)
 	generationalLandscapeForm, err := MakeGenerationalLandscapeForm(w, r, url, GetLabel(GenerationalLandscapeNewPageTitleIndex),
-		GetLabel(GenerationalLandscapeNewSubmitLabelIndex), generationalLandscape, generationalLandscapeRequest, schemaID, moments,
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationalLandscapeNewSubmitLabelIndex), generationalLandscape, generationalLandscapeRequest, schemaID, moments,
 		generation, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -70,6 +76,12 @@ func NewGenerationalLandscapeRetry(w http.ResponseWriter, r *http.Request, glReq
 	log := common.StartLog("handlers-generational-landscapes", "NewGenerationalLandscapeRetry")
 
 	schemaID, err := getUrlGenerationSchemaID(w, r)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
 	if err != nil {
 		log.FailedReturn()
 		return
@@ -96,7 +108,8 @@ func NewGenerationalLandscapeRetry(w http.ResponseWriter, r *http.Request, glReq
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/create", schemaID)
 	generationalLandscapeForm, err := MakeGenerationalLandscapeForm(w, r, url, GetLabel(GenerationalLandscapeNewPageTitleIndex),
-		GetLabel(GenerationalLandscapeNewSubmitLabelIndex), generationalLandscape, glRequest, schemaID, moments, generation, errors)
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationalLandscapeNewSubmitLabelIndex),
+		generationalLandscape, glRequest, schemaID, moments, generation, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

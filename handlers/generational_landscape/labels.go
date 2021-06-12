@@ -29,6 +29,8 @@ const (
 	IntangibleEditSubmitLabelIndex                 = 23
 	IntangibleUpdateErrorsReceivedIndex            = 24
 	IntangibleUpdatedIndex                         = 25
+	TangibleDeletedIndex                           = 26
+	IntangibleDeletedIndex                         = 27
 
 	GenerationalLandscapeIndexPageTitleES       = "Todos los paisajes generacionales"
 	GenerationalLandscapePageTitleES            = "Paisaje generacional"
@@ -56,6 +58,8 @@ const (
 	IntangibleEditSubmitLabelES                 = "Actualizar Intangible"
 	IntangibleUpdateErrorsReceivedES            = "Por favor corrija los errores para poder actualizar el intangible"
 	IntangibleUpdatedES                         = "El intangible fue actualizado satisfactoriamente"
+	TangibleDeletedES                           = "El tangible fue eliminado satisfactoriamente"
+	IntangibleDeletedES                         = "El intangible fue eliminado satisfactoriamente"
 )
 
 var LangES map[int]string
@@ -89,6 +93,8 @@ func initializeMaps() {
 		LangES[IntangibleEditSubmitLabelIndex] = IntangibleEditSubmitLabelES
 		LangES[IntangibleUpdateErrorsReceivedIndex] = IntangibleUpdateErrorsReceivedES
 		LangES[IntangibleUpdatedIndex] = IntangibleUpdatedES
+		LangES[TangibleDeletedIndex] = TangibleDeletedES
+		LangES[IntangibleDeletedIndex] = IntangibleDeletedES
 	}
 }
 

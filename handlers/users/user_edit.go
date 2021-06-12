@@ -32,7 +32,7 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 	euRequest := buildUpdateUserRequest(user)
 
 	url := fmt.Sprintf("/users/%d/update", userID)
-	editUserForm, err := MakeEditUserForm(w, r, url, GetLabel(UserEditPageTitleIndex),
+	editUserForm, err := MakeEditUserForm(w, r, url, GetLabel(UserEditPageTitleIndex), "",
 		GetLabel(UserEditSubmitLabelIndex), user, euRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -63,7 +63,7 @@ func EditUserRetry(w http.ResponseWriter, r *http.Request, euRequest *model.Upda
 	}
 
 	url := fmt.Sprintf("/users/%d/update", euRequest.ID)
-	editUserForm, err := MakeEditUserForm(w, r, url, GetLabel(UserEditPageTitleIndex),
+	editUserForm, err := MakeEditUserForm(w, r, url, GetLabel(UserEditPageTitleIndex), "",
 		GetLabel(UserEditSubmitLabelIndex), user, euRequest, errors)
 	if err != nil {
 		log.FailedReturn()

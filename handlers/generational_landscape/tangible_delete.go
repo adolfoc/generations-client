@@ -1,4 +1,4 @@
-package moment_types
+package generational_landscape
 
 import (
 	"fmt"
@@ -7,8 +7,8 @@ import (
 	"net/http"
 )
 
-func DeleteMomentType(w http.ResponseWriter, r *http.Request) {
-	log := common.StartLog("handlers-generation_types", "DeleteMomentType")
+func DeleteTangible(w http.ResponseWriter, r *http.Request) {
+	log := common.StartLog("handlers-generational_landscape", "DeleteTangible")
 
 	if handlers.UserAuthenticated(w, r) == false {
 		log.FailedReturn()
@@ -22,27 +22,40 @@ func DeleteMomentType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	momentTypeID, err := getUrlMomentTypeID(w, r)
+	generationalLandscapeID, err := getUrlGenerationalLandscapeID(w, r)
 	if err != nil {
 		log.FailedReturn()
 		return
 	}
 
-	code, body, err := deleteMomentType(w, r, schemaID, momentTypeID)
+	generationalLandscape, err := getGenerationalLandscape(w, r, schemaID, generationalLandscapeID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
+	tangibleID, err := getUrlTangibleID(w, r)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
+	code, body, err := deleteTangible(w, r, tangibleID)
 	if err != nil {
 		log.FailedReturn()
 		return
 	}
 
 	if code == http.StatusOK {
-		handlers.WriteSessionInfoMessage(r, GetLabel(MomentTypeDeletedIndex))
+		handlers.WriteSessionInfoMessage(r, GetLabel(TangibleDeletedIndex))
 	} else {
 		responseErrors, _ := handlers.OnDeleteError(r, body)
 		handlers.WriteSessionErrorMessage(r, handlers.ExtractFirstError(responseErrors))
 	}
 
-	url := fmt.Sprintf("/schemas/%d", schemaID)
+	url := fmt.Sprintf("/schemas/%d/generations/%d", schemaID, generationalLandscape.GenerationID)
 	http.Redirect(w, r, url, http.StatusMovedPermanently)
 
 	log.NormalReturn()
 }
+

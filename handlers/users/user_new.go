@@ -20,7 +20,7 @@ func NewUser(w http.ResponseWriter, r *http.Request) {
 	newUserRequest := &model.NewUserRequest{}
 
 	url := fmt.Sprintf("/users/create")
-	newUserForm, err := MakeNewUserForm(w, r, url, GetLabel(UserNewPageTitleIndex),
+	newUserForm, err := MakeNewUserForm(w, r, url, GetLabel(UserNewPageTitleIndex), "",
 		GetLabel(UserNewSubmitLabelIndex), &model.User{}, newUserRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -52,7 +52,7 @@ func NewUserRetry(w http.ResponseWriter, r *http.Request, newUserRequest *model.
 	}
 
 	url := fmt.Sprintf("/users/create")
-	newUserForm, err := MakeNewUserForm(w, r, url, GetLabel(UserNewPageTitleIndex),
+	newUserForm, err := MakeNewUserForm(w, r, url, GetLabel(UserNewPageTitleIndex), "",
 		GetLabel(UserNewSubmitLabelIndex), user, newUserRequest, errors)
 	if err != nil {
 		log.FailedReturn()

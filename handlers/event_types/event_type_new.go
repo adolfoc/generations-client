@@ -20,7 +20,7 @@ func NewEventType(w http.ResponseWriter, r *http.Request) {
 	eventTypeRequest := &model.EventTypeRequest{}
 
 	url := fmt.Sprintf("/event-types/create")
-	eventTypeForm, err := MakeEventTypeForm(w, r, url, GetLabel(EventTypeNewPageTitleIndex),
+	eventTypeForm, err := MakeEventTypeForm(w, r, url, GetLabel(EventTypeNewPageTitleIndex), "",
 		GetLabel(EventTypeNewSubmitLabelIndex), &model.EventType{}, eventTypeRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -48,7 +48,7 @@ func NewEventTypeRetry(w http.ResponseWriter, r *http.Request, eventTypeRequest 
 	}
 
 	url := fmt.Sprintf("/event-types/create")
-	eventTypeForm, err := MakeEventTypeForm(w, r, url, GetLabel(EventTypeNewPageTitleIndex),
+	eventTypeForm, err := MakeEventTypeForm(w, r, url, GetLabel(EventTypeNewPageTitleIndex), "",
 		GetLabel(EventTypeNewSubmitLabelIndex), eventType, eventTypeRequest, errors)
 	if err != nil {
 		log.FailedReturn()

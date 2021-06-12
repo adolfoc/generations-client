@@ -65,12 +65,12 @@ func makePersonErrorMessages(errors handlers.ResponseErrors) map[string]string {
 	return formErrorMessages
 }
 
-func MakePersonForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string, person *model.Person,
+func MakePersonForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string, person *model.Person,
 	lsRequest *model.PersonRequest, places []*model.Place, errors handlers.ResponseErrors) (*PersonForm, error) {
 
 	formValues := makePersonFormValues(lsRequest)
 	formErrorMessages := makePersonErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

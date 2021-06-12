@@ -34,7 +34,7 @@ func NewPlace(w http.ResponseWriter, r *http.Request) {
 	placeRequest := newPlaceRequest()
 
 	url := fmt.Sprintf("/places/create")
-	placeForm, err := MakePlaceForm(w, r, url, GetLabel(PlaceNewPageTitleIndex),
+	placeForm, err := MakePlaceForm(w, r, url, GetLabel(PlaceNewPageTitleIndex), "",
 		GetLabel(PlaceNewSubmitPlaceIndex), &model.Place{}, placeRequest, placeTypes, parents.Places, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -80,7 +80,7 @@ func NewPlaceRetry(w http.ResponseWriter, r *http.Request, pRequest *model.Place
 	}
 
 	url := fmt.Sprintf("/places/create")
-	momentForm, err := MakePlaceForm(w, r, url, GetLabel(PlaceNewPageTitleIndex),
+	momentForm, err := MakePlaceForm(w, r, url, GetLabel(PlaceNewPageTitleIndex), "",
 		GetLabel(PlaceNewSubmitPlaceIndex), place, pRequest, placeTypes, parents.Places, errors)
 	if err != nil {
 		log.FailedReturn()

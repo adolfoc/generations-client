@@ -55,12 +55,12 @@ func makePlaceErrorMessages(errors handlers.ResponseErrors) map[string]string {
 	return formErrorMessages
 }
 
-func MakePlaceForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string, place *model.Place,
+func MakePlaceForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string, place *model.Place,
 	pRequest *model.PlaceRequest, placeTypes []*model.PlaceType, parents []*model.Place, errors handlers.ResponseErrors) (*PlaceForm, error) {
 
 	formValues := makePlaceFormValues(pRequest)
 	formErrorMessages := makePlaceErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

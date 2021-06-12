@@ -23,6 +23,12 @@ func NewIntangible(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationalLandscapeID, err := getUrlGenerationalLandscapeID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -43,7 +49,7 @@ func NewIntangible(w http.ResponseWriter, r *http.Request) {
 	tangibleRequest := newIntangibleRequest(generationalLandscapeID)
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/%d/intangibles/create", schemaID, generationalLandscapeID)
-	intangibleForm, err := MakeIntangibleForm(w, r, url, GetLabel(IntangibleNewPageTitleIndex),
+	intangibleForm, err := MakeIntangibleForm(w, r, url, GetLabel(IntangibleNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(IntangibleNewSubmitLabelIndex), intangible, tangibleRequest, schemaID, generationalLandscape.GenerationID,
 		handlers.ResponseErrors{})
 	if err != nil {
@@ -70,6 +76,12 @@ func NewIntangibleRetry(w http.ResponseWriter, r *http.Request, intangibleReques
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	intangible := &model.Intangible{
 		ID:          0,
 		LandscapeID: intangibleRequest.LandscapeID,
@@ -84,7 +96,7 @@ func NewIntangibleRetry(w http.ResponseWriter, r *http.Request, intangibleReques
 	}
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/%d/intangibles/create", schemaID, intangibleRequest.LandscapeID)
-	intangibleForm, err := MakeIntangibleForm(w, r, url, GetLabel(IntangibleNewPageTitleIndex),
+	intangibleForm, err := MakeIntangibleForm(w, r, url, GetLabel(IntangibleNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(IntangibleNewSubmitLabelIndex), intangible, intangibleRequest, schemaID, generationalLandscape.GenerationID, errors)
 	if err != nil {
 		log.FailedReturn()

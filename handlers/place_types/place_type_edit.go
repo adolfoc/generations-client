@@ -32,7 +32,7 @@ func EditPlaceType(w http.ResponseWriter, r *http.Request) {
 	placeTypeRequest := buildPlaceTypeRequest(placeType)
 
 	url := fmt.Sprintf("/place-types/%d/update", placeTypeID)
-	placeTypeForm, err := MakePlaceTypeForm(w, r, url, GetLabel(PlaceTypeEditPageTitleIndex),
+	placeTypeForm, err := MakePlaceTypeForm(w, r, url, GetLabel(PlaceTypeEditPageTitleIndex), "",
 		GetLabel(PlaceTypeEditSubmitLabelIndex), placeType, placeTypeRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -59,7 +59,7 @@ func EditPlaceTypeRetry(w http.ResponseWriter, r *http.Request, placeTypeRequest
 	}
 
 	url := fmt.Sprintf("/place-types/%d/update", placeTypeRequest.ID)
-	placeForm, err := MakePlaceTypeForm(w, r, url, GetLabel(PlaceTypeEditPageTitleIndex),
+	placeForm, err := MakePlaceTypeForm(w, r, url, GetLabel(PlaceTypeEditPageTitleIndex), "",
 		GetLabel(PlaceTypeEditSubmitLabelIndex), placeType, placeTypeRequest, errors)
 	if err != nil {
 		log.FailedReturn()

@@ -23,6 +23,12 @@ func EditLifePhase(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	momentTypeID, err := getUrlLifePhaseID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -38,7 +44,7 @@ func EditLifePhase(w http.ResponseWriter, r *http.Request) {
 	momentTypeRequest := buildLifePhaseRequest(momentType)
 
 	url := fmt.Sprintf("/schemas/%d/life-phases/%d/update", schemaID, momentTypeID)
-	momentTypeForm, err := MakeLifePhaseForm(w, r, url, GetLabel(LifePhaseEditPageTitleIndex),
+	momentTypeForm, err := MakeLifePhaseForm(w, r, url, GetLabel(LifePhaseEditPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(LifePhaseEditSubmitLabelIndex), momentType, momentTypeRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -60,6 +66,12 @@ func EditLifePhaseRetry(w http.ResponseWriter, r *http.Request, lifePhaseRequest
 
 	schemaID := lifePhaseRequest.SchemaID
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	momentType := &model.LifePhase{
 		ID:        lifePhaseRequest.ID,
 		SchemaID:  lifePhaseRequest.SchemaID,
@@ -70,7 +82,7 @@ func EditLifePhaseRetry(w http.ResponseWriter, r *http.Request, lifePhaseRequest
 	}
 
 	url := fmt.Sprintf("/schemas/%d/life-phases/%d/update", schemaID, lifePhaseRequest.ID)
-	lifePhaseForm, err := MakeLifePhaseForm(w, r, url, GetLabel(LifePhaseEditPageTitleIndex),
+	lifePhaseForm, err := MakeLifePhaseForm(w, r, url, GetLabel(LifePhaseEditPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(LifePhaseEditSubmitLabelIndex), momentType, lifePhaseRequest, errors)
 	if err != nil {
 		log.FailedReturn()

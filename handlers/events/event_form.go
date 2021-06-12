@@ -56,7 +56,7 @@ func MakeEventForm(w http.ResponseWriter, r *http.Request, url string, pageTitle
 
 	formValues := makeEventFormValues(eRequest)
 	formErrorMessages := makeEventErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, "", submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

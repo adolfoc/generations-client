@@ -39,7 +39,7 @@ func AddSegments(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("/persons/%d/generate-life-segments", personID)
-	addSegmentForm, err := MakeAddSegmentsForm(w, r, url, GetLabel(PersonAddSegmentsPageTitleIndex),
+	addSegmentForm, err := MakeAddSegmentsForm(w, r, url, GetLabel(PersonAddSegmentsPageTitleIndex), "",
 		GetLabel(PersonAddSegmentSubmitLabelIndex), person, schemas, 0, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()

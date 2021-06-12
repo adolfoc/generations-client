@@ -26,7 +26,7 @@ func NewGroup(w http.ResponseWriter, r *http.Request) {
 	groupRequest := &model.GroupRequest{}
 
 	url := fmt.Sprintf("/groups/create")
-	groupForm, err := MakeGroupForm(w, r, url, GetLabel(GroupNewPageTitleIndex),
+	groupForm, err := MakeGroupForm(w, r, url, GetLabel(GroupNewPageTitleIndex), "",
 		GetLabel(GroupNewSubmitLabelIndex), &model.Group{}, groupRequest, groupTypes, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -66,7 +66,7 @@ func NewGroupRetry(w http.ResponseWriter, r *http.Request, groupRequest *model.G
 	}
 
 	url := fmt.Sprintf("/groups/create")
-	groupForm, err := MakeGroupForm(w, r, url, GetLabel(GroupNewPageTitleIndex),
+	groupForm, err := MakeGroupForm(w, r, url, GetLabel(GroupNewPageTitleIndex), "",
 		GetLabel(GroupNewSubmitLabelIndex), group, groupRequest, groupTypes, errors)
 	if err != nil {
 		log.FailedReturn()

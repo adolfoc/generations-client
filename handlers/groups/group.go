@@ -12,8 +12,8 @@ type GroupTemplate struct {
 	Group *model.Group
 }
 
-func MakeGroupTemplate(r *http.Request, pageTitle string, group *model.Group) (*GroupTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeGroupTemplate(r *http.Request, pageTitle, studyTitle string, group *model.Group) (*GroupTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func GetGroup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakeGroupTemplate(r, GetLabel(GroupPageTitleIndex), group)
+	ct, err := MakeGroupTemplate(r, GetLabel(GroupPageTitleIndex), "", group)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

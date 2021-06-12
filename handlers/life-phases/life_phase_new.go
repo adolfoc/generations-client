@@ -23,13 +23,19 @@ func NewLifePhase(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	lifePhaseRequest := newLifePhaseRequest(schemaID)
 	lifePhase := &model.LifePhase{
 		SchemaID:    schemaID,
 	}
 
 	url := fmt.Sprintf("/schemas/%d/life-phases/create", schemaID)
-	lifePhaseForm, err := MakeLifePhaseForm(w, r, url, GetLabel(LifePhaseNewPageTitleIndex),
+	lifePhaseForm, err := MakeLifePhaseForm(w, r, url, GetLabel(LifePhaseNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(LifePhaseNewSubmitLabelIndex), lifePhase, lifePhaseRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -51,6 +57,12 @@ func NewLifePhaseRetry(w http.ResponseWriter, r *http.Request, lifePhaseRequest 
 
 	schemaID := lifePhaseRequest.SchemaID
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	lifePhase := &model.LifePhase{
 		ID:        lifePhaseRequest.ID,
 		SchemaID:  lifePhaseRequest.SchemaID,
@@ -61,7 +73,7 @@ func NewLifePhaseRetry(w http.ResponseWriter, r *http.Request, lifePhaseRequest 
 	}
 
 	url := fmt.Sprintf("/schemas/%d/life-phases/create", schemaID)
-	lifePhaseForm, err := MakeLifePhaseForm(w, r, url, GetLabel(LifePhaseNewPageTitleIndex),
+	lifePhaseForm, err := MakeLifePhaseForm(w, r, url, GetLabel(LifePhaseNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(LifePhaseNewSubmitLabelIndex), lifePhase, lifePhaseRequest, errors)
 	if err != nil {
 		log.FailedReturn()

@@ -17,8 +17,8 @@ func getPaginationBaseURL() string {
 	return "/schemas/index?page=%d"
 }
 
-func MakeGenerationSchemasTemplate(r *http.Request, pageTitle string, schemas *model.GenerationSchemas, page int) (*TemplateGenerationSchemas, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeGenerationSchemasTemplate(r *http.Request, pageTitle, studyTitle string, schemas *model.GenerationSchemas, page int) (*TemplateGenerationSchemas, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func GetGenerationSchemas(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	at, err := MakeGenerationSchemasTemplate(r, GetLabel(GenerationSchemaIndexPageTitleIndex), affiliations, page)
+	at, err := MakeGenerationSchemasTemplate(r, GetLabel(GenerationSchemaIndexPageTitleIndex), "", affiliations, page)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

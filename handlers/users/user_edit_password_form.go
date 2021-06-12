@@ -40,12 +40,12 @@ func makeEditPasswordErrorMessages(errors handlers.ResponseErrors) map[string]st
 	return formErrorMessages
 }
 
-func MakeEditPasswordForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string, user *model.User,
+func MakeEditPasswordForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string, user *model.User,
 	cpRequest *model.ChangePasswordRequest, errors handlers.ResponseErrors) (*EditPasswordForm, error) {
 
 	formValues := makeEditPasswordFormValues(cpRequest)
 	formErrorMessages := makeEditPasswordErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

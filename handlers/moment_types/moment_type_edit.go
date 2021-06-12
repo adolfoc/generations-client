@@ -23,6 +23,12 @@ func EditMomentType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	momentTypeID, err := getUrlMomentTypeID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -38,7 +44,7 @@ func EditMomentType(w http.ResponseWriter, r *http.Request) {
 	momentTypeRequest := buildMomentTypeRequest(momentType)
 
 	url := fmt.Sprintf("/schemas/%d/moment-types/%d/update", schemaID, momentTypeID)
-	momentTypeForm, err := MakeMomentTypeForm(w, r, url, GetLabel(MomentTypeEditPageTitleIndex),
+	momentTypeForm, err := MakeMomentTypeForm(w, r, url, GetLabel(MomentTypeEditPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(MomentTypeEditSubmitLabelIndex), momentType, momentTypeRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -60,6 +66,12 @@ func EditMomentTypeRetry(w http.ResponseWriter, r *http.Request, momentTypeReque
 
 	schemaID := momentTypeRequest.SchemaID
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	momentType := &model.MomentType{
 		ID:          momentTypeRequest.ID,
 		SchemaID:    momentTypeRequest.SchemaID,
@@ -68,7 +80,7 @@ func EditMomentTypeRetry(w http.ResponseWriter, r *http.Request, momentTypeReque
 	}
 
 	url := fmt.Sprintf("/schemas/%d/moment-types/%d/update", schemaID, momentTypeRequest.ID)
-	momentTypeForm, err := MakeMomentTypeForm(w, r, url, GetLabel(MomentTypeEditPageTitleIndex),
+	momentTypeForm, err := MakeMomentTypeForm(w, r, url, GetLabel(MomentTypeEditPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(MomentTypeEditSubmitLabelIndex), momentType, momentTypeRequest, errors)
 	if err != nil {
 		log.FailedReturn()

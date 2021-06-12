@@ -39,7 +39,7 @@ func EditPerson(w http.ResponseWriter, r *http.Request) {
 	personRequest := buildPersonRequest(person)
 
 	url := fmt.Sprintf("/persons/%d/update", personID)
-	personForm, err := MakePersonForm(w, r, url, GetLabel(PersonEditPageTitleIndex),
+	personForm, err := MakePersonForm(w, r, url, GetLabel(PersonEditPageTitleIndex), "",
 		GetLabel(PersonEditSubmitLabelIndex), person, personRequest, places, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -94,7 +94,7 @@ func EditPersonRetry(w http.ResponseWriter, r *http.Request, personRequest *mode
 	}
 
 	url := fmt.Sprintf("/persons/%d/update", personRequest.ID)
-	personForm, err := MakePersonForm(w, r, url, GetLabel(PersonEditPageTitleIndex),
+	personForm, err := MakePersonForm(w, r, url, GetLabel(PersonEditPageTitleIndex), "",
 		GetLabel(PersonEditSubmitLabelIndex), person, personRequest, places, errors)
 	if err != nil {
 		log.FailedReturn()

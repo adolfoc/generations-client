@@ -198,11 +198,13 @@ func makeRouter() *mux.Router {
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/tangibles/create", generational_landscape.CreateTangible).Methods("POST")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/tangibles/{tangible_id:[0-9]+}/edit", generational_landscape.EditTangible).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/tangibles/{tangible_id:[0-9]+}/update", generational_landscape.UpdateTangible).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/tangibles/{tangible_id:[0-9]+}/delete", generational_landscape.DeleteTangible).Methods("GET")
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/intangibles/add", generational_landscape.NewIntangible).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/intangibles/create", generational_landscape.CreateIntangible).Methods("POST")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/intangibles/{intangible_id:[0-9]+}/edit", generational_landscape.EditIntangible).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/intangibles/{intangible_id:[0-9]+}/update", generational_landscape.UpdateIntangible).Methods("POST")
+	r.HandleFunc("/schemas/{schema_id:[0-9]+}/generational-landscape/{generational_landscape_id:[0-9]+}/intangibles/{intangible_id:[0-9]+}/delete", generational_landscape.DeleteIntangible).Methods("GET")
 
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments", moments.GetSchemaMoments).Methods("GET")
 	r.HandleFunc("/schemas/{schema_id:[0-9]+}/moments/{moment_id:[0-9]+}", moments.GetMoment).Methods("GET")

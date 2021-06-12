@@ -40,7 +40,7 @@ func EditSchema(w http.ResponseWriter, r *http.Request) {
 	schemaRequest := buildSchemaRequest(schema)
 
 	url := fmt.Sprintf("/schemas/%d/update", schemaID)
-	schemaForm, err := MakeSchemaForm(w, r, url, GetLabel(GenerationSchemaPageTitleIndex),
+	schemaForm, err := MakeSchemaForm(w, r, url, GetLabel(GenerationSchemaPageTitleIndex), "",
 		GetLabel(GenerationSchemaEditSubmitLabelIndex), schema, schemaRequest, places, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -81,7 +81,7 @@ func EditSchemaRetry(w http.ResponseWriter, r *http.Request, sRequest *model.Gen
 	}
 
 	url := fmt.Sprintf("/schemas/%d/update", sRequest.ID)
-	schemaForm, err := MakeSchemaForm(w, r, url, GetLabel(GenerationSchemaPageTitleIndex),
+	schemaForm, err := MakeSchemaForm(w, r, url, GetLabel(GenerationSchemaPageTitleIndex), "",
 		GetLabel(GenerationSchemaEditSubmitLabelIndex), schema, sRequest, places, errors)
 	if err != nil {
 		log.FailedReturn()

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/adolfoc/generations-client/common"
+	"github.com/adolfoc/generations-client/model"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"io/ioutil"
@@ -66,6 +67,31 @@ func CookiesExpired(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	return false
+}
+
+const (
+	ResourceGenerationSchema = "generation-schemas"
+)
+
+func GetGenerationSchema(w http.ResponseWriter, r *http.Request, schemaID int) (*model.GenerationSchema, error) {
+	url := fmt.Sprintf("%s%s/%d", GetAPIHostURL(), ResourceGenerationSchema, schemaID)
+	code, body, err := GetResource(w, r, url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if code != 200 {
+		return nil, fmt.Errorf("received %d", code)
+	}
+
+	var generationSchema *model.GenerationSchema
+	err = json.Unmarshal(body, &generationSchema)
+	if err != nil {
+		return nil, fmt.Errorf("%s", err.Error())
+	}
+
+	return generationSchema, nil
 }
 
 // GetUrlIntParam is meant to be used to capture a resource id named param in the router.

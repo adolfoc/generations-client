@@ -56,7 +56,7 @@ func extractYear(date string) int {
 	return 0
 }
 
-func MakeLifeSegmentForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string, lifeSegment *model.LifeSegment,
+func MakeLifeSegmentForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string, lifeSegment *model.LifeSegment,
 	lsRequest *model.LifeSegmentRequest, person *model.Person, errors handlers.ResponseErrors) (*LifeSegmentForm, error) {
 
 	yearOfBirth := extractYear(person.BirthDate)
@@ -65,7 +65,7 @@ func MakeLifeSegmentForm(w http.ResponseWriter, r *http.Request, url string, pag
 		yearOfBirth + lifeSegment.LifePhase.StartYear, yearOfBirth + lifeSegment.LifePhase.EndYear)
 	formValues := makeLifeSegmentFormValues(lsRequest)
 	formErrorMessages := makeLifeSegmentErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, fullPageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, fullPageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

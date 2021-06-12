@@ -20,8 +20,8 @@ func getPaginationBaseURL(generationSchemaID int) string {
 	return stem + "?page=%d"
 }
 
-func MakeGenerationsTemplate(r *http.Request, pageTitle string, generationSchema, page int, generations *model.Generations) (*GenerationsTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeGenerationsTemplate(r *http.Request, pageTitle, studyTitle string, generationSchema, page int, generations *model.Generations) (*GenerationsTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -47,20 +47,27 @@ func GetSchemaGenerations(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	gsID, err := getUrlGenerationSchemaID(w, r)
+	schemaID, err := getUrlGenerationSchemaID(w, r)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
 	if err != nil {
 		log.FailedReturn()
 		return
 	}
 
 	page := handlers.GetURLPageParameter(r)
-	generations, err := getSchemaGenerations(w, r, gsID)
+	generations, err := getSchemaGenerations(w, r, schemaID)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
 		return
 	}
 
-	ct, err := MakeGenerationsTemplate(r, GetLabel(GenerationIndexPageTitleIndex), gsID, page, generations)
+	ct, err := MakeGenerationsTemplate(r, GetLabel(GenerationIndexPageTitleIndex), generationSchema.MakeStudyTitle(),
+		schemaID, page, generations)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

@@ -39,7 +39,7 @@ func EditGroup(w http.ResponseWriter, r *http.Request) {
 	gRequest := buildGroupRequest(event)
 
 	url := fmt.Sprintf("/groups/%d/update", eventID)
-	groupForm, err := MakeGroupForm(w, r, url, GetLabel(GroupEditPageTitleIndex),
+	groupForm, err := MakeGroupForm(w, r, url, GetLabel(GroupEditPageTitleIndex), "",
 		GetLabel(GroupEditSubmitLabelIndex), event, gRequest, groupTypes, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -81,7 +81,7 @@ func EditGroupRetry(w http.ResponseWriter, r *http.Request, gRequest *model.Grou
 	}
 
 	url := fmt.Sprintf("/group-types/%d/update", gRequest.ID)
-	groupForm, err := MakeGroupForm(w, r, url, GetLabel(GroupEditPageTitleIndex),
+	groupForm, err := MakeGroupForm(w, r, url, GetLabel(GroupEditPageTitleIndex), "",
 		GetLabel(GroupEditSubmitLabelIndex), group, gRequest, groupTypes, errors)
 	if err != nil {
 		log.FailedReturn()

@@ -23,6 +23,12 @@ func EditGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationalLandscapeID, err := getUrlGenerationalLandscapeID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -51,7 +57,8 @@ func EditGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/%d/update", schemaID, generationalLandscapeID)
 	generationalLandscapeForm, err := MakeGenerationalLandscapeForm(w, r, url, GetLabel(GenerationalLandscapeEditPageTitleIndex),
-		GetLabel(GenerationalLandscapeEditSubmitLabelIndex), generationalLandscape, glRequest, schemaID, moments,
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationalLandscapeEditSubmitLabelIndex),
+		generationalLandscape, glRequest, schemaID, moments,
 		generation, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -70,7 +77,14 @@ func EditGenerationalLandscape(w http.ResponseWriter, r *http.Request) {
 
 func EditGenerationalLandscapeRetry(w http.ResponseWriter, r *http.Request, glRequest *model.GenerationalLandscapeRequest,
 	schemaID int, errors handlers.ResponseErrors) {
+
 	log := common.StartLog("handlers-generational_landscape", "EditGenerationalLandscapeRetry")
+
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
 
 	moments, err := getMomentsForSchema(w, r, schemaID)
 	if handlers.HandleError(w, r, err) {
@@ -93,7 +107,7 @@ func EditGenerationalLandscapeRetry(w http.ResponseWriter, r *http.Request, glRe
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/%d/update", schemaID, glRequest.ID)
 	generationalLandscapeForm, err := MakeGenerationalLandscapeForm(w, r, url, GetLabel(GenerationalLandscapeEditPageTitleIndex),
-		GetLabel(GenerationalLandscapeEditSubmitLabelIndex), generationalLandscape, glRequest, schemaID, moments, generation, errors)
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationalLandscapeEditSubmitLabelIndex), generationalLandscape, glRequest, schemaID, moments, generation, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

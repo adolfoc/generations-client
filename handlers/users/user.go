@@ -12,8 +12,8 @@ type UserTemplate struct {
 	User *model.User
 }
 
-func MakeUserTemplate(r *http.Request, pageTitle string, user *model.User) (*UserTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeUserTemplate(r *http.Request, pageTitle, studyTitle string, user *model.User) (*UserTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakeUserTemplate(r, GetLabel(UserPageTitleIndex), user)
+	ct, err := MakeUserTemplate(r, GetLabel(UserPageTitleIndex), "", user)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

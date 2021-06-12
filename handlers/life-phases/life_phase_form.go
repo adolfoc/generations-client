@@ -47,12 +47,12 @@ func makeLifePhaseErrorMessages(errors handlers.ResponseErrors) map[string]strin
 	return formErrorMessages
 }
 
-func MakeLifePhaseForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string,
+func MakeLifePhaseForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string,
 	lifePhase *model.LifePhase, lifePhaseRequest *model.LifePhaseRequest, errors handlers.ResponseErrors) (*LifePhaseForm, error) {
 
 	formValues := makeLifePhaseFormValues(lifePhaseRequest)
 	formErrorMessages := makeLifePhaseErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

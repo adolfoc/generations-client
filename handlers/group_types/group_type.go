@@ -12,8 +12,8 @@ type GroupTypeTemplate struct {
 	GroupType *model.GroupType
 }
 
-func MakeGroupTypeTemplate(r *http.Request, pageTitle string, group *model.GroupType) (*GroupTypeTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeGroupTypeTemplate(r *http.Request, pageTitle, studyTitle string, group *model.GroupType) (*GroupTypeTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func GetGroupType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakeGroupTypeTemplate(r, GetLabel(GroupTypePageTitleIndex), groupType)
+	ct, err := MakeGroupTypeTemplate(r, GetLabel(GroupTypePageTitleIndex), "", groupType)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

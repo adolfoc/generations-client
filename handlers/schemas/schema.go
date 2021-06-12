@@ -16,9 +16,9 @@ type GenerationSchemaTemplate struct {
 	AllowTemplateGeneration bool
 }
 
-func MakeGenerationSchemaTemplate(r *http.Request, pageTitle string, gs *model.GenerationSchema,
+func MakeGenerationSchemaTemplate(r *http.Request, pageTitle, studyTitle string, gs *model.GenerationSchema,
 	lifePhases []*model.LifePhase, generationTypes []*model.GenerationType, momentTypes []*model.MomentType) (*GenerationSchemaTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,8 @@ func GetGenerationSchema(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakeGenerationSchemaTemplate(r, GetLabel(GenerationSchemaPageTitleIndex), generationSchema, lifePhases, generationTypes, momentTypes)
+	ct, err := MakeGenerationSchemaTemplate(r, GetLabel(GenerationSchemaPageTitleIndex), generationSchema.MakeStudyTitle(),
+		generationSchema, lifePhases, generationTypes, momentTypes)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

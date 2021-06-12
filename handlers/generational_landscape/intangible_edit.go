@@ -23,6 +23,12 @@ func EditIntangible(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	intangibleID, err := getUrlIntangibleID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -45,7 +51,8 @@ func EditIntangible(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/%d/intangibles/%d/update", schemaID, itRequest.LandscapeID, itRequest.ID)
 	intangibleForm, err := MakeIntangibleForm(w, r, url, GetLabel(IntangibleEditPageTitleIndex),
-		GetLabel(IntangibleEditSubmitLabelIndex), intangible, itRequest, schemaID, generationalLandscape.GenerationID, handlers.ResponseErrors{})
+		generationSchema.MakeStudyTitle(), GetLabel(IntangibleEditSubmitLabelIndex),
+		intangible, itRequest, schemaID, generationalLandscape.GenerationID, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
@@ -65,6 +72,12 @@ func EditIntangibleRetry(w http.ResponseWriter, r *http.Request, itRequest *mode
 	schemaID int, errors handlers.ResponseErrors) {
 	log := common.StartLog("handlers-generational_landscape", "EditIntangibleRetry")
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	intangible := &model.Intangible{
 		ID:          itRequest.ID,
 		LandscapeID: itRequest.LandscapeID,
@@ -80,7 +93,8 @@ func EditIntangibleRetry(w http.ResponseWriter, r *http.Request, itRequest *mode
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/%d/intangibles/%d/update", schemaID, itRequest.LandscapeID, itRequest.ID)
 	intangibleForm, err := MakeIntangibleForm(w, r, url, GetLabel(IntangibleEditPageTitleIndex),
-		GetLabel(IntangibleEditSubmitLabelIndex), intangible, itRequest, schemaID, generationalLandscape.GenerationID, errors)
+		generationSchema.MakeStudyTitle(), GetLabel(IntangibleEditSubmitLabelIndex),
+		intangible, itRequest, schemaID, generationalLandscape.GenerationID, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

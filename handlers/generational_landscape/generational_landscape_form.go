@@ -43,14 +43,14 @@ func makeGenerationalLandscapeErrorMessages(errors handlers.ResponseErrors) map[
 	return formErrorMessages
 }
 
-func MakeGenerationalLandscapeForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string,
+func MakeGenerationalLandscapeForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string,
 	generationalLandscape *model.GenerationalLandscape, glRequest *model.GenerationalLandscapeRequest, schemaID int,
 	formationMoments *model.HistoricalMoments, generation *model.Generation, errors handlers.ResponseErrors) (*GenerationalLandscapeForm, error) {
 
 	fullTitle := fmt.Sprintf("%s: %s (%d-%d)", pageTitle, generation.Name, generation.StartYear, generation.EndYear)
 	formValues := makeGenerationalLandscapeFormValues(glRequest)
 	formErrorMessages := makeGenerationalLandscapeErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, fullTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, fullTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

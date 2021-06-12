@@ -14,13 +14,14 @@ type CommonTemplate struct {
 	Title        string
 	ParkName     string
 	PageTitle    string
+	StudyTitle   string
 	BarTitle     string
 	UserName     string
 	UserEmail    string
 	UserRole     string
 }
 
-func MakeCommonTemplate(r *http.Request, pageTitle string) (*CommonTemplate, error) {
+func MakeCommonTemplate(r *http.Request, pageTitle, studyTitle string) (*CommonTemplate, error) {
 	currentSession, err := GetCurrentSessionFromRequest(r)
 	if err != nil {
 		return nil, err
@@ -30,15 +31,16 @@ func MakeCommonTemplate(r *http.Request, pageTitle string) (*CommonTemplate, err
 	userRole, _ := currentSession.GetUserRole()
 
 	ct := &CommonTemplate{
-		InfoMessage:   currentSession.UseInfoMessage(),
-		ErrorMessage:   currentSession.UseErrorMessage(),
-		BarTitle:  BarTitle,
-		Title:     AppTitle,
-		ParkName:  ParkName,
-		PageTitle: pageTitle,
-		UserName:  userName,
-		UserEmail: userEmail,
-		UserRole:  userRole,
+		InfoMessage:  currentSession.UseInfoMessage(),
+		ErrorMessage: currentSession.UseErrorMessage(),
+		BarTitle:     BarTitle,
+		Title:        AppTitle,
+		ParkName:     ParkName,
+		PageTitle:    pageTitle,
+		StudyTitle:   studyTitle,
+		UserName:     userName,
+		UserEmail:    userEmail,
+		UserRole:     userRole,
 	}
 
 	return ct, nil

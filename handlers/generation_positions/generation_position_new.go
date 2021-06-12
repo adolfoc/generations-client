@@ -23,6 +23,12 @@ func NewGenerationPosition(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationID, err := getUrlGenerationID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -55,8 +61,8 @@ func NewGenerationPosition(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("/schemas/%d/generations/%d/generation-positions/create", schemaID, generationID)
 	generationPositionForm, err := MakeGenerationPositionForm(w, r, url, GetLabel(GenerationPositionNewPageTitleIndex),
-		GetLabel(GenerationPositionNewSubmitLabelIndex), generationPosition, generationPositionRequest,
-		schemaID, lifePhases, moments, handlers.ResponseErrors{})
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationPositionNewSubmitLabelIndex),
+		generationPosition, generationPositionRequest, schemaID, lifePhases, moments, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
@@ -75,6 +81,12 @@ func NewGenerationPosition(w http.ResponseWriter, r *http.Request) {
 func NewGenerationPositionRetry(w http.ResponseWriter, r *http.Request, gpRequest *model.GenerationPositionRequest,
 	schemaID int, errors handlers.ResponseErrors) {
 	log := common.StartLog("handlers-generation_positions", "NewGenerationPositionRetry")
+
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
 
 	generationID, err := getUrlGenerationID(w, r)
 	if err != nil {
@@ -115,7 +127,8 @@ func NewGenerationPositionRetry(w http.ResponseWriter, r *http.Request, gpReques
 
 	url := fmt.Sprintf("/schemas/%d/generations/%d/generation_positions/create", schemaID, generationID)
 	generationPositionForm, err := MakeGenerationPositionForm(w, r, url, GetLabel(GenerationPositionNewPageTitleIndex),
-		GetLabel(GenerationPositionNewSubmitLabelIndex), generationPosition, gpRequest, schemaID, lifePhases, moments, errors)
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationPositionNewSubmitLabelIndex),
+		generationPosition, gpRequest, schemaID, lifePhases, moments, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

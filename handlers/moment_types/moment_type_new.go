@@ -23,13 +23,19 @@ func NewMomentType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	momentTypeRequest := newMomentTypeRequest(schemaID)
 	momentType := &model.MomentType{
 		SchemaID:    schemaID,
 	}
 
 	url := fmt.Sprintf("/schemas/%d/moment-types/create", schemaID)
-	momentTypeForm, err := MakeMomentTypeForm(w, r, url, GetLabel(MomentTypeNewPageTitleIndex),
+	momentTypeForm, err := MakeMomentTypeForm(w, r, url, GetLabel(MomentTypeNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(MomentTypeNewSubmitLabelIndex), momentType, momentTypeRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -51,6 +57,12 @@ func NewMomentTypeRetry(w http.ResponseWriter, r *http.Request, momentTypeReques
 
 	schemaID := momentTypeRequest.SchemaID
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	momentType := &model.MomentType{
 		ID:          0,
 		SchemaID:    momentTypeRequest.SchemaID,
@@ -59,7 +71,7 @@ func NewMomentTypeRetry(w http.ResponseWriter, r *http.Request, momentTypeReques
 	}
 
 	url := fmt.Sprintf("/schemas/%d/moment-types/create", schemaID)
-	momentTypeForm, err := MakeMomentTypeForm(w, r, url, GetLabel(MomentTypeNewPageTitleIndex),
+	momentTypeForm, err := MakeMomentTypeForm(w, r, url, GetLabel(MomentTypeNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(MomentTypeNewSubmitLabelIndex), momentType, momentTypeRequest, errors)
 	if err != nil {
 		log.FailedReturn()

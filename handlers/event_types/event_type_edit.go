@@ -32,7 +32,7 @@ func EditEventType(w http.ResponseWriter, r *http.Request) {
 	eventTypeRequest := buildEventTypeRequest(eventType)
 
 	url := fmt.Sprintf("/event-types/%d/update", eventTypeID)
-	eventTypeForm, err := MakeEventTypeForm(w, r, url, GetLabel(EventTypeEditPageTitleIndex),
+	eventTypeForm, err := MakeEventTypeForm(w, r, url, GetLabel(EventTypeEditPageTitleIndex), "",
 		GetLabel(EventTypeEditSubmitLabelIndex), eventType, eventTypeRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -60,7 +60,7 @@ func EditEventTypeRetry(w http.ResponseWriter, r *http.Request, eventTypeRequest
 	}
 
 	url := fmt.Sprintf("/event-types/%d/update", eventTypeRequest.ID)
-	placeForm, err := MakeEventTypeForm(w, r, url, GetLabel(EventTypeEditPageTitleIndex),
+	placeForm, err := MakeEventTypeForm(w, r, url, GetLabel(EventTypeEditPageTitleIndex), "",
 		GetLabel(EventTypeEditSubmitLabelIndex), eventType, eventTypeRequest, errors)
 	if err != nil {
 		log.FailedReturn()

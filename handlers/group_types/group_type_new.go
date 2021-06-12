@@ -20,7 +20,7 @@ func NewGroupType(w http.ResponseWriter, r *http.Request) {
 	groupTypeRequest := &model.GroupTypeRequest{}
 
 	url := fmt.Sprintf("/group-types/create")
-	groupTypeForm, err := MakeGroupTypeForm(w, r, url, GetLabel(GroupTypeNewPageTitleIndex),
+	groupTypeForm, err := MakeGroupTypeForm(w, r, url, GetLabel(GroupTypeNewPageTitleIndex), "",
 		GetLabel(GroupTypeNewSubmitLabelIndex), &model.GroupType{}, groupTypeRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -47,7 +47,7 @@ func NewGroupTypeRetry(w http.ResponseWriter, r *http.Request, groupTypeRequest 
 	}
 
 	url := fmt.Sprintf("/group-types/create")
-	groupForm, err := MakeGroupTypeForm(w, r, url, GetLabel(GroupTypeNewPageTitleIndex),
+	groupForm, err := MakeGroupTypeForm(w, r, url, GetLabel(GroupTypeNewPageTitleIndex), "",
 		GetLabel(GroupTypeNewSubmitLabelIndex), groupType, groupTypeRequest, errors)
 	if err != nil {
 		log.FailedReturn()

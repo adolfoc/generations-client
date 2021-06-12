@@ -12,8 +12,8 @@ type EventTypeTemplate struct {
 	EventType *model.EventType
 }
 
-func MakeEventTypeTemplate(r *http.Request, pageTitle string, eventType *model.EventType) (*EventTypeTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeEventTypeTemplate(r *http.Request, pageTitle, studyTitle string, eventType *model.EventType) (*EventTypeTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func GetEventType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakeEventTypeTemplate(r, GetLabel(EventTypePageTitleIndex), person)
+	ct, err := MakeEventTypeTemplate(r, GetLabel(EventTypePageTitleIndex), "", person)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

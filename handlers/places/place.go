@@ -12,8 +12,8 @@ type PlaceTemplate struct {
 	Place *model.Place
 }
 
-func MakePlaceTemplate(r *http.Request, pageTitle string, place *model.Place) (*PlaceTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakePlaceTemplate(r *http.Request, pageTitle, studyTitle string, place *model.Place) (*PlaceTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func GetPlace(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakePlaceTemplate(r, GetLabel(PlacePageTitleIndex), place)
+	ct, err := MakePlaceTemplate(r, GetLabel(PlacePageTitleIndex), "", place)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

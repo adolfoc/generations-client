@@ -32,7 +32,7 @@ func EditGroupType(w http.ResponseWriter, r *http.Request) {
 	gtRequest := buildGroupTypeRequest(event)
 
 	url := fmt.Sprintf("/group-types/%d/update", eventID)
-	groupTypeForm, err := MakeGroupTypeForm(w, r, url, GetLabel(GroupTypeEditPageTitleIndex),
+	groupTypeForm, err := MakeGroupTypeForm(w, r, url, GetLabel(GroupTypeEditPageTitleIndex), "",
 		GetLabel(GroupTypeEditSubmitLabelIndex), event, gtRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -59,7 +59,7 @@ func EditGroupTypeRetry(w http.ResponseWriter, r *http.Request, gtRequest *model
 	}
 
 	url := fmt.Sprintf("/group-types/%d/update", gtRequest.ID)
-	groupTypeForm, err := MakeGroupTypeForm(w, r, url, GetLabel(GroupTypeEditPageTitleIndex),
+	groupTypeForm, err := MakeGroupTypeForm(w, r, url, GetLabel(GroupTypeEditPageTitleIndex), "",
 		GetLabel(GroupTypeEditSubmitLabelIndex), group, gtRequest, errors)
 	if err != nil {
 		log.FailedReturn()

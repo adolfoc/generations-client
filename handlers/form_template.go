@@ -10,10 +10,10 @@ type FormTemplate struct {
 	FormErrorMessages map[string]string
 }
 
-func MakeFormTemplate(r *http.Request, url, pageTitle, submitLabel string, formValues map[string]interface{},
+func MakeFormTemplate(r *http.Request, url, pageTitle, studyTitle, submitLabel string, formValues map[string]interface{},
 	errorMessages map[string]string) (*FormTemplate, error) {
 
-	ct, err := MakeCommonTemplate(r, pageTitle)
+	ct, err := MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}

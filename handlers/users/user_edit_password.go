@@ -32,7 +32,7 @@ func EditPassword(w http.ResponseWriter, r *http.Request) {
 	cpRequest := buildChangePasswordRequest(user)
 
 	url := fmt.Sprintf("/users/%d/update-password", userID)
-	editPasswordForm, err := MakeEditPasswordForm(w, r, url, GetLabel(UserChangePasswordTitleIndex),
+	editPasswordForm, err := MakeEditPasswordForm(w, r, url, GetLabel(UserChangePasswordTitleIndex), "",
 		GetLabel(UserChangePasswordSubmitLabelIndex), user, cpRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -59,7 +59,7 @@ func EditPasswordRetry(w http.ResponseWriter, r *http.Request, cprRequest *model
 	}
 
 	url := fmt.Sprintf("/users/%d/update-password", cprRequest.ID)
-	editPasswordForm, err := MakeEditPasswordForm(w, r, url, GetLabel(UserChangePasswordTitleIndex),
+	editPasswordForm, err := MakeEditPasswordForm(w, r, url, GetLabel(UserChangePasswordTitleIndex), "",
 		GetLabel(UserChangePasswordSubmitLabelIndex), user, cprRequest, errors)
 	if err != nil {
 		log.FailedReturn()

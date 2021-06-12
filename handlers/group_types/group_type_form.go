@@ -37,12 +37,12 @@ func makeGroupTypeErrorMessages(errors handlers.ResponseErrors) map[string]strin
 	return formErrorMessages
 }
 
-func MakeGroupTypeForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string, groupType *model.GroupType,
+func MakeGroupTypeForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string, groupType *model.GroupType,
 	gtRequest *model.GroupTypeRequest, errors handlers.ResponseErrors) (*GroupTypeForm, error) {
 
 	formValues := makeGroupTypeFormValues(gtRequest)
 	formErrorMessages := makeGroupTypeErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

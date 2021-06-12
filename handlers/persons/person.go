@@ -13,8 +13,8 @@ type PersonTemplate struct {
 	HaveLifeSegments bool
 }
 
-func MakePersonTemplate(r *http.Request, pageTitle string, person *model.Person) (*PersonTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakePersonTemplate(r *http.Request, pageTitle, studyTitle string, person *model.Person) (*PersonTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func GetPerson(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakePersonTemplate(r, GetLabel(PersonPageTitleIndex), person)
+	ct, err := MakePersonTemplate(r, GetLabel(PersonPageTitleIndex), "", person)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

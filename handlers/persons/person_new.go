@@ -28,7 +28,7 @@ func NewPerson(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("/persons/create")
-	momentForm, err := MakePersonForm(w, r, url, GetLabel(PersonNewPageTitleIndex),
+	momentForm, err := MakePersonForm(w, r, url, GetLabel(PersonNewPageTitleIndex), "",
 		GetLabel(PersonNewSubmitLabelIndex), &model.Person{}, personRequest, places, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -83,7 +83,7 @@ func NewPersonRetry(w http.ResponseWriter, r *http.Request, pRequest *model.Pers
 	}
 
 	url := fmt.Sprintf("/persons/create")
-	momentForm, err := MakePersonForm(w, r, url, GetLabel(PersonNewPageTitleIndex),
+	momentForm, err := MakePersonForm(w, r, url, GetLabel(PersonNewPageTitleIndex), "",
 		GetLabel(PersonNewSubmitLabelIndex), person, pRequest, places, errors)
 	if err != nil {
 		log.FailedReturn()

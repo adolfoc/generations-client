@@ -12,6 +12,14 @@
     font-weight: bold;
 }
 
+.page-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    margin-top: 0.5em;
+}
+
 .school-card {
     margin-top: 1em;
 }

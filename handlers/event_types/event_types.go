@@ -19,8 +19,8 @@ func getPaginationBaseURL() string {
 	return stem + "?page=%d"
 }
 
-func MakeEventTypesTemplate(r *http.Request, pageTitle string, page int, eventTypes *model.EventTypes) (*EventTypesTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeEventTypesTemplate(r *http.Request, pageTitle, studyTitle string, page int, eventTypes *model.EventTypes) (*EventTypesTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, studyTitle, pageTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func GetEventTypes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakeEventTypesTemplate(r, GetLabel(EventTypeIndexPageTitleIndex), page, events)
+	ct, err := MakeEventTypesTemplate(r, GetLabel(EventTypeIndexPageTitleIndex), "", page, events)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

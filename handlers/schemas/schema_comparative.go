@@ -57,8 +57,8 @@ func buildRows(comparative *model.SchemaComparative) []*ComparativeRow {
 	return rows
 }
 
-func MakeComparativeTemplate(r *http.Request, pageTitle string, sc *model.SchemaComparative, schemaID int) (*ComparativeTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeComparativeTemplate(r *http.Request, pageTitle, studyTitle string, sc *model.SchemaComparative, schemaID int) (*ComparativeTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -87,13 +87,20 @@ func GetComparative(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	comparativeReport, err := getComparativeReport(w, r, schemaID)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
 		return
 	}
 
-	ct, err := MakeComparativeTemplate(r, GetLabel(GenerationSchemaComparativePageTitleIndex), comparativeReport, schemaID)
+	ct, err := MakeComparativeTemplate(r, GetLabel(GenerationSchemaComparativePageTitleIndex),
+		generationSchema.MakeStudyTitle(), comparativeReport, schemaID)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

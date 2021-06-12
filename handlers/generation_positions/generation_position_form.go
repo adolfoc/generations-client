@@ -49,13 +49,13 @@ func makeGenerationPositionErrorMessages(errors handlers.ResponseErrors) map[str
 	return formErrorMessages
 }
 
-func MakeGenerationPositionForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string,
+func MakeGenerationPositionForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string,
 	generationPosition *model.GenerationPosition, gpRequest *model.GenerationPositionRequest, schemaID int,
 	lifePhases []*model.LifePhase, moments []*model.HistoricalMoment, errors handlers.ResponseErrors) (*GenerationPositionForm, error) {
 
 	formValues := makeGenerationPositionFormValues(gpRequest)
 	formErrorMessages := makeGenerationPositionErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

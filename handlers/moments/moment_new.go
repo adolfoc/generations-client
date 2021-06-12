@@ -24,6 +24,12 @@ func NewMoment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	momentTypes, err := getMomentTypesForSchema(w, r, schemaID)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
@@ -33,7 +39,7 @@ func NewMoment(w http.ResponseWriter, r *http.Request) {
 	momentRequest := newMomentRequest(schemaID)
 
 	url := fmt.Sprintf("/schemas/%d/moments/create", schemaID)
-	momentForm, err := MakeMomentForm(w, r, url, GetLabel(MomentNewPageTitleIndex),
+	momentForm, err := MakeMomentForm(w, r, url, GetLabel(MomentNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(MomentNewSubmitLabelIndex), &model.HistoricalMoment{}, momentRequest, momentTypes, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -54,6 +60,13 @@ func NewMomentRetry(w http.ResponseWriter, r *http.Request, momentRequest *model
 	log := common.StartLog("handlers-moments", "NewMomentRetry")
 
 	schemaID := momentRequest.SchemaID
+
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	momentTypes, err := getMomentTypesForSchema(w, r, schemaID)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
@@ -73,7 +86,7 @@ func NewMomentRetry(w http.ResponseWriter, r *http.Request, momentRequest *model
 	}
 
 	url := fmt.Sprintf("/schemas/%d/moments/create", schemaID)
-	momentForm, err := MakeMomentForm(w, r, url, GetLabel(MomentNewPageTitleIndex),
+	momentForm, err := MakeMomentForm(w, r, url, GetLabel(MomentNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(MomentNewSubmitLabelIndex), moment, momentRequest, momentTypes, errors)
 	if err != nil {
 		log.FailedReturn()

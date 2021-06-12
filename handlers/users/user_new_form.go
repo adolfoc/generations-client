@@ -53,12 +53,12 @@ func makeNewUserErrorMessages(errors handlers.ResponseErrors) map[string]string 
 	return formErrorMessages
 }
 
-func MakeNewUserForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string, user *model.User,
+func MakeNewUserForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string, user *model.User,
 	nuRequest *model.NewUserRequest, errors handlers.ResponseErrors) (*NewUserForm, error) {
 
 	formValues := makeNewUserFormValues(nuRequest)
 	formErrorMessages := makeNewUserErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

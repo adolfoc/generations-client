@@ -39,7 +39,7 @@ func EditLifeSegment(w http.ResponseWriter, r *http.Request) {
 	lifeSegmentRequest := buildLifeSegmentRequest(lifeSegment)
 
 	url := fmt.Sprintf("/persons/%d/life-segments/%d/update", lifeSegment.PersonID, lifeSegmentID)
-	generationForm, err := MakeLifeSegmentForm(w, r, url, GetLabel(LifeSegmentEditPageTitleIndex),
+	generationForm, err := MakeLifeSegmentForm(w, r, url, GetLabel(LifeSegmentEditPageTitleIndex), "",
 		GetLabel(LifeSegmentEditSubmitLabelIndex), lifeSegment, lifeSegmentRequest, person, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -81,7 +81,7 @@ func EditLifeSegmentRetry(w http.ResponseWriter, r *http.Request, lsRequest *mod
 	}
 
 	url := fmt.Sprintf("/life-segments/%d/update", lsRequest.ID)
-	generationForm, err := MakeLifeSegmentForm(w, r, url, GetLabel(LifeSegmentEditPageTitleIndex),
+	generationForm, err := MakeLifeSegmentForm(w, r, url, GetLabel(LifeSegmentEditPageTitleIndex), "",
 		GetLabel(LifeSegmentEditSubmitLabelIndex), lifeSegment, lsRequest, person, errors)
 	if err != nil {
 		log.FailedReturn()

@@ -23,6 +23,12 @@ func EditGenerationType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationTypeID, err := getUrlGenerationTypeID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -39,7 +45,8 @@ func EditGenerationType(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("/schemas/%d/generation-types/%d/update", schemaID, generationTypeID)
 	generationTypeForm, err := MakeGenerationTypeForm(w, r, url, GetLabel(GenerationTypeEditPageTitleIndex),
-		GetLabel(GenerationTypeEditSubmitLabelIndex), generationType, generationTypeRequest, handlers.ResponseErrors{})
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationTypeEditSubmitLabelIndex),
+		generationType, generationTypeRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
@@ -60,6 +67,12 @@ func EditGenerationTypeRetry(w http.ResponseWriter, r *http.Request, generationT
 
 	schemaID := generationTypeRequest.SchemaID
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationType := &model.GenerationType{
 		ID:          generationTypeRequest.ID,
 		SchemaID:    generationTypeRequest.SchemaID,
@@ -69,7 +82,8 @@ func EditGenerationTypeRetry(w http.ResponseWriter, r *http.Request, generationT
 
 	url := fmt.Sprintf("/schemas/%d/generation-types/%d/update", schemaID, generationTypeRequest.ID)
 	generationTypeForm, err := MakeGenerationTypeForm(w, r, url, GetLabel(GenerationTypeEditPageTitleIndex),
-		GetLabel(GenerationTypeEditSubmitLabelIndex), generationType, generationTypeRequest, errors)
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationTypeEditSubmitLabelIndex),
+		generationType, generationTypeRequest, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

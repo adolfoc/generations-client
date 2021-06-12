@@ -16,9 +16,9 @@ type MomentTemplate struct {
 	People        []*model.Person
 }
 
-func MakeMomentTemplate(r *http.Request, pageTitle string, moment *model.HistoricalMoment, positions []*model.GenerationPosition,
+func MakeMomentTemplate(r *http.Request, pageTitle, studyTitle string, moment *model.HistoricalMoment, positions []*model.GenerationPosition,
 	events []*model.Event, people []*model.Person) (*MomentTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -45,6 +45,12 @@ func GetMoment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	schemaID, err := getUrlGenerationSchemaID(w, r)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
 	if err != nil {
 		log.FailedReturn()
 		return
@@ -80,7 +86,7 @@ func GetMoment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakeMomentTemplate(r, GetLabel(MomentPageTitleIndex), moment, positions, events, people)
+	ct, err := MakeMomentTemplate(r, GetLabel(MomentPageTitleIndex), generationSchema.MakeStudyTitle(), moment, positions, events, people)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

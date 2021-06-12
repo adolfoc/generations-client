@@ -5,7 +5,11 @@
   <div class="main-title">{{.Ct.Title}}</div>
 </div>
 {{template "nav_bar" .}}
+
 <div class="container">
+  {{ if ne .Ct.StudyTitle "" }}
+  <div class="page-title bg-primary">{{ .Ct.StudyTitle }}</div>
+  {{ end }}
   {{ if (ne .Ct.ErrorMessage "") }}
   <div class="error-message">{{.Ct.ErrorMessage}}</div>
   {{ end }}

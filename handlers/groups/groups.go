@@ -19,8 +19,8 @@ func getPaginationBaseURL() string {
 	return stem + "?page=%d"
 }
 
-func MakeGroupsTemplate(r *http.Request, pageTitle string, page int, groups *model.Groups) (*GroupsTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeGroupsTemplate(r *http.Request, pageTitle, studyTitle string, page int, groups *model.Groups) (*GroupsTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func GetGroups(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakeGroupsTemplate(r, GetLabel(GroupIndexPageTitleIndex), page, events)
+	ct, err := MakeGroupsTemplate(r, GetLabel(GroupIndexPageTitleIndex), "", page, events)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

@@ -23,6 +23,12 @@ func NewTangible(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationalLandscapeID, err := getUrlGenerationalLandscapeID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -43,7 +49,7 @@ func NewTangible(w http.ResponseWriter, r *http.Request) {
 	tangibleRequest := newTangibleRequest(generationalLandscapeID)
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/%d/tangibles/create", schemaID, generationalLandscapeID)
-	tangibleForm, err := MakeTangibleForm(w, r, url, GetLabel(TangibleNewPageTitleIndex),
+	tangibleForm, err := MakeTangibleForm(w, r, url, GetLabel(TangibleNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(TangibleNewSubmitLabelIndex), tangible, tangibleRequest, schemaID, generationalLandscape.GenerationID,
 		handlers.ResponseErrors{})
 	if err != nil {
@@ -70,6 +76,12 @@ func NewTangibleRetry(w http.ResponseWriter, r *http.Request, tangibleRequest *m
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	tangible := &model.Tangible{
 		ID:          0,
 		LandscapeID: tangibleRequest.LandscapeID,
@@ -84,7 +96,7 @@ func NewTangibleRetry(w http.ResponseWriter, r *http.Request, tangibleRequest *m
 	}
 
 	url := fmt.Sprintf("/schemas/%d/generational-landscape/%d/tangibles/create", schemaID, tangibleRequest.LandscapeID)
-	tangibleForm, err := MakeTangibleForm(w, r, url, GetLabel(TangibleNewPageTitleIndex),
+	tangibleForm, err := MakeTangibleForm(w, r, url, GetLabel(TangibleNewPageTitleIndex), generationSchema.MakeStudyTitle(),
 		GetLabel(TangibleNewSubmitLabelIndex), tangible, tangibleRequest, schemaID, generationalLandscape.GenerationID, errors)
 	if err != nil {
 		log.FailedReturn()

@@ -41,12 +41,12 @@ func makeEventTypeErrorMessages(errors handlers.ResponseErrors) map[string]strin
 	return formErrorMessages
 }
 
-func MakeEventTypeForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string, eventType *model.EventType,
+func MakeEventTypeForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string, eventType *model.EventType,
 	etRequest *model.EventTypeRequest, errors handlers.ResponseErrors) (*EventTypeForm, error) {
 
 	formValues := makeEventTypeFormValues(etRequest)
 	formErrorMessages := makeEventTypeErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

@@ -22,10 +22,11 @@ type GenerationTemplate struct {
 	Cohort                    []*model.Person
 }
 
-func MakeGenerationTemplate(r *http.Request, pageTitle string, generation *model.Generation,
+func MakeGenerationTemplate(r *http.Request, pageTitle, studyTitle string, generation *model.Generation,
 	formationMoment *model.HistoricalMoment, calculatedFormationMoment *model.HistoricalMoment,
 	generationalLandscape *model.GenerationalLandscape, positions []*model.GenerationFullPosition, persons []*model.Person) (*GenerationTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -82,6 +83,12 @@ func GetGeneration(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationID, err := getUrlGenerationID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -127,8 +134,8 @@ func GetGeneration(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ct, err := MakeGenerationTemplate(r, GetLabel(GenerationPageTitleIndex), generation,
-		formationMoment, calculatedMoment, generationalLandscape, positions, persons)
+	ct, err := MakeGenerationTemplate(r, GetLabel(GenerationPageTitleIndex), generationSchema.MakeStudyTitle(),
+		generation, formationMoment, calculatedMoment, generationalLandscape, positions, persons)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

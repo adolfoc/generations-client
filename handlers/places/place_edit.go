@@ -46,7 +46,7 @@ func EditPlace(w http.ResponseWriter, r *http.Request) {
 	placeRequest := buildPlaceRequest(place)
 
 	url := fmt.Sprintf("/places/%d/update", placeID)
-	personForm, err := MakePlaceForm(w, r, url, GetLabel(PlaceEditPageTitleIndex),
+	personForm, err := MakePlaceForm(w, r, url, GetLabel(PlaceEditPageTitleIndex), "",
 		GetLabel(PlaceEditSubmitPlaceIndex), place, placeRequest, placeTypes, parents.Places, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
@@ -92,7 +92,7 @@ func EditPlaceRetry(w http.ResponseWriter, r *http.Request, placeRequest *model.
 	}
 
 	url := fmt.Sprintf("/places/%d/update", placeRequest.ID)
-	placeForm, err := MakePlaceForm(w, r, url, GetLabel(PlaceEditPageTitleIndex),
+	placeForm, err := MakePlaceForm(w, r, url, GetLabel(PlaceEditPageTitleIndex), "",
 		GetLabel(PlaceEditSubmitPlaceIndex), place, placeRequest, placeTypes, parents.Places, errors)
 	if err != nil {
 		log.FailedReturn()

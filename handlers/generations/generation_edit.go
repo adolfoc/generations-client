@@ -24,6 +24,12 @@ func EditGeneration(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationID, err := getUrlGenerationID(w, r)
 	if err != nil {
 		log.FailedReturn()
@@ -58,7 +64,8 @@ func EditGeneration(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("/schemas/%d/generations/%d/update", schemaID, generationID)
 	generationForm, err := MakeGenerationForm(w, r, url, GetLabel(GenerationEditPageTitleIndex),
-		GetLabel(GenerationEditSubmitLabelIndex), generation, generationRequest, generationTypes, places, moments, handlers.ResponseErrors{})
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationEditSubmitLabelIndex),
+		generation, generationRequest, generationTypes, places, moments, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
@@ -78,6 +85,13 @@ func EditGenerationRetry(w http.ResponseWriter, r *http.Request, generationReque
 	log := common.StartLog("handlers-generations", "EditGenerationRetry")
 
 	schemaID := generationRequest.SchemaID
+
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationTypes, err := getGenerationTypesForSchema(w, r, schemaID)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
@@ -112,7 +126,8 @@ func EditGenerationRetry(w http.ResponseWriter, r *http.Request, generationReque
 
 	url := fmt.Sprintf("/schemas/%d/generations/%d/update", schemaID, generationRequest.ID)
 	generationForm, err := MakeGenerationForm(w, r, url, GetLabel(GenerationEditPageTitleIndex),
-		GetLabel(GenerationEditSubmitLabelIndex), generation, generationRequest, generationTypes, places, moments, errors)
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationEditSubmitLabelIndex),
+		generation, generationRequest, generationTypes, places, moments, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

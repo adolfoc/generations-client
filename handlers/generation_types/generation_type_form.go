@@ -41,13 +41,13 @@ func makeGenerationTypeErrorMessages(errors handlers.ResponseErrors) map[string]
 	return formErrorMessages
 }
 
-func MakeGenerationTypeForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, submitLabel string,
+func MakeGenerationTypeForm(w http.ResponseWriter, r *http.Request, url string, pageTitle, studyTitle, submitLabel string,
 	generationType *model.GenerationType, generationTypeRequest *model.GenerationTypeRequest,
 	errors handlers.ResponseErrors) (*GenerationTypeForm, error) {
 
 	formValues := makeGenerationTypeFormValues(generationTypeRequest)
 	formErrorMessages := makeGenerationTypeErrorMessages(errors)
-	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, submitLabel, formValues, formErrorMessages)
+	ft, err := handlers.MakeFormTemplate(r, url, pageTitle, studyTitle, submitLabel, formValues, formErrorMessages)
 	if err != nil {
 		return nil, err
 	}

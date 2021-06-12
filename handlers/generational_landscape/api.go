@@ -286,6 +286,18 @@ func patchTangible(w http.ResponseWriter, r *http.Request, tRequest *model.Tangi
 	return code, body, nil
 }
 
+func deleteTangible(w http.ResponseWriter, r *http.Request, tangibleID int) (int, []byte, error) {
+	url := getTangibleURL(tangibleID)
+
+	code, body, err := handlers.DeleteResource(w, r, url)
+	if err != nil {
+		return 0, nil, err
+	}
+
+
+	return code, body, nil
+}
+
 func getIntangible(w http.ResponseWriter, r *http.Request, intangibleID int) (*model.Intangible, error) {
 	url := getTangibleURL(intangibleID)
 	code, body, err := handlers.GetResource(w, r, url)
@@ -380,3 +392,14 @@ func patchIntangible(w http.ResponseWriter, r *http.Request, itRequest *model.In
 	return code, body, nil
 }
 
+func deleteIntangible(w http.ResponseWriter, r *http.Request, intangibleID int) (int, []byte, error) {
+	url := getIntangibleURL(intangibleID)
+
+	code, body, err := handlers.DeleteResource(w, r, url)
+	if err != nil {
+		return 0, nil, err
+	}
+
+
+	return code, body, nil
+}

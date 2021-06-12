@@ -23,6 +23,12 @@ func NewGenerationType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationTypeRequest := newGenerationTypeRequest(schemaID)
 	generationType := &model.GenerationType{
 		SchemaID:    schemaID,
@@ -30,7 +36,8 @@ func NewGenerationType(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("/schemas/%d/generation-types/create", schemaID)
 	generationForm, err := MakeGenerationTypeForm(w, r, url, GetLabel(GenerationTypeNewPageTitleIndex),
-		GetLabel(GenerationTypeNewSubmitLabelIndex), generationType, generationTypeRequest, handlers.ResponseErrors{})
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationTypeNewSubmitLabelIndex),
+		generationType, generationTypeRequest, handlers.ResponseErrors{})
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
@@ -51,6 +58,12 @@ func NewGenerationTypeRetry(w http.ResponseWriter, r *http.Request, generationTy
 
 	schemaID := generationTypeRequest.SchemaID
 
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
 	generationType := &model.GenerationType{
 		ID:          0,
 		SchemaID:    generationTypeRequest.SchemaID,
@@ -60,7 +73,8 @@ func NewGenerationTypeRetry(w http.ResponseWriter, r *http.Request, generationTy
 
 	url := fmt.Sprintf("/schemas/%d/generation_types/create", schemaID)
 	generationTypeForm, err := MakeGenerationTypeForm(w, r, url, GetLabel(GenerationTypeNewPageTitleIndex),
-		GetLabel(GenerationTypeNewSubmitLabelIndex), generationType, generationTypeRequest, errors)
+		generationSchema.MakeStudyTitle(), GetLabel(GenerationTypeNewSubmitLabelIndex),
+		generationType, generationTypeRequest, errors)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)

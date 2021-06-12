@@ -20,8 +20,8 @@ func getPaginationBaseURL(generationSchemaID int) string {
 	return stem + "?page=%d"
 }
 
-func MakeMomentsTemplate(r *http.Request, pageTitle string, generationSchema, page int, moments *model.HistoricalMoments) (*MomentsTemplate, error) {
-	ct, err := handlers.MakeCommonTemplate(r, pageTitle)
+func MakeMomentsTemplate(r *http.Request, pageTitle, studyTitle string, generationSchema, page int, moments *model.HistoricalMoments) (*MomentsTemplate, error) {
+	ct, err := handlers.MakeCommonTemplate(r, pageTitle, studyTitle)
 	if err != nil {
 		return nil, err
 	}
@@ -47,20 +47,26 @@ func GetSchemaMoments(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	gsID, err := getUrlGenerationSchemaID(w, r)
+	schemaID, err := getUrlGenerationSchemaID(w, r)
+	if err != nil {
+		log.FailedReturn()
+		return
+	}
+
+	generationSchema, err := handlers.GetGenerationSchema(w, r, schemaID)
 	if err != nil {
 		log.FailedReturn()
 		return
 	}
 
 	page := handlers.GetURLPageParameter(r)
-	generations, err := getSchemaMoments(w, r, gsID)
+	generations, err := getSchemaMoments(w, r, schemaID)
 	if handlers.HandleError(w, r, err) {
 		log.FailedReturn()
 		return
 	}
 
-	ct, err := MakeMomentsTemplate(r, GetLabel(MomentIndexPageTitleIndex), gsID, page, generations)
+	ct, err := MakeMomentsTemplate(r, GetLabel(MomentIndexPageTitleIndex), generationSchema.MakeStudyTitle(), schemaID, page, generations)
 	if err != nil {
 		log.FailedReturn()
 		handlers.RedirectToErrorPage(w, r)
